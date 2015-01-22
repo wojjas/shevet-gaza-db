@@ -1,0 +1,29 @@
+CACHE MANIFEST
+#version 0.1
+
+CACHE:
+/angular/angular.min.js
+/angular-resource/angular-resource.min.js
+/angular-route/angular-route.min.js
+/js/app.js
+/js/controllers/doctorsCtrl.js
+/js/controllers/doctorCtrl.js
+/js/services/doctors.js
+/js/services/config.js
+
+/jquery/dist/jquery.js
+
+/bootstrap/dist/css/bootstrap.min.css
+/bootstrap/dist/js/bootstrap.min.js
+
+/img/logo_with_text.gif
+
+/partials/doctor.html
+/partials/doctors.html
+
+#The "NETWORK" needs to be '*' for ajax-calls to work!
+NETWORK:
+*
+
+FALLBACK:
+#/

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="gazaApp">
+<!--<html class="no-js" ng-app="gazaApp" manifest="./manifest.apache">-->
+<!--<html class="no-js" ng-app="gazaApp" manifest="manifest.apache">-->
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>GazaDB, Doctors</title>
+
+    <link rel="stylesheet" href="/ng-table/dist/ng-table.min.css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<style>
+    html, body{
+        height: 100%;
+    }
+    .main-view{
+        background: rgba(213,190,96,0.2);
+        height: 100%;
+    }
+    .main-content{
+        margin-top: 60px;   /* Makes space for the top-fixed-header */
+    }
+</style>
+
+<body>
+    <div class="container-fluid main-view">
+        <div>
+            <div ng-include="'/home/header.html'"></div>
+        </div>
+
+        <div class="main-content">
+            <div ng-view></div>
+        </div>
+    </div>
+
+    <!--<script src="/angular/angular.js"></script>-->
+    <!--<script src="/angular-resource/angular-resource.js"></script>-->
+    <!--<script src="/angular-route/angular-route.js"></script>-->
+    <script src="/angular/angular.min.js"></script>
+    <script src="/angular-resource/angular-resource.min.js"></script>
+    <script src="/angular-route/angular-route.min.js"></script>
+    <script src="/ng-table/dist/ng-table.js"></script>
+    <script src="/client/app.js"></script>
+    <script src="/client/home/headerCtrl.js"></script>
+    <script src="/client/home/crudButtons.js"></script>
+    <script src="/client/home/crudButtonsCtrl.js"></script>
+    <script src="/client/doctors/doctorsCtrl.js"></script>
+    <script src="/client/doctors/doctorCtrl.js"></script>
+    <script src="/client/doctors/doctorsProxy.js"></script>
+    <script src="/client/doctors/doctorsTable.js"></script>
+    <script src="/client/config.js"></script>
+
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--Doctors list/table partial-->
+
+        <style>
+            /*.body {*/
+                /*background: rgba(213,190,96,0.2);*/
+            /*}*/
+            .ng-table {
+                border: 1px solid #000;
+            }
+        </style>
+
+<section class="body">
+    <legend>Doctors</legend>
+    <!--<p><strong>Page:</strong> {{vm.tableParams.page()}}</p>-->
+    <!--<p><strong>Count per page:</strong> {{vm.tableParams.count()}}</p>-->
+
+    <table ng-table="vm.table"
+           show-filter="true"
+           class="table table-bordered table-hover table-striped ">
+            <tr ng-repeat="doctor in $data"
+                ng-click="vm.handleRowClicked(doctor)">
+                <td data-title="'Name'"
+                    sortable="'name'"
+                    filter="{ 'name': 'text' }"
+                    class="col-sm-3">
+                    {{doctor.name}}</td>
+                <td data-title="'Cell Phone'"
+                    filter="{ 'cellPhone': 'text' }"
+                    sortable="'cellPhone'"
+                    class="col-sm-2">
+                    {{doctor.cellPhone}}</td>
+                <td data-title="'Office Phone'"
+                    sortable="'officePhone'"
+                    filter="{ 'officePhone': 'text' }"
+                    class="col-sm-2">
+                    {{doctor.officePhone}}</td>
+                <td data-title="'Office Fax'"
+                    sortable="'officeFax'"
+                    filter="{ 'officeFax': 'text' }"
+                    class="col-sm-1">
+                    {{doctor.officeFax}}</td>
+                <td data-title="'Home Fax'"
+                    sortable="'homeFax'"
+                    filter="{ 'homeFax': 'text' }"
+                    class="col-sm-1">
+                    {{doctor.homeFax}}</td>
+                <td data-title="'Home Phone'"
+                    sortable="'homePhone'"
+                    filter="{ 'homePhone': 'text' }"
+                    class="col-sm-1">
+                    {{doctor.homePhone}}</td>
+                <td data-title="'Email'"
+                    sortable="'email'"
+                    filter="{ 'email': 'text' }"
+                    class="col-sm-2">
+                    {{doctor.email}}</td>
+            </tr>
+    </table>
+
+</section>

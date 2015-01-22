@@ -1,0 +1,52 @@
+<style>
+    /*colors:*/
+    /*#D3BC61*/
+    /*rgba(213,190,96,0.5); Lighter cause opacity 0.5*/
+    .header{
+        background: rgba(213,190,96,0.5);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        overflow: hidden;
+    }
+    .logo-in-header{
+        height: 40px;
+        width: auto;
+    }
+    .nav-buttons{
+        margin-top: 5px;
+        text-align: center;
+        height: 100%;
+    }
+    .nav-buttons a{
+        font-size: 1.3em;
+    }
+</style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+    <div class="container-fluid header"
+         ng-controller="header as vm">
+
+        <div class="row">
+            <div class="col-xs-2">
+                <div>
+                    <a href="/#/home"><img class="logo-in-header" ng-src="/img/logo_with_text.gif"></a>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <nav class="nav-buttons">
+                    <a href="/#/doctors" class="btn btn-large">Doctors</a>
+                    <a href="/#/patients" class="btn btn-large">Patients</a>
+                    <a href="/#/settings" class="btn btn-large">Settings</a>
+                </nav>
+            </div>
+            <div class="col-xs-2 vertical-middle">
+                <p ng-click="vm.handleOfflineModeChanged()">Offline Mode:
+                    <input type="checkbox"
+                           ng-model="vm.offline">
+                </p>
+            </div>
+        </div>
+    </div>
+
+</nav>
