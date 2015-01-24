@@ -1,10 +1,12 @@
 (function(){
-    app.controller('doctors', ['$location', 'config', 'doctors', 'doctorsTable',
+    app.controller('doctors', ['$scope','$location', 'config', 'doctors', 'doctorsTable',
                                Doctors]);
 
-    function Doctors($location, config, doctors, doctorsTable) {
+    function Doctors($scope, $location, config, doctors, doctorsTable) {
         var vm = this;
 
+        vm.isLoading = false;
+        //vm.table= doctorsTable.createTable([]);
         vm.activate = activate;
         vm.handleRowClicked = handleRowClicked;
         vm.handleOfflineModeChanged = handleOfflineModeChanged;
@@ -14,17 +16,30 @@
         //////////////////
 
         function activate() {
-//            vm.table= doctorsTable.createTable([]);
+            console.log('setting timeout');
             var doctorsRead = doctors.readAllDoctors();
 
             if(doctorsRead.$promise){
-                //TODO: show deferred msg that doctors are being fetched from server.
+                //Show, after some time that table is loading.
+                var timer = delayedIsLoading(1500);
+
                 doctorsRead.$promise.then(function (docs) {
                     vm.table = doctorsTable.createTable(docs);
+
+                    //Data gotten and table rendered, clear the loading indication.
+                    clearTimeout(timer);
+                    vm.isLoading = false;
                 })
             }else{
                 vm.table= doctorsTable.createTable(doctorsRead);
             }
+        }
+
+        function delayedIsLoading(delay){
+            return setTimeout(function () {
+                vm.isLoading = true;
+                $scope.$apply();
+            }, delay);
         }
 
         //Event handlers:

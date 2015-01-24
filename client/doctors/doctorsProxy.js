@@ -109,6 +109,7 @@
                 window.localStorage['doctors'] = JSON.stringify(doctors);
             }else{
                 //TODO: Duplication of code, yes, but the "new Doctor(...)" makes the editor freak out.
+                //noinspection JSUnresolvedFunction
 //                var newDoctor = new Doctor(doctor);
                 var newDoctor = new $resource('/api/doctors/:_id', {id:'@_id'}, {update: {method: 'PUT'}})(doctor);
 

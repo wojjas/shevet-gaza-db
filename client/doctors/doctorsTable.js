@@ -11,7 +11,6 @@
     function DoctorsTable($filter, ngTableParams, doctorsProxy) {
         var doctors = [];           //The array with all the doctors.
         var service = {
-            table: {},              //Exposes table, instantiated in init().
             parameters: {
                 page: 1,
                 count: 17,
