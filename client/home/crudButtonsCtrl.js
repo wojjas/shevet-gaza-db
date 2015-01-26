@@ -8,6 +8,7 @@
         var vm = this;
         vm.isInEditMode = false;
         vm.isDirty = true;
+        vm.isLocked = false;             //if true every button is disabled, if false enable according to other flags
 
         vm.activate = activate;
         vm.handleEditBtnClick = handleEditBtnClick;
@@ -24,6 +25,7 @@
             vm.isInEditMode = false;
         }
 
+        //Events:
         function handleEditBtnClick() {
             vm.isInEditMode = true;
             vm.isDirty = true;
@@ -51,8 +53,12 @@
             crudButtons.fireDeleteClickedEvent();
         }
 
+        //External events:
         $scope.$on('isDirtyEvent', function () {
             vm.isDirty = false;
+        })
+        $scope.$on('lockEvent', function (event, args) {
+            vm.isLocked = args.lock;
         })
     }
 })();

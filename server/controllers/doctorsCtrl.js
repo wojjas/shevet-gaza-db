@@ -1,11 +1,16 @@
 var Doctors = require('../models/doctor.js');
 
-function generateRandomNumber(min, max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// There is a configurable delay in each server-response.
+// Use it for debug-purposes. Set min and max to 0 to disable it.
+const MIN_DELAY = 1500;
+const MAX_DELAY = 3000;
+function generateRandomDelay(){
+    return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1)) + MIN_DELAY;
 }
 
 module.exports.getAll = function (req, res) {
-    var delay = generateRandomNumber(500, 4000);
+    //TODO: implement a  var retMessage = "OK"; to be consistent with the other responses
+    var delay = generateRandomDelay();
     console.log("Getting all doctors from db. Delay: " +delay + "ms");
 
     setTimeout(function(){
@@ -19,7 +24,8 @@ module.exports.getAll = function (req, res) {
 }
 
 module.exports.getOne = function (req, res) {
-    var delay = generateRandomNumber(500, 1000);
+    //TODO: implement a  var retMessage = "OK"; to be consistent with the other responses
+    var delay = generateRandomDelay();
     console.log("Getting one doctor from db. Delay: " +delay+ "ms");
     var searchParameter = decodeURI(req.url.substr(req.url.lastIndexOf('/') + 1));
     console.log("Search Parameter: " + searchParameter);
@@ -49,14 +55,14 @@ module.exports.getMatching = function (req, res) {
 }
 
 module.exports.deleteOne = function (req, res) {
-    var delay = generateRandomNumber(500, 1000);
+    var delay = generateRandomDelay();
     console.log("Deleting one doctor from db. Delay: " +delay+ "ms");
     var searchParameter = req.url.substr(req.url.lastIndexOf('/') + 1);
     console.log("Search Parameter: " + searchParameter);
 
     setTimeout(function () {
             Doctors.remove({"_id": searchParameter}, function (err, document) {
-            var retMessage = "Document deleted";
+            var retMessage = "OK";
 
             if(err !== null){
                 console.log("Failed to delete one doctor ", err);
@@ -74,10 +80,10 @@ module.exports.deleteOne = function (req, res) {
 }
 
 module.exports.updateOne = function(req, res){
-    var delay = generateRandomNumber(500, 1000);
+    var delay = generateRandomDelay();
     console.log("Updating one doctor in db. Delay: " +delay+ "ms");
 
-    var retMessage = "Document Updated";
+    var retMessage = "OK";
 
     var doctorToSave = req.body;
     var query = {"_id": doctorToSave._id};
@@ -85,8 +91,8 @@ module.exports.updateOne = function(req, res){
     setTimeout(function () {
         Doctors.update(query, doctorToSave, function (err, numberAffected) {
             if(err !== null){
-                console.log("Failed to delete one doctor ", err);
-                retMessage = "Error, deleting document:" + err.message;
+                console.log("Failed to update one doctor ", err);
+                retMessage = "Error, updating document:" + err.message;
             }
             console.log('Affected doctors in Update: ' + numberAffected);
 
@@ -96,10 +102,10 @@ module.exports.updateOne = function(req, res){
 }
 
 module.exports.createOne = function(req, res){
-    var delay = generateRandomNumber(500, 1000);
+    var delay = generateRandomDelay();
     console.log("Creating one doctor in db. Delay: " +delay+ "ms");
 
-    var retMessage = "Document Created";
+    var retMessage = "OK";
     var newDoctor = new Doctors(req.body);
 
     setTimeout(function () {
@@ -110,7 +116,7 @@ module.exports.createOne = function(req, res){
             }
             console.log('Affected doctors in Create: ' + result);
 
-            res.send({"status":retMessage});
+            res.send({"status":retMessage, "_id":result._id});
         });
     }, delay);
 }

@@ -8,8 +8,15 @@
 
     app.factory('doctors', ['$resource', 'config', doctors]);
 
+    //Performs CRUD against LocalStorage and, or remote db.
+    //Every document stored in LocalStorage is assigned an unique string with known prefix as _id.
+    //This is needed to be able to CRUD it against LocalStorage.
+    //Upon each save, if this tmp-id is exists it is removed so that the remote db
+    //can assign an _id to this document. Upon successful save this _id is assigned to the
+    //document in LocalStorage so that remote and local data is in sync.
     function doctors($resource, config) {
         var Doctor = {};          /*Main resource*/
+        var tmpLocalIdPrefix = '-';
 
         var service = {
             createNewDoctor: createNewDoctor,
@@ -29,6 +36,19 @@
 
         function init(){
             Doctor = $resource('/api/doctors/:_id', {id:'@_id'}, {update: {method: 'PUT'}});
+        }
+
+        function documentHasTmpLocalId(document){
+            if(!document._id){
+                console.debug('Document has no _id. This should never be the case.');
+                return false;
+            }
+
+            return document._id.slice(0, tmpLocalIdPrefix.length) === tmpLocalIdPrefix
+        }
+        //Creates a temporary id for a locally stored document.
+        function createTmpLocalId(){
+            return tmpLocalIdPrefix + new Date().getTime();
         }
 
 
@@ -66,8 +86,13 @@
             }else{
                 console.log("client requests one doctor from Server, with parameter: " + searchParameter);
 
-                return Doctor.get({"_id":searchParameter}, function (result) {
-                    window.localStorage['doctor'] = JSON.stringify(result);
+                return Doctor.get({"_id":searchParameter}, function (response) {
+                    //TODDO:
+                    //if(response.status !== "OK"){
+                    //    console.debug('Failed to get document: ', response.status);
+                    //    return;
+                    //}
+                    window.localStorage['doctor'] = JSON.stringify(response);
                 });
             }
         }
@@ -82,39 +107,41 @@
                         doctors.splice(i, 1);
                         window.localStorage['doctors'] = JSON.stringify(doctors);
 
-                        break;
+                        return {};
                     }
                 }
             }else{
                 console.log('client requests to delete one doctor from Server');
-                Doctor.delete({"_id":searchParameter}, function (result) {
-                    console.log('Server response: ', result);
+                return Doctor.delete({"_id":searchParameter}, function (response) {
+                    if(response.status !== "OK"){
+                        console.debug('Failed to delete document: ', response.status);
+                    }
                 });
             }
         }
 
-        //Creates or Updates a doctor, used for both "Add" and "Edit"
-//        function saveDoctor(doctorToSave) {
-//            console.log("client requests to create/update one doctor");
-//
-//            Doctor.save(doctorToSave, function (result) {
-//               console.log('Affected doctors in Create/Update: ', result);
-//            });
-//        }
-
         function createDoctor(doctor){
             if(config.getOfflineMode()){
                 var doctors = JSON.parse(window.localStorage['doctors']);
+                doctor._id = createTmpLocalId();
                 doctors.push(doctor);
                 window.localStorage['doctors'] = JSON.stringify(doctors);
-            }else{
-                //TODO: Duplication of code, yes, but the "new Doctor(...)" makes the editor freak out.
-                //noinspection JSUnresolvedFunction
-//                var newDoctor = new Doctor(doctor);
-                var newDoctor = new $resource('/api/doctors/:_id', {id:'@_id'}, {update: {method: 'PUT'}})(doctor);
 
-                newDoctor.$save(function (result) {
-                    console.log('Saved new doctor: ', result);
+                return {};
+            }else{
+                //Locally stored documents are assigned temp ids. If this document is a locally stored one
+                //remove the id-property to let the remote db assign a new one upon creation/save.
+                if(doctor._id && documentHasTmpLocalId(doctor)){
+                    delete doctor._id;
+                }
+
+                return Doctor.save(doctor, function (response) {
+                    if(response.status !== "OK"){
+                        console.debug('Failed to save document: ', response.status);
+
+                        return;
+                    }
+                    doctor._id = response._id;
                 });
             }
         }
@@ -128,15 +155,38 @@
                         doctors[i] = doctor;
                         window.localStorage['doctors'] = JSON.stringify(doctors);
 
-                        break;
+                        return {};
                     }
                 }
+                console.debug('Failed to update doctor in LocalStorage: Could not find it');
             }else{
-                Doctor.update(doctor, function (result) {
-                    console.log('Affected doctors in Create/Update: ', result);
-                });
+                //Locally stored documents are assigned negative ids.
+                //This will not be an update but an create if id is tmpLocalId.
+                //Remove the id-property to let the server db assign a new one upon creation/save.
+                if(doctor._id && documentHasTmpLocalId(doctor)){
+                    delete doctor._id;
+
+                    return Doctor.save(doctor, function (response) {
+                        if(response.status !== "OK"){
+                            console.debug('Failed to update document: ', response.status);
+
+                            return;
+                        }
+                        console.log('Upserted doctor: ', response._id);
+
+                        doctor._id = response._id;
+                    });
+                }else{
+                    return Doctor.update(doctor, function (response) {
+                        if(response.status !== "OK"){
+                            console.debug('Failed to update document: ', response.status);
+
+                            return;
+                        }
+                        console.log('Affected doctors in Update: ', response._id);
+                    });
+                }
             }
         }
-
     }
 })();

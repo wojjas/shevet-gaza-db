@@ -1,19 +1,24 @@
 <!--Doctor detail info partial-->
-
-        <!--<style>-->
-            <!--.container{-->
-                <!--background: lightcyan;-->
-            <!--}-->
-        <!--</style>-->
+<link rel="stylesheet" href="../main.css">
+<style>
+    /*.container{*/
+        /*background: lightcyan;*/
+    /*}*/
+</style>
 
 <section class="container">
 
     <legend>Doctor</legend>
     <div class="row center-block" ng-include="'/home/crudButtons.html'"></div>
 
+    <!--showIsLoading-->
+    <div class="is-loading-cover"
+         ng-show="vm.showIsLoading">
+        <img class="loader-gif center-block" src="/client/img/loader_transparent.gif">
+    </div>
+
     <form class="form-horizontal center-block" ng-submit="vm.handleFormSubmit()">
         <fieldset>
-
             <!-- Text input-->
             <div class="form-group">
                 <label class="col-md-4 control-label" for="Name">Name</label>

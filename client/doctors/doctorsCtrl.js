@@ -16,7 +16,6 @@
         //////////////////
 
         function activate() {
-            console.log('setting timeout');
             var doctorsRead = doctors.readAllDoctors();
 
             if(doctorsRead.$promise){
@@ -35,6 +34,7 @@
             }
         }
 
+        //TODO: move out to shared lib
         function delayedIsLoading(delay){
             return setTimeout(function () {
                 vm.isLoading = true;
