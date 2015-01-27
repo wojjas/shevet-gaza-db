@@ -11,7 +11,7 @@
         vm.doctor = {};
 
         vm.isReadonly = true;      //Governs input-fields.
-        vm.isLoading = true;       //Disables buttons, etc.
+        vm.isLoading = false;      //Disables buttons, etc.
         vm.showIsLoading = false;  //Big visual impact with progress-gif.
 
         vm.activate = activate;
@@ -22,19 +22,20 @@
         ////////////////
 
         function activate() {
-            console.log('Doctor controller activated');
-
             var searchParameter = decodeURI($location.path().substr($location.path().lastIndexOf('/') + 2));
             var doctorRead = doctors.readOneDoctor(searchParameter);
 
             if(doctorRead.$promise){
                 changeIsLoading(true);
 
-                //TODO: Server-Error-handling
-                doctorRead.$promise.then(function (doc) {
-                    vm.doctor = doc;
+                doctorRead.$promise.then(function (response) {
+                    vm.doctor = response;
+                }).catch(function (response) {
+                    var errorMessage = "ERROR getting doctor. " + response.statusText;
+                    window.alert(errorMessage);
+                }).finally(function () {
                     changeIsLoading(false);
-                })
+                });
             }else{
                 vm.doctor = doctorRead;
                 vm.isLoading = false;
@@ -123,13 +124,16 @@
             if(actionResult.$promise){
                 changeIsLoading(true);
 
-                actionResult.$promise.then(function () {
-                    changeIsLoading(false);
-
+                actionResult.$promise.then(function (response) {
                     if(saveAndClose){
                         $location.path("/doctors");
                     }
-                })
+                }).catch(function (response) {
+                    var errorMessage = "ERROR saving doctor. " + response.statusText;
+                    window.alert(errorMessage);
+                }).finally(function () {
+                    changeIsLoading(false);
+                });
             }else{
                 if(saveAndClose){
                     $location.path("/doctors");
@@ -145,18 +149,19 @@
         })
 
         $scope.$on('deleteClickedEvent', function () {
-            toggleReadonly();
-            console.log('delete doctor');
-
             var result = doctors.deleteDoctor(vm.doctor._id);
 
             if(result.$promise){
                 changeIsLoading(true);
 
-                result.$promise.then(function () {
-                    changeIsLoading(false);
+                result.$promise.then(function (response) {
                     $location.path("/doctors");
-                })
+                }).catch(function (response) {
+                    var errorMessage = "ERROR deleting doctor. " + response.statusText;
+                    window.alert(errorMessage);
+                }).finally(function () {
+                    changeIsLoading(false);
+                });
             }else{
                 $location.path("/doctors");
             }

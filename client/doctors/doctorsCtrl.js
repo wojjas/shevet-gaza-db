@@ -5,7 +5,8 @@
     function Doctors($scope, $location, config, doctors, doctorsTable) {
         var vm = this;
 
-        vm.isLoading = false;
+        vm.isLoading = false;           //Unused yet.
+        vm.showIsLoading = false;
         //vm.table= doctorsTable.createTable([]);
         vm.activate = activate;
         vm.handleRowClicked = handleRowClicked;
@@ -20,24 +21,42 @@
 
             if(doctorsRead.$promise){
                 //Show, after some time that table is loading.
-                var timer = delayedIsLoading(1500);
+                changeIsLoading(true);
 
-                doctorsRead.$promise.then(function (docs) {
-                    vm.table = doctorsTable.createTable(docs);
+                doctorsRead.$promise.then(function (response) {
+                    vm.table = doctorsTable.createTable(response);
+                }).catch(function (response) {
+                    //var errorMessage = "ERROR getting doctors. " +
+                    //                    response.statusText.length > 0 ?
+                    //                    "Server Response: " + response.statusText :
+                    //                    "";
+                    var errorMessage = "ERROR getting doctors. " + response.statusText;
+                    window.alert(errorMessage);
+                }).finally(function () {
+                    changeIsLoading(false);
+                });
 
-                    //Data gotten and table rendered, clear the loading indication.
-                    clearTimeout(timer);
-                    vm.isLoading = false;
-                })
             }else{
                 vm.table= doctorsTable.createTable(doctorsRead);
             }
         }
 
-        //TODO: move out to shared lib
-        function delayedIsLoading(delay){
-            return setTimeout(function () {
+        function changeIsLoading(isLoading){
+            if(isLoading){
+                var timer = delayedShowIsLoading(1500);
                 vm.isLoading = true;
+            }else{
+                clearTimeout(timer);
+                vm.isLoading = false;
+                vm.showIsLoading = false;
+            }
+        }
+
+        //TODO: Duplicated
+        //Delays setting of flag that makes View display progress-gif.
+        function delayedShowIsLoading(delay){
+            return setTimeout(function () {
+                vm.showIsLoading = true;
                 $scope.$apply();
             }, delay);
         }

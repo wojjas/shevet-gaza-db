@@ -65,8 +65,10 @@
                 return [];
             }else{
                 console.log('client requests all doctors from Server');
-                return Doctor.query(function (results) {
-                    window.localStorage['doctors'] = JSON.stringify(results);
+                return Doctor.query(function (response) {
+                    window.localStorage['doctors'] = JSON.stringify(response.data);
+                }, function (error) {
+                    console.debug("Error getting doctors: ", error);
                 });
             }
         }
@@ -87,12 +89,9 @@
                 console.log("client requests one doctor from Server, with parameter: " + searchParameter);
 
                 return Doctor.get({"_id":searchParameter}, function (response) {
-                    //TODDO:
-                    //if(response.status !== "OK"){
-                    //    console.debug('Failed to get document: ', response.status);
-                    //    return;
-                    //}
                     window.localStorage['doctor'] = JSON.stringify(response);
+                }, function (error) {
+                    console.debug("Error getting doctor: ", error);
                 });
             }
         }
@@ -114,7 +113,7 @@
                 console.log('client requests to delete one doctor from Server');
                 return Doctor.delete({"_id":searchParameter}, function (response) {
                     if(response.status !== "OK"){
-                        console.debug('Failed to delete document: ', response.status);
+                        console.debug('Failed to delete document: ' + response.status);
                     }
                 });
             }
@@ -137,7 +136,7 @@
 
                 return Doctor.save(doctor, function (response) {
                     if(response.status !== "OK"){
-                        console.debug('Failed to save document: ', response.status);
+                        console.debug('Failed to save document: ' + response.status);
 
                         return;
                     }
@@ -168,7 +167,7 @@
 
                     return Doctor.save(doctor, function (response) {
                         if(response.status !== "OK"){
-                            console.debug('Failed to update document: ', response.status);
+                            console.debug('Failed to update document: ' + response.status);
 
                             return;
                         }
@@ -179,7 +178,7 @@
                 }else{
                     return Doctor.update(doctor, function (response) {
                         if(response.status !== "OK"){
-                            console.debug('Failed to update document: ', response.status);
+                            console.debug('Failed to update document: ' + response.status);
 
                             return;
                         }

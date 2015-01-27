@@ -9,7 +9,6 @@ function generateRandomDelay(){
 }
 
 module.exports.getAll = function (req, res) {
-    //TODO: implement a  var retMessage = "OK"; to be consistent with the other responses
     var delay = generateRandomDelay();
     console.log("Getting all doctors from db. Delay: " +delay + "ms");
 
@@ -24,7 +23,6 @@ module.exports.getAll = function (req, res) {
 }
 
 module.exports.getOne = function (req, res) {
-    //TODO: implement a  var retMessage = "OK"; to be consistent with the other responses
     var delay = generateRandomDelay();
     console.log("Getting one doctor from db. Delay: " +delay+ "ms");
     var searchParameter = decodeURI(req.url.substr(req.url.lastIndexOf('/') + 1));
