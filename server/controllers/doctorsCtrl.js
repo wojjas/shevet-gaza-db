@@ -2,8 +2,8 @@ var Doctors = require('../models/doctor.js');
 
 // There is a configurable delay in each server-response.
 // Use it for debug-purposes. Set min and max to 0 to disable it.
-const MIN_DELAY = 1500;
-const MAX_DELAY = 3000;
+const MIN_DELAY = 500;
+const MAX_DELAY = 500;
 function generateRandomDelay(){
     return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1)) + MIN_DELAY;
 }
@@ -20,7 +20,7 @@ module.exports.getAll = function (req, res) {
             res.send(documents);
         });
     }, delay)
-}
+};
 
 module.exports.getOne = function (req, res) {
     var delay = generateRandomDelay();
@@ -40,7 +40,7 @@ module.exports.getOne = function (req, res) {
             res.send(document);
         });
     }, delay);
-}
+};
 
 module.exports.getMatching = function (req, res) {
     console.log("Getting one doctor from db.");
@@ -50,7 +50,7 @@ module.exports.getMatching = function (req, res) {
     //Doctors.find()
 
     res.send({"name":"SomeDoc"});
-}
+};
 
 module.exports.deleteOne = function (req, res) {
     var delay = generateRandomDelay();
@@ -74,8 +74,7 @@ module.exports.deleteOne = function (req, res) {
             res.send({"status":retMessage});
         });
     }, delay);
-
-}
+};
 
 module.exports.updateOne = function(req, res){
     var delay = generateRandomDelay();
@@ -97,7 +96,7 @@ module.exports.updateOne = function(req, res){
             res.send({"status":retMessage});
         });
     }, delay);
-}
+};
 
 module.exports.createOne = function(req, res){
     var delay = generateRandomDelay();
@@ -117,4 +116,4 @@ module.exports.createOne = function(req, res){
             res.send({"status":retMessage, "_id":result._id});
         });
     }, delay);
-}
+};

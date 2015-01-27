@@ -5,6 +5,8 @@
     function Doctors($scope, $location, config, doctors, doctorsTable) {
         var vm = this;
 
+        var delayedShowIsLoadingTimer = null;
+
         vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
         //vm.table= doctorsTable.createTable([]);
@@ -43,10 +45,10 @@
 
         function changeIsLoading(isLoading){
             if(isLoading){
-                var timer = delayedShowIsLoading(1500);
+                delayedShowIsLoadingTimer = delayedShowIsLoading(1500);
                 vm.isLoading = true;
             }else{
-                clearTimeout(timer);
+                clearTimeout(delayedShowIsLoadingTimer);
                 vm.isLoading = false;
                 vm.showIsLoading = false;
             }
