@@ -6,21 +6,19 @@
             /*}*/
         </style>
 
-<section class="body">
-    <legend>Doctors</legend>
-    <!--<p><strong>Page:</strong> {{vm.tableParams.page()}}</p>-->
-    <!--<p><strong>Count per page:</strong> {{vm.tableParams.count()}}</p>-->
+<section class="body"
+         ng-controller="doctors as vmDoctors">
 
     <div class="is-loading-cover"
-         ng-show="vm.showIsLoading">
+         ng-show="vmDoctors.showIsLoading">
         <img class="loader-gif center-block" src="/client/img/loader_transparent.gif">
     </div>
 
-    <table ng-table="vm.table"
+    <table ng-table="vmDoctors.table"
            show-filter="true"
            class="table table-bordered table-hover table-striped ">
         <tr ng-repeat="doctor in $data"
-                ng-click="vm.handleRowClicked(doctor)">
+                ng-click="vm.handleTableRowClicked(doctor)">
                 <td data-title="'Name'"
                     sortable="'name'"
                     filter="{ 'name': 'text' }"

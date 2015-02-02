@@ -23,8 +23,36 @@
         ////////////////
 
         function activate() {
-            var searchParameter = decodeURI($location.path().substr($location.path().lastIndexOf('/') + 2));
-            var doctorRead = doctors.readOneDoctor(searchParameter);
+            //var searchParameter = decodeURI($location.path().substr($location.path().lastIndexOf('/') + 2));
+            //var allTabs = $scope.vm.tabset;
+            //var currentTab = allTabs[allTabs.length - 2];
+            //
+            //if(currentTab.isFirstTab || currentTab.isAddTab){
+            //    var logMsg = 'Doctor Ctrl Activated for: ' + (currentTab.isFirstTab ? 'FirstTab' : 'AddTab');
+            //    console.log(logMsg);
+            //
+            //    return;
+            //}
+            //console.log('Doctor Ctrl Activated for doctor: ' + currentTab.heading + " with id: " + currentTab.id);
+
+            var id;
+            var tabset = $scope.vm.tabset;
+            for(var i=0, len=tabset.length; i<len; i++){
+                var tab = tabset[i];
+                if(!tab.isFirstTab && !tab.isAddTab && !tab.initiated){
+                    tab.initiated = true;
+                    id = tab.id;
+
+                    break;
+                }
+            }
+            if(!id){
+                vm.doctor = {};
+
+                return;
+            }
+
+            var doctorRead = doctors.readOneDoctor(id);
 
             if(doctorRead.$promise){
                 changeIsLoading(true);

@@ -1,7 +1,8 @@
 var app = angular.module('gazaApp', [
     'ngResource',
     'ngRoute',
-    'ngTable'
+    'ngTable',
+    'ui.bootstrap'
 ]);
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -10,13 +11,9 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'home/home.html'
 //            controller: 'home as vm'
         }).
-        when('/doctors', {
-            templateUrl: 'doctors/doctors.html',
-            controller: 'doctors as vm'
-        }).
-        when('/doctor/:id', {
-            templateUrl: 'doctors/doctor.html',
-            controller: 'doctor as vm'
+        when('/tabset/:list', {
+            templateUrl: 'common/tabset.html',
+            controller: 'tabset as vm'
         }).
         when('/patients', {
             templateUrl: 'patients/patients.html'

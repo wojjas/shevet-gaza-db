@@ -7,11 +7,11 @@
 
         var delayedShowIsLoadingTimer = null;
 
+        vm.title = 'doctors Ctrl';
         vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
-        //vm.table= doctorsTable.createTable([]);
         vm.activate = activate;
-        vm.handleRowClicked = handleRowClicked;
+
         vm.handleOfflineModeChanged = handleOfflineModeChanged;
 
         activate();
@@ -28,11 +28,10 @@
                 doctorsRead.$promise.then(function (response) {
                     vm.table = doctorsTable.createTable(response);
                 }).catch(function (response) {
-                    //var errorMessage = "ERROR getting doctors. " +
-                    //                    response.statusText.length > 0 ?
-                    //                    "Server Response: " + response.statusText :
-                    //                    "";
-                    var errorMessage = "ERROR getting doctors. " + response.statusText;
+                    var errorMessage = "ERROR getting doctors. " +
+                        (response.statusText.length > 0 ?
+                        "Server Response: " + response.statusText :
+                        "");
                     window.alert(errorMessage);
                 }).finally(function () {
                     changeIsLoading(false);
@@ -64,12 +63,6 @@
         }
 
         //Event handlers:
-        function handleRowClicked(selectedDoctor){
-            $location.path("/doctor/:" + selectedDoctor._id);
-
-            //Persist the parameters in service
-            doctorsTable.parameters = vm.table.parameters();
-        }
         function handleOfflineModeChanged(){
             config.setOfflineMode(vm.offline);
         }

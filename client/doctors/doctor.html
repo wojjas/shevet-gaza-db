@@ -6,14 +6,15 @@
     /*}*/
 </style>
 
-<section class="container">
+<section class="container"
+         ng-controller="doctor as vmd">
 
-    <legend>Doctor</legend>
+    <!--<legend>Doctor</legend>-->
     <div class="row center-block" ng-include="'/home/crudButtons.html'"></div>
 
     <!--showIsLoading-->
     <div class="is-loading-cover"
-         ng-show="vm.showIsLoading">
+         ng-show="vmd.showIsLoading">
         <img class="loader-gif center-block" src="/client/img/loader_transparent.gif">
     </div>
 
@@ -24,8 +25,8 @@
                 <label class="col-md-4 control-label" for="Name">Name</label>
                 <div class="col-md-4">
                     <input id="Name"
-                           ng-model="vm.doctor.name"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.name"
+                           ng-readonly="vmd.isReadonly"
                            type="text"
                            placeholder="doctor's full name" class="form-control input-md">
 
@@ -36,8 +37,8 @@
                 <label class="col-md-4 control-label" for="cellPhone">Cell Phone</label>
                 <div class="col-md-4">
                     <input id="cellPhone"
-                           ng-model="vm.doctor.cellPhone"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.cellPhone"
+                           ng-readonly="vmd.isReadonly"
                            type="text"
                            placeholder="cell phone"
                            class="form-control input-md">
@@ -48,8 +49,8 @@
                 <label class="col-md-4 control-label" for="OfficePhone">Office Phone</label>
                 <div class="col-md-4">
                     <input id="OfficePhone"
-                           ng-model="vm.doctor.officePhone"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.officePhone"
+                           ng-readonly="vmd.isReadonly"
                            type="text"
                            placeholder="office phone"
                            class="form-control input-md">
@@ -61,8 +62,8 @@
                 <label class="col-md-4 control-label" for="officeFax">Office Fax</label>
                 <div class="col-md-4">
                     <input id="officeFax"
-                           ng-model="vm.doctor.officeFax"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.officeFax"
+                           ng-readonly="vmd.isReadonly"
                            type="text" placeholder="office fax" class="form-control input-md">
 
                 </div>
@@ -72,8 +73,8 @@
                 <label class="col-md-4 control-label" for="homeFax">Home Fax</label>
                 <div class="col-md-4">
                     <input id="homeFax"
-                           ng-model="vm.doctor.homeFax"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.homeFax"
+                           ng-readonly="vmd.isReadonly"
                            type="text" placeholder="home fax" class="form-control input-md">
 
                 </div>
@@ -83,8 +84,8 @@
                 <label class="col-md-4 control-label" for="homePhone">Home Phone</label>
                 <div class="col-md-4">
                     <input id="homePhone"
-                           ng-model="vm.doctor.homePhone"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.homePhone"
+                           ng-readonly="vmd.isReadonly"
                            type="text" placeholder="home phone" class="form-control input-md">
 
                 </div>
@@ -94,8 +95,8 @@
                 <label class="col-md-4 control-label" for="email">Email</label>
                 <div class="col-md-4">
                     <input id="email"
-                           ng-model="vm.doctor.email"
-                           ng-readonly="vm.isReadonly"
+                           ng-model="vmd.doctor.email"
+                           ng-readonly="vmd.isReadonly"
                            type="text" placeholder="email" class="form-control input-md">
 
                 </div>

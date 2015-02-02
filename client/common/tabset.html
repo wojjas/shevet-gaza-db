@@ -1,0 +1,37 @@
+<style>
+    .tab-icon{
+        margin-left: 1em;
+    }
+</style>
+
+<div class="content">
+    <div class="col-md-12">
+        <tabset justified="false">
+            <tab ng-repeat="tab in vm.tabset"
+                 active="tab.active">
+                <!--Different heading depending on tab-type-->
+                <tab-heading>
+                    <!--The first tab with the table-->
+                    <div ng-show="tab.isFirstTab">
+                        {{tab.heading}}
+                        <i class="glyphicon glyphicon-list tab-icon"></i>
+                    </div>
+                    <!--The detail-info tabs-->
+                    <div ng-show="!tab.isAddTab && !tab.isFirstTab">
+                        {{tab.heading}}
+                        <a href=""
+                           ng-click="vm.handleTabCloseClicked($index)">
+                            <i class="glyphicon glyphicon-remove-circle tab-icon"></i>
+                        </a>
+                    </div>
+                    <!--The Add New Tab-->
+                    <div ng-show="tab.isAddTab">
+                        {{tab.heading}}
+                        <i class="glyphicon glyphicon-plus-sign tab-icon"></i>
+                    </div>
+                </tab-heading>
+                <div ng-include="tab.template"></div>
+            </tab>
+        </tabset>
+    </div>
+</div>
