@@ -1,14 +1,14 @@
 (function(){
-    app.controller('doctors', ['$scope','$location', 'config', 'doctors', 'doctorsTable',
+    app.controller('doctors', ['$scope','$location', 'config', 'doctors', 'tableService',
                                Doctors]);
 
-    function Doctors($scope, $location, config, doctors, doctorsTable) {
+    function Doctors($scope, $location, config, doctors, tableService) {
         var vm = this;
 
         var delayedShowIsLoadingTimer = null;
 
         vm.title = 'doctors Ctrl';
-        //vm.table = doctorsTable.createTable([]);
+        vm.table; // = tableService.init([]);
         vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
         vm.activate = activate;
@@ -20,7 +20,7 @@
         //////////////////
 
         function activate() {
-            //vm.table = doctorsTable.createTable([{},{},{}]);
+            vm.table = tableService.init([]);
             fillTable();
         }
         function fillTable(){
@@ -31,9 +31,7 @@
                 changeIsLoading(true);
 
                 doctorsRead.$promise.then(function (response) {
-                    vm.table = doctorsTable.createTable(response);
-
-                    //doctorsTable.setData(response);
+                    tableService.updateData(response);
                     //vm.table.reload();
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctors. " +
@@ -46,7 +44,8 @@
                 });
 
             }else{
-                vm.table= doctorsTable.createTable(doctorsRead);
+                tableService.updateData(doctorsRead);
+                //vm.table.read();
             }
         }
 
@@ -76,7 +75,7 @@
         }
 
         $scope.$on('getAllDoctorsEvent', function () {
-            //fillTable();
+            fillTable();
         })
     }
 })();

@@ -2,15 +2,16 @@
     'use strict';
 
     //ngTable constructor takes two objects, parameters and settings.
-    app.factory('doctorsTable', DoctorsTable);
+    app.factory('tableService', TableService);
 
-    DoctorsTable.$inject = ['$filter', 'ngTableParams', 'doctors'];
+    TableService.$inject = ['$filter', 'ngTableParams'];
 
     /* @ngInject */
-    function DoctorsTable($filter, ngTableParams, doctorsProxy) {
-        var doctors = [];           //The array with all the doctors.
+    function TableService($filter, ngTableParams) {
+        var table;
+        var data = [];           //The array with all the data.
         var service = {
-            setDoctors: setDoctors,
+            updateData: updateData,
             parameters: {
                 page: 1,
                 count: 17,
@@ -22,12 +23,12 @@
             },
             settings: {
                 filterDelay:200,
-                total: doctors.length,
+                total: data.length,
                 getData: function($defer, params){
                     // use build-in angular filter
                     var filteredData = params.filter() ?
-                        $filter('filter')(doctors, params.filter()) :
-                        doctors;
+                        $filter('filter')(data, params.filter()) :
+                        data;
                     var orderedData = params.sorting() ?
                         $filter('orderBy')(filteredData, params.orderBy()) :
                         filteredData;
@@ -36,19 +37,21 @@
                     $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                 }
             },
-            createTable: createTable
+            init: init
         };
 
         return service;
 
         ////////////////
 
-        function createTable(docs) {
-            doctors = docs;
-            return new ngTableParams(service.parameters, service.settings);
+        function init(docs) {
+            data = docs;
+            table = new ngTableParams(service.parameters, service.settings);
+            return table;
         }
-        function setDoctors(docs){
-            doctors = docs;
+        function updateData(docs){
+            data = docs;
+            table.reload();
         }
     }
 })();
