@@ -10,7 +10,7 @@
          ng-controller="doctor as vmd">
 
     <!--<legend>Doctor</legend>-->
-    <div class="row center-block" ng-include="'/home/crudButtons.html'"></div>
+    <!--<div class="row center-block" ng-include="'/home/crudButtons.html'"></div>-->
 
     <!--showIsLoading-->
     <div class="is-loading-cover"
@@ -102,13 +102,31 @@
                 </div>
             </div>
 
-            <!-- Button -->
-            <div class="row form-group">
-                <label class="col-md-4 control-label" for="backButton"></label>
+            <!-- Buttons -->
+            <!--<div class="row form-group">-->
+                <!--<label class="col-md-4 control-label" for="backButton"></label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<button id="backButton" name="backButton" class="btn btn-primary">Back</button>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!-- Buttons -->
+            <!-- This label centers the button group on wide screen, when labels move to the left of input boxes -->
+            <label class="col-md-4 control-label" for="buttons"></label>
+            <div class="form-group" id="buttons">
                 <div class="col-md-4">
-                    <button id="backButton" name="backButton" class="btn btn-primary">Back</button>
+                    <button class="btn btn-primary" id="backButton" name="backButton"
+                            ng-click="vmd.handleCloseClicked()">Close</button>
+                    <button class="btn btn-default"
+                            ng-click="vmd.handleSaveClicked()">Save</button>
+                    <button class="btn btn-default"
+                            ng-click="vmd.handleSaveAndCloseClicked()">Save and Close</button>
+                    <button class="btn btn-default"
+                            ng-click="vmd.handleClearClicked()"
+                            ng-show="vmd.isAddNewDoctor">Clear</button>
                 </div>
             </div>
+
 
         </fieldset>
     </form>

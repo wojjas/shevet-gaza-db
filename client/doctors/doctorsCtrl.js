@@ -8,6 +8,7 @@
         var delayedShowIsLoadingTimer = null;
 
         vm.title = 'doctors Ctrl';
+        //vm.table = doctorsTable.createTable([]);
         vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
         vm.activate = activate;
@@ -19,6 +20,10 @@
         //////////////////
 
         function activate() {
+            //vm.table = doctorsTable.createTable([{},{},{}]);
+            fillTable();
+        }
+        function fillTable(){
             var doctorsRead = doctors.readAllDoctors();
 
             if(doctorsRead.$promise){
@@ -27,11 +32,14 @@
 
                 doctorsRead.$promise.then(function (response) {
                     vm.table = doctorsTable.createTable(response);
+
+                    //doctorsTable.setData(response);
+                    //vm.table.reload();
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctors. " +
                         (response.statusText.length > 0 ?
                         "Server Response: " + response.statusText :
-                        "");
+                            "");
                     window.alert(errorMessage);
                 }).finally(function () {
                     changeIsLoading(false);
@@ -66,5 +74,9 @@
         function handleOfflineModeChanged(){
             config.setOfflineMode(vm.offline);
         }
+
+        $scope.$on('getAllDoctorsEvent', function () {
+            //fillTable();
+        })
     }
 })();

@@ -11,12 +11,14 @@
 
         vm.title = 'Tabset Ctrl tabsets-style';
         vm.tabset = [];
-        vm.nofOpenedTabs = 0;
+        vm.reloadNeeded = false;
 
         vm.activate = activate;
+        vm.handleTabSelect = handleTabSelect;
         vm.handleTabCloseClicked = handleTabCloseClicked;
         vm.handleTableRowClicked = handleTableRowClicked;
 
+        vm.closeTab = closeTab;
         vm.saveTab = saveTab;
         vm.updateTabHeader = updateTabHeader;
 
@@ -36,11 +38,20 @@
         function updateTabHeader(data){
             tabsets.updateTabHeader(currentList, data);
         }
+        function closeTab(){
+            tabsets.closeTab(currentList);
+        }
         function saveTab(data){
             tabsets.createOrOpenTab(currentList, data);
         }
 
         //Event Handlers:
+        function handleTabSelect(tab){
+            if(tab.isFirstTab && vm.reloadNeeded){
+                vm.reloadNeeded = false;
+                $scope.$broadcast('getAllDoctorsEvent');
+            }
+        }
         function handleTabCloseClicked(index){
             tabsets.closeTab(currentList, index);
         }

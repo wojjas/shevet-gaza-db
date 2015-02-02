@@ -1,40 +1,35 @@
 (function () {
     'use strict';
 
-    app.controller('doctor', ['crudButtons', 'doctors', '$location', '$scope', Doctor]);
+    app.controller('doctor', Doctor);
 
-    function Doctor(crudButtons, doctors, $location, $scope) {
+    Doctor.$inject = ['$scope', 'doctors'];
+
+    /* @ngInject */
+    function Doctor($scope, doctorsProxy) {
+        /* jshint validthis: true */
         var vm = this;
-
         var delayedShowIsLoadingTimer = null;
-        var doctorBkp = null;     //Doctor object backed up to use in case of Cancel
-        var isEditing = false;    //if true we are updating an existing document, else crating a new one.
+
+        var isEditing = false;
+        var inAddNewTab = false;
+
+        //vm.isAddNewDoctor = true;
+        vm.title = 'Doctor Ctrl';
         vm.doctor = {};
-
-        vm.isReadonly = true;      //Governs input-fields.
-        vm.isLoading = false;      //Disables buttons, etc.
-        vm.showIsLoading = false;  //Big visual impact with progress-gif.
-
         vm.activate = activate;
-        vm.handleFormSubmit = handleFormSubmit;
+        vm.handleCloseClicked = handleCloseClicked;
+        vm.handleSaveClicked = handleSaveClicked;
+        vm.handleSaveAndCloseClicked = handleSaveAndCloseClicked;
+        vm.handleClearClicked = handleClearClicked;
 
         activate();
 
         ////////////////
 
         function activate() {
-            //var searchParameter = decodeURI($location.path().substr($location.path().lastIndexOf('/') + 2));
-            //var allTabs = $scope.vm.tabset;
-            //var currentTab = allTabs[allTabs.length - 2];
-            //
-            //if(currentTab.isFirstTab || currentTab.isAddTab){
-            //    var logMsg = 'Doctor Ctrl Activated for: ' + (currentTab.isFirstTab ? 'FirstTab' : 'AddTab');
-            //    console.log(logMsg);
-            //
-            //    return;
-            //}
-            //console.log('Doctor Ctrl Activated for doctor: ' + currentTab.heading + " with id: " + currentTab.id);
-
+            //Use tabset's memory to track what's initiated and what's not.
+            //initiated means, that a doctor-controller has used this tab's info to fill its form.
             var id;
             var tabset = $scope.vm.tabset;
             for(var i=0, len=tabset.length; i<len; i++){
@@ -49,16 +44,18 @@
             if(!id){
                 vm.doctor = {};
 
+                inAddNewTab = true;  //Or some error... :-)
                 return;
             }
 
-            var doctorRead = doctors.readOneDoctor(id);
+            var doctorRead = doctorsProxy.readOneDoctor(id);
 
             if(doctorRead.$promise){
                 changeIsLoading(true);
 
                 doctorRead.$promise.then(function (response) {
                     vm.doctor = response;
+                    isEditing = true;
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -68,13 +65,10 @@
             }else{
                 vm.doctor = doctorRead;
                 vm.isLoading = false;
+                isEditing = true;
             }
         }
 
-        //TODO: Move this function to some global tool-box:
-        function cloneObject(object){
-            return JSON.parse(JSON.stringify(object));
-        }
         //TODO: move out to shared lib
         //Delays setting of flag that makes View display progress-gif.
         function delayedShowIsLoading(delay){
@@ -93,61 +87,16 @@
                 vm.showIsLoading = false;
             }
         }
-        function toggleReadonly() {
-            vm.isReadonly = !vm.isReadonly;
-        }
-
-        $scope.$watch('vm.isLoading', function () {
-            crudButtons.fireLock(vm.isLoading);
-        });
-
-        //Watches for isDirty, another solution is to use ng-change on each input in the view.
-        $scope.$watch('vm.doctor.name', function(){
-            crudButtons.fireIsDirty();
-        });
-        $scope.$watch('vm.doctor.cellPhone', function(){
-            crudButtons.fireIsDirty();
-        });
-        $scope.$watch('vm.doctor.officePhone', function(){
-            crudButtons.fireIsDirty();
-        });
-        $scope.$watch('vm.doctor.officeFax', function(){
-            crudButtons.fireIsDirty();
-        });
-        $scope.$watch('vm.doctor.homePhone', function(){
-            crudButtons.fireIsDirty();
-        });
-        $scope.$watch('vm.doctor.email', function(){
-            crudButtons.fireIsDirty();
-        });
-
-        $scope.$on('editClickedEvent', function () {
-            toggleReadonly();
-            isEditing = true;
-            doctorBkp = cloneObject(vm.doctor);
-        });
-
-        $scope.$on('addClickedEvent', function () {
-            toggleReadonly();
-            isEditing = false;
-            doctorBkp = cloneObject(vm.doctor);
-            vm.doctor = {};
-        });
-        $scope.$on('cancelClickedEvent', function () {
-            toggleReadonly();
-            vm.doctor = doctorBkp;
-        });
-
-        //TODO: Server-Error-handling
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose) {
             var actionResult = null;
+            $scope.vm.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
 
             if(isEditing){
-                actionResult = doctors.updateDoctor(vm.doctor);
+                actionResult = doctorsProxy.updateDoctor(vm.doctor);
             }else{
-                toggleReadonly();
-                actionResult = doctors.createDoctor(vm.doctor);
+                //toggleReadonly();
+                actionResult = doctorsProxy.createDoctor(vm.doctor);
             }
 
             if(actionResult.$promise){
@@ -155,7 +104,9 @@
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
-                        $location.path("/doctors");
+                        //$location.path("/doctors");
+                        console.debug('TODO: close tab if we are in AddTab!');
+                        $scope.vm.closeTab();
                     }
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + response.statusText;
@@ -165,39 +116,46 @@
                 });
             }else{
                 if(saveAndClose){
-                    $location.path("/doctors");
+                    //$location.path("/doctors");
+                    console.debug('TODO: close tab if we are in AddTab!');
+                    $scope.vm.closeTab();
                 }
             }
         }
-        $scope.$on('saveClickedEvent', function () {
-            save();
-            doctorBkp = cloneObject(vm.doctor);
-        });
-        $scope.$on('saveAndCloseClickedEvent', function () {
-            save(true);
-        });
 
-        $scope.$on('deleteClickedEvent', function () {
-            var result = doctors.deleteDoctor(vm.doctor._id);
-
-            if(result.$promise){
-                changeIsLoading(true);
-
-                result.$promise.then(function () {
-                    $location.path("/doctors");
-                }).catch(function (response) {
-                    var errorMessage = "ERROR deleting doctor. " + response.statusText;
-                    window.alert(errorMessage);
-                }).finally(function () {
-                    changeIsLoading(false);
-                });
-            }else{
-                $location.path("/doctors");
-            }
-        });
-
-        function handleFormSubmit(){
-            $location.path("/doctors");
+        //Event Handlers:
+        function handleCloseClicked(){
+            //TODO: check if changes have been done,
+            // then maybe this should be disabled?
+            $scope.vm.closeTab();
         }
+        function handleSaveClicked(){
+            //doctorsProxy.saveDoctor(vm.doctor);
+            save(false);
+
+            if(inAddNewTab){
+                $scope.vm.saveTab(vm.doctor);
+                vm.doctor = {};
+            }else{
+                $scope.vm.updateTabHeader(vm.doctor);
+            }
+        }
+        function handleSaveAndCloseClicked(){
+            //doctorsProxy.saveDoctor(vm.doctor);
+            save(true);
+
+            if(inAddNewTab){
+                vm.doctor = {}; //Clear this object so a new one can be created next time.
+            }
+            //Call parent scope's function:
+            $scope.vm.handleTabCloseClicked();
+        }
+        function handleClearClicked(){
+            vm.doctor = {};
+        }
+
+        $scope.$on('$destroy', function () {
+            console.log('Doctor Ctrl is being destroyed for Doctor: ', vm.doctor.name + ", id: " +vm.doctor.id);
+        })
     }
 })();

@@ -124,7 +124,7 @@
                 //If no index it's called from child-scope
                 for(var i=1, len=currentTabset.length; i < len; i++){
                     if(currentTabset[i].active && !currentTabset[i].isAddTab){
-                        currentTabset.splice(i,1);
+                        currentTabset.splice(i, 1);
                         break;
                     }
                 }

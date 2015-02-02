@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    //Uses ngTable and the doctorsProxy to handle the data.
     //ngTable constructor takes two objects, parameters and settings.
     app.factory('doctorsTable', DoctorsTable);
 
@@ -11,6 +10,7 @@
     function DoctorsTable($filter, ngTableParams, doctorsProxy) {
         var doctors = [];           //The array with all the doctors.
         var service = {
+            setDoctors: setDoctors,
             parameters: {
                 page: 1,
                 count: 17,
@@ -46,6 +46,9 @@
         function createTable(docs) {
             doctors = docs;
             return new ngTableParams(service.parameters, service.settings);
+        }
+        function setDoctors(docs){
+            doctors = docs;
         }
     }
 })();

@@ -8,7 +8,8 @@
     <div class="col-md-12">
         <tabset justified="false">
             <tab ng-repeat="tab in vm.tabset"
-                 active="tab.active">
+                 active="tab.active"
+                 select="vm.handleTabSelect(tab)">
                 <!--Different heading depending on tab-type-->
                 <tab-heading>
                     <!--The first tab with the table-->
