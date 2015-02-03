@@ -15,7 +15,7 @@
         var service = {
             initTabset: initTabset,
             getTabset: getTabset,
-            setTabset: setTabset,
+            //setTabset: setTabset,
             unInitTabset: unInitTabset,
 
             createOrOpenTab: createOrOpenTab,
@@ -98,10 +98,10 @@
         function getTabset(tabset) {
             return tabsets[tabset];
         }
-        function setTabset(tabsetName, tabset){
-            var index = tabsets.indexOf(tabsetName);
-            tabsets[index] = tabset;
-        }
+        //function setTabset(tabsetName, tabset){
+        //    var index = tabsets.indexOf(tabsetName);
+        //    tabsets[index] = tabset;
+        //}
 
         function createOrOpenTab(tabset, data){
             var tabOfRequested = indexOfOpenedTab(tabset, data);

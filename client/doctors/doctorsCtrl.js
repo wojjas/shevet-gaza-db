@@ -32,7 +32,6 @@
 
                 doctorsRead.$promise.then(function (response) {
                     tableService.updateData(response);
-                    //vm.table.reload();
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctors. " +
                         (response.statusText.length > 0 ?
@@ -45,7 +44,6 @@
 
             }else{
                 tableService.updateData(doctorsRead);
-                //vm.table.read();
             }
         }
 

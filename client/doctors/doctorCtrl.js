@@ -10,9 +10,9 @@
         /* jshint validthis: true */
         var vm = this;
         var delayedShowIsLoadingTimer = null;
-
         var isEditing = false;
-        var inAddNewTab = false;
+
+        vm.isAddNewTab = false;
 
         //vm.isAddNewDoctor = true;
         vm.title = 'Doctor Ctrl';
@@ -44,7 +44,7 @@
             if(!id){
                 vm.doctor = {};
 
-                inAddNewTab = true;  //Or some error... :-)
+                vm.isAddNewTab = true;  //Or some error... :-)
                 return;
             }
 
@@ -95,7 +95,6 @@
             if(isEditing){
                 actionResult = doctorsProxy.updateDoctor(vm.doctor);
             }else{
-                //toggleReadonly();
                 actionResult = doctorsProxy.createDoctor(vm.doctor);
             }
 
@@ -104,9 +103,8 @@
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
-                        //$location.path("/doctors");
-                        console.debug('TODO: close tab if we are in AddTab!');
-                        $scope.vm.closeTab();
+                        vm.doctor = {}; //Clear this object so a new one can be created next time.
+                          $scope.vm.handleTabCloseClicked();
                     }
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + response.statusText;
@@ -116,9 +114,8 @@
                 });
             }else{
                 if(saveAndClose){
-                    //$location.path("/doctors");
-                    console.debug('TODO: close tab if we are in AddTab!');
-                    $scope.vm.closeTab();
+                    vm.doctor = {}; //Clear this object so a new one can be created next time.
+                    $scope.vm.handleTabCloseClicked();
                 }
             }
         }
@@ -127,13 +124,12 @@
         function handleCloseClicked(){
             //TODO: check if changes have been done,
             // then maybe this should be disabled?
-            $scope.vm.closeTab();
+            $scope.vm.handleTabCloseClicked();
         }
         function handleSaveClicked(){
-            //doctorsProxy.saveDoctor(vm.doctor);
             save(false);
 
-            if(inAddNewTab){
+            if(vm.isAddNewTab){
                 $scope.vm.saveTab(vm.doctor);
                 vm.doctor = {};
             }else{
@@ -141,14 +137,7 @@
             }
         }
         function handleSaveAndCloseClicked(){
-            //doctorsProxy.saveDoctor(vm.doctor);
             save(true);
-
-            if(inAddNewTab){
-                vm.doctor = {}; //Clear this object so a new one can be created next time.
-            }
-            //Call parent scope's function:
-            $scope.vm.handleTabCloseClicked();
         }
         function handleClearClicked(){
             vm.doctor = {};
