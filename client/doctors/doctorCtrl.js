@@ -21,6 +21,7 @@
         vm.handleCloseClicked = handleCloseClicked;
         vm.handleSaveClicked = handleSaveClicked;
         vm.handleSaveAndCloseClicked = handleSaveAndCloseClicked;
+        vm.handleDeleteClicked = handleDeleteClicked;
         vm.handleClearClicked = handleClearClicked;
 
         activate();
@@ -104,7 +105,7 @@
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
-                          $scope.vm.handleTabCloseClicked();
+                        $scope.vm.handleTabCloseClicked();
                     }
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + response.statusText;
@@ -138,6 +139,27 @@
         }
         function handleSaveAndCloseClicked(){
             save(true);
+        }
+        function handleDeleteClicked(){
+            var result = doctorsProxy.deleteDoctor(vm.doctor._id);
+            $scope.vm.reloadNeeded = true;
+
+            if(result.$promise){
+                changeIsLoading(true);
+
+                result.$promise.then(function () {
+                    //$location.path("/doctors");
+                    $scope.vm.handleTabCloseClicked();
+                }).catch(function (response) {
+                    var errorMessage = "ERROR deleting doctor. " + response.statusText;
+                    window.alert(errorMessage);
+                }).finally(function () {
+                    changeIsLoading(false);
+                });
+            }else{
+                //$location.path("/doctors");
+                $scope.vm.handleTabCloseClicked();
+            }
         }
         function handleClearClicked(){
             vm.doctor = {};

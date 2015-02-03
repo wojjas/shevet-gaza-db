@@ -12,8 +12,11 @@
         vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
         vm.activate = activate;
+        vm.dangerMarkedDocumentId = -1;
 
         vm.handleOfflineModeChanged = handleOfflineModeChanged;
+        vm.handleHoverOverDeleteBtn = handleHoverOverDeleteBtn;
+        vm.handleDeleteClick = handleDeleteClick;
 
         activate();
 
@@ -70,6 +73,41 @@
         //Event handlers:
         function handleOfflineModeChanged(){
             config.setOfflineMode(vm.offline);
+        }
+        function handleHoverOverDeleteBtn(id){
+            if(vm.dangerMarkedDocumentId){
+                vm.dangerMarkedDocumentId = id;
+            }
+        }
+        function handleDeleteClick($event, id){
+            console.log('handleDeleteClick');
+            $event.stopPropagation();
+
+            var result = doctors.deleteDoctor(id);
+
+            //TODO: The whole IsLoading-delayed thing should be in it's own View-Controller
+            // When moving it there look out for what I have done here. Here we cancel the
+            // delayed IsLoading in then(), this is because fillTable and Delete are using the
+            // same global variable: delayedShowIsLoadingTimer. It could be an dictionary of
+            // timers, where key should be sent in each call, set and unset, so the correct
+            // timer gets cancelled.
+            // timer gets cancelled.
+            if(result.$promise){
+                changeIsLoading(true);
+
+                result.$promise.then(function () {
+                    changeIsLoading(false);
+                    fillTable();
+                }).catch(function (response) {
+                    var errorMessage = "ERROR deleting doctor. " + response.statusText;
+                    window.alert(errorMessage);
+                    changeIsLoading(false);
+                }).finally(function () {
+                    //changeIsLoading(false);
+                });
+            }else{
+                fillTable();
+            }
         }
 
         $scope.$on('getAllDoctorsEvent', function () {
