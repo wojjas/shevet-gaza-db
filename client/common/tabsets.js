@@ -9,8 +9,8 @@
     function tabsets() {
         var tabsets = [[]];
         var indexOfOpenedTab = indexOfOpenedTab;
-        var openTab =  openTab;
-        var createTab = createTab;
+        var openTab;
+        var addTabToTabsetAndOpen = addTabToTabsetAndOpen;
 
         var service = {
             initTabset: initTabset,
@@ -18,7 +18,7 @@
             //setTabset: setTabset,
             unInitTabset: unInitTabset,
 
-            createOrOpenTab: createOrOpenTab,
+            openInTabCreateIfNeeded: openInTabCreateIfNeeded,
             updateTabHeader: updateTabHeader,
             closeTab: closeTab
         };
@@ -40,7 +40,7 @@
         function openTab(tabset, index){
             tabsets[tabset][index].active = true;
         }
-        function createTab(tabset, data){
+        function addTabToTabsetAndOpen(tabset, data){
             var currentTabset = tabsets[tabset];
 
             var newTab = {
@@ -103,10 +103,11 @@
         //    tabsets[index] = tabset;
         //}
 
-        function createOrOpenTab(tabset, data){
+        //Always opens data in tab, if needed after adding tab to tabset.
+        function openInTabCreateIfNeeded(tabset, data){
             var tabOfRequested = indexOfOpenedTab(tabset, data);
             if(tabOfRequested === -1){
-                createTab(tabset, data);
+                addTabToTabsetAndOpen(tabset, data);
             }else{
                 openTab(tabset, tabOfRequested);
             }

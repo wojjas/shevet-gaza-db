@@ -16,7 +16,7 @@
 
     <table ng-table="vmDoctors.table"
            show-filter="true"
-           class="table table-bordered table-hover table-striped ">
+           class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="doctor in $data"
             ng-class="{danger: doctor._id == vmDoctors.dangerMarkedDocumentId}"
                 ng-click="vm.handleTableRowClicked(doctor)">
@@ -56,7 +56,8 @@
                     class="col-sm-2">
                     {{doctor.email}}</td>
                 <td>
-                    <button class="btn btn-danger "
+                    <button class="btn btn-default "
+                            ng-class="{'btn-danger': doctor._id == vmDoctors.dangerMarkedDocumentId}"
                             ng-mouseover="vmDoctors.handleHoverOverDeleteBtn(doctor._id)"
                             ng-mouseleave="vmDoctors.handleHoverOverDeleteBtn(-1)"
                             ng-click="vmDoctors.handleDeleteClick($event, doctor._id)">

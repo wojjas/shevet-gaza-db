@@ -18,7 +18,7 @@
         vm.handleTabCloseClicked = handleTabCloseClicked;
         vm.handleTableRowClicked = handleTableRowClicked;
 
-        vm.saveTab = saveTab;
+        vm.saveAndOpenInTab = saveAndOpenInTab;
         vm.updateTabHeader = updateTabHeader;
 
         activate();
@@ -37,8 +37,8 @@
         function updateTabHeader(data){
             tabsets.updateTabHeader(currentList, data);
         }
-        function saveTab(data){
-            tabsets.createOrOpenTab(currentList, data);
+        function saveAndOpenInTab(data){
+            tabsets.openInTabCreateIfNeeded(currentList, data);
         }
 
         //Event Handlers:
@@ -52,7 +52,7 @@
             tabsets.closeTab(currentList, index);
         }
         function handleTableRowClicked(data){
-            tabsets.createOrOpenTab(currentList, data);
+            tabsets.openInTabCreateIfNeeded(currentList, data);
         }
 
         $scope.$on('$destroy', function () {

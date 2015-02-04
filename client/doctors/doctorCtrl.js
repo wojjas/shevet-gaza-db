@@ -10,9 +10,8 @@
         /* jshint validthis: true */
         var vm = this;
         var delayedShowIsLoadingTimer = null;
-        var isEditing = false;
 
-        vm.isAddNewTab = false;
+        vm.isAddNewTab = true;
 
         //vm.isAddNewDoctor = true;
         vm.title = 'Doctor Ctrl';
@@ -44,11 +43,14 @@
             }
             if(!id){
                 vm.doctor = {};
+                vm.isAddNewTab = true;
 
-                vm.isAddNewTab = true;  //Or some error... :-)
                 return;
             }
 
+            //If we failed to get data from tabset we are not editing an existing consequently
+            //we will fetch from persistent storage and thus we are NOT in the AddTab.
+            vm.isAddNewTab = false;
             var doctorRead = doctorsProxy.readOneDoctor(id);
 
             if(doctorRead.$promise){
@@ -56,7 +58,6 @@
 
                 doctorRead.$promise.then(function (response) {
                     vm.doctor = response;
-                    isEditing = true;
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -66,7 +67,6 @@
             }else{
                 vm.doctor = doctorRead;
                 vm.isLoading = false;
-                isEditing = true;
             }
         }
 
@@ -93,10 +93,10 @@
             var actionResult = null;
             $scope.vm.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
 
-            if(isEditing){
-                actionResult = doctorsProxy.updateDoctor(vm.doctor);
-            }else{
+            if(vm.isAddNewTab){
                 actionResult = doctorsProxy.createDoctor(vm.doctor);
+            }else{
+                actionResult = doctorsProxy.updateDoctor(vm.doctor);
             }
 
             if(actionResult.$promise){
@@ -106,6 +106,11 @@
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
                         $scope.vm.handleTabCloseClicked();
+                    }else if(vm.isAddNewTab){
+                        $scope.vm.saveAndOpenInTab(vm.doctor);
+                        vm.doctor = {};
+                    }else{
+                        $scope.vm.updateTabHeader(vm.doctor);
                     }
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + response.statusText;
@@ -129,13 +134,6 @@
         }
         function handleSaveClicked(){
             save(false);
-
-            if(vm.isAddNewTab){
-                $scope.vm.saveTab(vm.doctor);
-                vm.doctor = {};
-            }else{
-                $scope.vm.updateTabHeader(vm.doctor);
-            }
         }
         function handleSaveAndCloseClicked(){
             save(true);
@@ -157,7 +155,6 @@
                     changeIsLoading(false);
                 });
             }else{
-                //$location.path("/doctors");
                 $scope.vm.handleTabCloseClicked();
             }
         }
