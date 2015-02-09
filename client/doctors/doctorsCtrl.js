@@ -79,11 +79,11 @@
                 vm.dangerMarkedDocumentId = id;
             }
         }
-        function handleDeleteClick($event, id){
+        function handleDeleteClick($event, data){
             console.log('handleDeleteClick');
             $event.stopPropagation();
 
-            var result = doctors.deleteDoctor(id);
+            var result = doctors.deleteDoctor(data._id);
 
             //TODO: The whole IsLoading-delayed thing should be in it's own View-Controller
             // When moving it there look out for what I have done here. Here we cancel the
@@ -97,6 +97,7 @@
 
                 result.$promise.then(function () {
                     changeIsLoading(false);
+                    $scope.vm.closeTabDeletedInList(data)
                     fillTable();
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;

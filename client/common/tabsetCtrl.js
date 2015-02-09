@@ -20,6 +20,7 @@
 
         vm.saveAndOpenInTab = saveAndOpenInTab;
         vm.updateTabHeader = updateTabHeader;
+        vm.closeTabDeletedInList = closeTabDeletedInList;
 
         activate();
 
@@ -39,6 +40,9 @@
         }
         function saveAndOpenInTab(data){
             tabsets.openInTabCreateIfNeeded(currentList, data);
+        }
+        function closeTabDeletedInList(data){
+            tabsets.closeTabDeletedInList(currentList, data);
         }
 
         //Event Handlers:

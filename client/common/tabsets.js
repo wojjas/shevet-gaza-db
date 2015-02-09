@@ -20,6 +20,7 @@
 
             openInTabCreateIfNeeded: openInTabCreateIfNeeded,
             updateTabHeader: updateTabHeader,
+            closeTabDeletedInList: closeTabDeletedInList,
             closeTab: closeTab
         };
 
@@ -143,6 +144,12 @@
         function updateTabHeader(tabset, data){
             var index = indexOfOpenedTab(tabset, data);
             tabsets[tabset][index].heading = data.name;
+        }
+        function closeTabDeletedInList(tabset, data){
+            var index = indexOfOpenedTab(tabset, data);
+            if(index !== -1){
+                closeTab(tabset, index);
+            }
         }
     }
 })();

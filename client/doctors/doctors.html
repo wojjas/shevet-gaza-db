@@ -60,7 +60,7 @@
                             ng-class="{'btn-danger': doctor._id == vmDoctors.dangerMarkedDocumentId}"
                             ng-mouseover="vmDoctors.handleHoverOverDeleteBtn(doctor._id)"
                             ng-mouseleave="vmDoctors.handleHoverOverDeleteBtn(-1)"
-                            ng-click="vmDoctors.handleDeleteClick($event, doctor._id)">
+                            ng-click="vmDoctors.handleDeleteClick($event, doctor)">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </td>
