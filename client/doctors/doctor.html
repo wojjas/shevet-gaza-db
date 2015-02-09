@@ -1,11 +1,8 @@
 <!--Doctor detail info partial-->
 <link rel="stylesheet" href="../main.css">
 <style>
-    /*.container{*/
-        /*background: lightcyan;*/
-    /*}*/
-    .right-align{
-
+    .margin-top-md{
+        margin-top: 25px;
     }
 </style>
 
@@ -21,24 +18,24 @@
         <img class="loader-gif center-block" src="/client/img/loader_transparent.gif">
     </div>
 
-    <form class="form-horizontal center-block" ng-submit="vm.handleFormSubmit()">
-        <fieldset>
-            <!-- Text input-->
+    <!-- form-horizontal makes form-groups behave like grid rows, so no need for .row -->
+    <form class="form-horizontal center-block margin-top-md" ng-submit="vm.handleFormSubmit()">
+        <fieldset class="container">
+
             <div class="form-group">
-                <label class="col-md-4 control-label" for="Name">Name</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="Name">Name</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="Name"
                            ng-model="vmd.doctor.name"
                            ng-readonly="vmd.isReadonly"
                            type="text"
                            placeholder="doctor's full name" class="form-control input-md">
-
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="cellPhone">Cell Phone</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="cellPhone">Cell Phone</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="cellPhone"
                            ng-model="vmd.doctor.cellPhone"
                            ng-readonly="vmd.isReadonly"
@@ -49,8 +46,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="OfficePhone">Office Phone</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="OfficePhone">Office Phone</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="OfficePhone"
                            ng-model="vmd.doctor.officePhone"
                            ng-readonly="vmd.isReadonly"
@@ -62,8 +59,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="officeFax">Office Fax</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="officeFax">Office Fax</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="officeFax"
                            ng-model="vmd.doctor.officeFax"
                            ng-readonly="vmd.isReadonly"
@@ -73,8 +70,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="homeFax">Home Fax</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="homeFax">Home Fax</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="homeFax"
                            ng-model="vmd.doctor.homeFax"
                            ng-readonly="vmd.isReadonly"
@@ -84,8 +81,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="homePhone">Home Phone</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="homePhone">Home Phone</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="homePhone"
                            ng-model="vmd.doctor.homePhone"
                            ng-readonly="vmd.isReadonly"
@@ -95,8 +92,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="email">Email</label>
-                <div class="col-md-4">
+                <label class="col-md-3 col-sm-2 control-label" for="email">Email</label>
+                <div class="col-md-6 col-sm-8">
                     <input id="email"
                            ng-model="vmd.doctor.email"
                            ng-readonly="vmd.isReadonly"
@@ -105,26 +102,39 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
-            <!-- This label centers the button group on wide screen, when labels move to the left of input boxes -->
-            <label class="col-md-4 control-label" for="buttons"></label>
-            <div class="form-group" id="buttons">
-                <div class="col-md-4">
-                    <button class="btn btn-primary" id="backButton" name="backButton"
-                            ng-click="vmd.handleCloseClicked()">Close</button>
+            <div class="form-group margin-top-md">
+                <div class="col-md-3 col-sm-2"></div>
+                <div class=" col-md-6 col-sm-8 buttons">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-2 text-left">
+                                <button class="btn btn-primary"
+                                        ng-click="vmd.handleCloseClicked()">Close</button>
+                            </div>
 
-                    <button class="btn btn-default"
-                            ng-click="vmd.handleSaveClicked()">Save</button>
-                    <button class="btn btn-default"
-                            ng-click="vmd.handleSaveAndCloseClicked()">Save and Close</button>
-                    <button class="btn btn-danger"
-                            ng-click="vmd.handleDeleteClicked()"
-                            ng-hide="vmd.isAddNewTab">Delete</button>
-                    <button class="btn btn-default"
-                            ng-click="vmd.handleClearClicked()"
-                            ng-show="vmd.isAddNewTab">Clear</button>
+                            <div class="text-center col-sm-6 col-xs-8">
+                                <div class="btn-group">
+                                    <button class="btn btn-default"
+                                            ng-click="vmd.handleSaveClicked()">Save</button>
+                                    <button class="btn btn-default"
+                                            ng-click="vmd.handleSaveAndCloseClicked()">Save & Close</button>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 col-xs-2 text-right">
+                                <button class="btn btn-danger"
+                                        ng-click="vmd.handleDeleteClicked()"
+                                        ng-hide="vmd.isAddNewTab">Delete</button>
+                                <button class="btn btn-default"
+                                        ng-click="vmd.handleClearClicked()"
+                                        ng-show="vmd.isAddNewTab">Clear</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-3 col-xs-2"></div>
             </div>
+
         </fieldset>
     </form>
 
