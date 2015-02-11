@@ -9,9 +9,10 @@
 <section class="body"
          ng-controller="doctors as vmDoctors">
 
-    <div class="is-loading-cover"
+    <!--showIsLoading-->
+    <div class="row"
+         ng-include="'/loadingCover/loadingCover.html'"
          ng-show="vmDoctors.showIsLoading">
-        <img class="loader-gif center-block" src="/client/img/loader_transparent.gif">
     </div>
 
     <table ng-table="vmDoctors.table"

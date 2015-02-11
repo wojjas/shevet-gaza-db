@@ -1,15 +1,16 @@
 (function(){
-    app.controller('doctors', ['$scope','$location', 'config', 'doctors', 'tableService',
-                               Doctors]);
+    app.controller('doctors', ['$scope', 'config', 'doctors',
+                               'tableService','loadingCover',
+                    Doctors]);
 
-    function Doctors($scope, $location, config, doctors, tableService) {
+    function Doctors($scope, config, doctors,
+                     tableService, loadingCover) {
         var vm = this;
 
         var delayedShowIsLoadingTimer = null;
 
         vm.title = 'doctors Ctrl';
         vm.table; // = tableService.init([]);
-        vm.isLoading = false;           //Unused yet.
         vm.showIsLoading = false;
         vm.activate = activate;
         vm.dangerMarkedDocumentId = -1;
@@ -31,7 +32,7 @@
 
             if(doctorsRead.$promise){
                 //Show, after some time that table is loading.
-                changeIsLoading(true);
+                loadingCover.changeIsLoading($scope, vm, true);
 
                 doctorsRead.$promise.then(function (response) {
                     tableService.updateData(response);
@@ -42,32 +43,12 @@
                             "");
                     window.alert(errorMessage);
                 }).finally(function () {
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                 });
 
             }else{
                 tableService.updateData(doctorsRead);
             }
-        }
-
-        function changeIsLoading(isLoading){
-            if(isLoading){
-                delayedShowIsLoadingTimer = delayedShowIsLoading(1500);
-                vm.isLoading = true;
-            }else{
-                clearTimeout(delayedShowIsLoadingTimer);
-                vm.isLoading = false;
-                vm.showIsLoading = false;
-            }
-        }
-
-        //TODO: Duplicated
-        //Delays setting of flag that makes View display progress-gif.
-        function delayedShowIsLoading(delay){
-            return setTimeout(function () {
-                vm.showIsLoading = true;
-                $scope.$apply();
-            }, delay);
         }
 
         //Event handlers:
@@ -93,16 +74,16 @@
             // timer gets cancelled.
             // timer gets cancelled.
             if(result.$promise){
-                changeIsLoading(true);
+                loadingCover.changeIsLoading($scope, vm, true);
 
                 result.$promise.then(function () {
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                     $scope.vm.closeTabDeletedInList(data)
                     fillTable();
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                 }).finally(function () {
                     //changeIsLoading(false);
                 });

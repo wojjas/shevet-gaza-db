@@ -1,0 +1,23 @@
+<!--Covers the stuff that is loading with a transparent div and a gif showing progress-->
+<style>
+    .loading-cover{
+        display: block;
+        position: absolute;
+        background-color: rgba(99,99,99,0.6);
+        z-index: 1;
+        width: 100%;
+        height: 100%;        /*TODO: maybe change to 85% later...*/
+    }
+    .loading-cover .loader-gif{
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto; /* presto! */
+    }
+</style>
+
+<div class="loading-cover">
+    <img class="loader-gif" src="/client/img/loader_transparent.gif">
+</div>

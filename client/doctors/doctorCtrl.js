@@ -3,17 +3,14 @@
 
     app.controller('doctor', Doctor);
 
-    Doctor.$inject = ['$scope', 'doctors'];
+    Doctor.$inject = ['$scope', 'doctors', 'loadingCover'];
 
     /* @ngInject */
-    function Doctor($scope, doctorsProxy) {
+    function Doctor($scope, doctorsProxy, loadingCover) {
         /* jshint validthis: true */
         var vm = this;
-        var delayedShowIsLoadingTimer = null;
 
         vm.isAddNewTab = true;
-
-        //vm.isAddNewDoctor = true;
         vm.title = 'Doctor Ctrl';
         vm.doctor = {};
         vm.activate = activate;
@@ -54,7 +51,7 @@
             var doctorRead = doctorsProxy.readOneDoctor(id);
 
             if(doctorRead.$promise){
-                changeIsLoading(true);
+                loadingCover.changeIsLoading($scope, vm, true);
 
                 doctorRead.$promise.then(function (response) {
                     vm.doctor = response;
@@ -62,7 +59,7 @@
                     var errorMessage = "ERROR getting doctor. " + response.statusText;
                     window.alert(errorMessage);
                 }).finally(function () {
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                 });
             }else{
                 vm.doctor = doctorRead;
@@ -70,24 +67,6 @@
             }
         }
 
-        //TODO: move out to shared lib
-        //Delays setting of flag that makes View display progress-gif.
-        function delayedShowIsLoading(delay){
-            return setTimeout(function () {
-                vm.showIsLoading = true;
-                $scope.$apply();
-            }, delay);
-        }
-        function changeIsLoading(isLoading){
-            if(isLoading){
-                delayedShowIsLoadingTimer = delayedShowIsLoading(1500);
-                vm.isLoading = true;
-            }else{
-                clearTimeout(delayedShowIsLoadingTimer);
-                vm.isLoading = false;
-                vm.showIsLoading = false;
-            }
-        }
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose) {
             var actionResult = null;
@@ -100,7 +79,7 @@
             }
 
             if(actionResult.$promise){
-                changeIsLoading(true);
+                loadingCover.changeIsLoading($scope, vm, true);
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
@@ -116,7 +95,7 @@
                     var errorMessage = "ERROR saving doctor. " + response.statusText;
                     window.alert(errorMessage);
                 }).finally(function () {
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                 });
             }else{
                 if(saveAndClose){
@@ -143,7 +122,7 @@
             $scope.vm.reloadNeeded = true;
 
             if(result.$promise){
-                changeIsLoading(true);
+                loadingCover.changeIsLoading($scope, vm, true);
 
                 result.$promise.then(function () {
                     //$location.path("/doctors");
@@ -152,7 +131,7 @@
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
                 }).finally(function () {
-                    changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, false);
                 });
             }else{
                 $scope.vm.handleTabCloseClicked();
