@@ -1,13 +1,11 @@
 (function(){
     app.controller('doctors', ['$scope', 'config', 'doctors',
-                               'tableService','loadingCover',
+                               'tableService','loadingCover', '$modal', '$log',
                     Doctors]);
 
     function Doctors($scope, config, doctors,
-                     tableService, loadingCover) {
+                     tableService, loadingCover, $modal, $log) {
         var vm = this;
-
-        var delayedShowIsLoadingTimer = null;
 
         vm.title = 'doctors Ctrl';
         vm.table; // = tableService.init([]);
@@ -50,6 +48,28 @@
                 tableService.updateData(doctorsRead);
             }
         }
+        //TODO: duplicated, in doctorCtrl
+        function showConfirmDelete(data){
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/confirm_delete.html',
+                controller: 'confirmDelete as vm',
+                backdrop: 'true',
+                size: 'sm',
+                resolve: {
+                    doctorName: function () {
+                        return data.name;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (modalResult) {
+                if(modalResult == 'delete'){
+                    handleDeleteClick(undefined, data, true);
+                }
+            }, function () {
+                $log.info('Doctor deletion dismissed.');
+            });
+        }
 
         //Event handlers:
         function handleOfflineModeChanged(){
@@ -61,13 +81,18 @@
             }
         }
         function handleDeleteClick($event, data){
-            console.log('handleDeleteClick');
-            $event.stopPropagation();
+            //If $event exists function is called from the view, demand confirmation.
+            if($event){
+                $event.stopPropagation();
+                showConfirmDelete(data);
+
+                return;
+            }
 
             var result = doctors.deleteDoctor(data._id);
 
-            //TODO: The whole IsLoading-delayed thing should be in it's own View-Controller
-            // When moving it there look out for what I have done here. Here we cancel the
+            //TODO:
+            // Here we cancel the
             // delayed IsLoading in then(), this is because fillTable and Delete are using the
             // same global variable: delayedShowIsLoadingTimer. It could be an dictionary of
             // timers, where key should be sent in each call, set and unset, so the correct

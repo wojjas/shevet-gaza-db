@@ -3,10 +3,10 @@
 
     app.controller('doctor', Doctor);
 
-    Doctor.$inject = ['$scope', 'doctors', 'loadingCover'];
+    Doctor.$inject = ['$scope', 'doctors', 'loadingCover', '$modal', '$log'];
 
     /* @ngInject */
-    function Doctor($scope, doctorsProxy, loadingCover) {
+    function Doctor($scope, doctorsProxy, loadingCover, $modal, $log) {
         /* jshint validthis: true */
         var vm = this;
 
@@ -14,11 +14,11 @@
         vm.title = 'Doctor Ctrl';
         vm.doctor = {};
         vm.activate = activate;
-        vm.handleCloseClicked = handleCloseClicked;
-        vm.handleSaveClicked = handleSaveClicked;
-        vm.handleSaveAndCloseClicked = handleSaveAndCloseClicked;
-        vm.handleDeleteClicked = handleDeleteClicked;
-        vm.handleClearClicked = handleClearClicked;
+        vm.handleCloseClick = handleCloseClick;
+        vm.handleSaveClick = handleSaveClick;
+        vm.handleSaveAndCloseClick = handleSaveAndCloseClick;
+        vm.handleDeleteClick = handleDeleteClick;
+        vm.handleClearClick = handleClearClick;
 
         activate();
 
@@ -67,6 +67,7 @@
             }
         }
 
+        //Private functions:
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose) {
             var actionResult = null;
@@ -104,20 +105,48 @@
                 }
             }
         }
+        //TODO: duplicated, in doctorsCtrl
+        function showConfirmDelete(){
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/confirm_delete.html',
+                controller: 'confirmDelete as vm',
+                backdrop: 'true',
+                size: 'sm',
+                resolve: {
+                    doctorName: function () {
+                        return vm.doctor.name;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (modalResult) {
+                if(modalResult == 'delete'){
+                    handleDeleteClick(true);
+                }
+            }, function () {
+                $log.info('Doctor deletion dismissed.');
+            });
+        }
 
         //Event Handlers:
-        function handleCloseClicked(){
+        function handleCloseClick(){
             //TODO: check if changes have been done,
             // then maybe this should be disabled?
             $scope.vm.handleTabCloseClicked();
         }
-        function handleSaveClicked(){
+        function handleSaveClick(){
             save(false);
         }
-        function handleSaveAndCloseClicked(){
+        function handleSaveAndCloseClick(){
             save(true);
         }
-        function handleDeleteClicked(){
+        function handleDeleteClick(confirmed){
+            if(!confirmed){
+                 showConfirmDelete();
+
+                return;
+            }
+
             var result = doctorsProxy.deleteDoctor(vm.doctor._id);
             $scope.vm.reloadNeeded = true;
 
@@ -137,7 +166,7 @@
                 $scope.vm.handleTabCloseClicked();
             }
         }
-        function handleClearClicked(){
+        function handleClearClick(){
             vm.doctor = {};
         }
 

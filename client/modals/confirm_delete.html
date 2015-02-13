@@ -1,0 +1,18 @@
+<style>
+    .modal-backdrop{
+        bottom: 0;
+        position: fixed;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Confirm Delete</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete doctor <strong>{{vm.doctorName}}</strong>?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="vm.handleDeleteClick()">Delete</button>
+        <button class="btn btn-warning" ng-click="vm.handleCancelClick()">Cancel</button>
+    </div>
+</div>
