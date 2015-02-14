@@ -53,7 +53,7 @@
             var modalInstance = $modal.open({
                 templateUrl: 'modals/confirm_delete.html',
                 controller: 'confirmDelete as vm',
-                backdrop: 'true',
+                backdrop: 'static',
                 size: 'sm',
                 resolve: {
                     doctorName: function () {
