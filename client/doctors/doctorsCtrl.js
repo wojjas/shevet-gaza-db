@@ -1,11 +1,11 @@
 (function(){
     angular
         .module('gdDoctors')
-        .controller('doctors', ['$scope', 'config', 'doctors',
+        .controller('doctors', ['$scope', 'config', 'doctorsProxy',
                                'tableService','loadingCover', '$modal', '$log',
                     Doctors]);
 
-    function Doctors($scope, config, doctors,
+    function Doctors($scope, config, doctorsProxy,
                      tableService, loadingCover, $modal, $log) {
         var vm = this;
 
@@ -28,7 +28,7 @@
             fillTable();
         }
         function fillTable(){
-            var doctorsRead = doctors.readAllDoctors();
+            var doctorsRead = doctorsProxy.readAllDoctors();
 
             if(doctorsRead.$promise){
                 //Show, after some time that table is loading.
@@ -91,7 +91,7 @@
                 return;
             }
 
-            var result = doctors.deleteDoctor(data._id);
+            var result = doctorsProxy.deleteDoctor(data._id);
 
             //TODO:
             // Here we cancel the

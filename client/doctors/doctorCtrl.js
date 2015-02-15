@@ -3,7 +3,7 @@
 
     angular.module('gdDoctors').controller('doctor', Doctor);
 
-    Doctor.$inject = ['$scope', 'doctors', 'loadingCover', '$modal', '$log'];
+    Doctor.$inject = ['$scope', 'doctorsProxy', 'loadingCover', '$modal', '$log'];
 
     /* @ngInject */
     function Doctor($scope, doctorsProxy, loadingCover, $modal, $log) {
