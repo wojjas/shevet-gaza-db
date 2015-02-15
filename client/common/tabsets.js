@@ -3,7 +3,7 @@
 
     //app.factory('tabsets', tabsets);
     angular
-        .module('gazaApp')
+        .module('gdCommon')
         .factory('tabsets', tabsets);
 
     function tabsets() {

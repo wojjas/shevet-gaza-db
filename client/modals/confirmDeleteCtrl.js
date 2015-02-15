@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('gazaApp')
+        .module('gdModals')
         .controller('confirmDelete', ConfirmDelete);
 
     //ConfirmDelete.$inject = ['$modal'];

@@ -1,5 +1,7 @@
 (function(){
-    app.controller('doctors', ['$scope', 'config', 'doctors',
+    angular
+        .module('gdDoctors')
+        .controller('doctors', ['$scope', 'config', 'doctors',
                                'tableService','loadingCover', '$modal', '$log',
                     Doctors]);
 

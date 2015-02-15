@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    app.factory('crudButtons', ['$rootScope', crudButtons]);
+    angular
+        .module('gdHome')
+        .factory('crudButtons', ['$rootScope', crudButtons]);
 
     function crudButtons($rootScope)
     {

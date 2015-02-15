@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    app.factory('loadingCover', loadingCover);
+    angular
+        .module('gdLoadingCover')
+        .factory('loadingCover', loadingCover);
 
     function loadingCover($timeout) {
         var delayedShowIsLoadingTimer;

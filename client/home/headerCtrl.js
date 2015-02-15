@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    app.controller('header', Header);
+    angular
+        .module('gdHome')
+        .controller('header', Header);
 
     Header.$inject = ['config'];
 

@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    app.controller('tabset', ['$scope', '$routeParams', 'tabsets', Tabset]);
+    angular
+        .module('gdCommon')
+        .controller('tabset', ['$scope', '$routeParams', 'tabsets', Tabset]);
 
     function Tabset($scope, $routeParams, tabsets) {
         var vm = this;

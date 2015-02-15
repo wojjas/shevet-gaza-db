@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    app.service('config', config);
+    angular.module('gdCommon').service('config', config);
 
     function config() {
         //When offlineMode === true, app should act as an offline application.

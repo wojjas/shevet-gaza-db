@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    app.controller('crudButtonsCtrl', ['$scope', 'crudButtons', CrudButtonsCtrl]);
+    angular
+        .module('gdHome')
+        .controller('crudButtonsCtrl', ['$scope', 'crudButtons', CrudButtonsCtrl]);
 
     function CrudButtonsCtrl($scope, crudButtons)
     {

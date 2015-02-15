@@ -2,7 +2,14 @@ var app = angular.module('gazaApp', [
     'ngResource',
     'ngRoute',
     'ngTable',
-    'ui.bootstrap'
+    'ui.bootstrap',
+
+    //gazaDB modules:
+    'gdCommon',
+    'gdDoctors',
+    'gdHome',
+    'gdLoadingCover',
+    'gdModals'
 ]);
 
 app.config(['$routeProvider', function ($routeProvider) {

@@ -6,7 +6,9 @@
 (function () {
     'use strict';
 
-    app.factory('doctors', ['$resource', 'config', doctors]);
+    angular
+        .module('gdDoctors')
+        .factory('doctors', ['$resource', 'config', doctors]);
 
     //Performs CRUD against LocalStorage and, or remote db.
     //Every document stored in LocalStorage is assigned an unique string with known prefix as _id.
