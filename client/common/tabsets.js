@@ -113,25 +113,16 @@
                 openTab(tabset, tabOfRequested);
             }
         }
-        function closeTab(tabset, index){
+        function closeTab(tabset){
             var currentTabset = tabsets[tabset];//vm.tabset;
 
-            if(index){
-                if(currentTabset[index].isAddTab){
-                    return;
+            for(var i=1, len=currentTabset.length; i < len; i++){
+                if(currentTabset[i].active && !currentTabset[i].isAddTab){
+                    currentTabset.splice(i, 1);
+                    break;
                 }
-                currentTabset.splice(index, 1);
-                //vm.nofOpenedTabs = currentTabset.length - 2;
-            }else{
-                //If no index it's called from child-scope
-                for(var i=1, len=currentTabset.length; i < len; i++){
-                    if(currentTabset[i].active && !currentTabset[i].isAddTab){
-                        currentTabset.splice(i, 1);
-                        break;
-                    }
-                }
-                //currentTabset[0].active = true;
             }
+
             //Always select tab with table, do we really want that!?
             openTab(tabset, 0);
         }

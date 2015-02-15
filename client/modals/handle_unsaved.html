@@ -1,0 +1,22 @@
+<style>
+    .modal-backdrop{
+        bottom: 0;
+        position: fixed;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Leaving Unsaved</h3>
+    </div>
+    <div class="modal-body">
+        <p>You are leaving unsaved changes. Please choose desired action:</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default"
+                ng-click="vm.handleSaveClick()">Save and Continue</button>
+        <button class="btn btn-default"
+                ng-click="vm.handleContinueClick()">Continue and loose changes</button>
+        <button class="btn btn-primary"
+                ng-click="vm.handleCancelClick()">Cancel</button>
+    </div>
+</div>

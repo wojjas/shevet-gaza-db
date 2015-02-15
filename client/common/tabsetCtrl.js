@@ -3,9 +3,9 @@
 
     angular
         .module('gdCommon')
-        .controller('tabset', ['$scope', '$routeParams', 'tabsets', Tabset]);
+        .controller('tabset', ['$scope', '$routeParams', 'tabsets', '$modal', Tabset]);
 
-    function Tabset($scope, $routeParams, tabsets) {
+    function Tabset($scope, $routeParams, tabsets, $modal) {
         var vm = this;
 
         var tabTemplate = '';
@@ -36,6 +36,24 @@
             }
             vm.tabset = tabsets.getTabset(currentList);
         }
+        function showConfirmClose(){
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/handle_unsaved.html',
+                controller: 'handleUnsaved as vm',
+                backdrop: 'static'
+            });
+
+            modalInstance.result.then(function (modalResult) {
+                if(modalResult == 'save'){
+                    //handleTabCloseClicked(true);
+                    $scope.$broadcast('saveAndCloseEvent');
+                }
+
+                handleTabCloseClicked(true);
+            }, function () {
+                console.log('Tab close dismissed.');
+            });
+        }
 
         function updateTabHeader(data){
             tabsets.updateTabHeader(currentList, data);
@@ -54,8 +72,15 @@
                 $scope.$broadcast('getAllDoctorsEvent');
             }
         }
-        function handleTabCloseClicked(index){
-            tabsets.closeTab(currentList, index);
+        function handleTabCloseClicked(confirmed){
+            console.log('Closing tab, confirmed: ' + confirmed);
+
+            //Check for unsaved changes and demand confirmation. Close only when confirmed.
+            if(confirmed){
+                tabsets.closeTab(currentList);
+            }else{
+                showConfirmClose();
+            }
         }
         function handleTableRowClicked(data){
             tabsets.openInTabCreateIfNeeded(currentList, data);

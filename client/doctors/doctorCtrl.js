@@ -9,6 +9,7 @@
     function Doctor($scope, doctorsProxy, loadingCover, $modal, $log) {
         /* jshint validthis: true */
         var vm = this;
+        var doctorBkp = {};
 
         vm.isAddNewTab = true;
         vm.title = 'Doctor Ctrl';
@@ -38,8 +39,9 @@
                     break;
                 }
             }
+            //We are in addNewTab, creating a new doctor:
             if(!id){
-                vm.doctor = {};
+                setDoctor({});
                 vm.isAddNewTab = true;
 
                 return;
@@ -54,7 +56,7 @@
                 loadingCover.changeIsLoading($scope, vm, true);
 
                 doctorRead.$promise.then(function (response) {
-                    vm.doctor = response;
+                    setDoctor(response);
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -62,12 +64,26 @@
                     loadingCover.changeIsLoading($scope, vm, false);
                 });
             }else{
-                vm.doctor = doctorRead;
+                setDoctor(doctorRead);
                 vm.isLoading = false;
             }
         }
 
         //Private functions:
+        function isDirty(){
+            var doctorBkpStr = JSON.stringify(doctorBkp);
+            var doctorStr = JSON.stringify(vm.doctor);
+
+            return doctorBkpStr !== "" && doctorBkpStr !== doctorStr;
+        }
+        //TODO: Move this function to some global tool-box:
+        function cloneObject(object){
+            return JSON.parse(JSON.stringify(object));
+        }
+        function setDoctor(doctor){
+            vm.doctor = doctor;
+            doctorBkp = cloneObject(doctor);
+        }
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose) {
             var actionResult = null;
@@ -85,7 +101,7 @@
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
-                        $scope.vm.handleTabCloseClicked();
+                        $scope.vm.handleTabCloseClicked(true);
                     }else if(vm.isAddNewTab){
                         $scope.vm.saveAndOpenInTab(vm.doctor);
                         vm.doctor = {};
@@ -101,7 +117,7 @@
             }else{
                 if(saveAndClose){
                     vm.doctor = {}; //Clear this object so a new one can be created next time.
-                    $scope.vm.handleTabCloseClicked();
+                    $scope.vm.handleTabCloseClicked(true);
                 }
             }
         }
@@ -130,12 +146,11 @@
 
         //Event Handlers:
         function handleCloseClick(){
-            //TODO: check if changes have been done,
-            // then maybe this should be disabled?
-            $scope.vm.handleTabCloseClicked();
+            $scope.vm.handleTabCloseClicked(!isDirty());
         }
         function handleSaveClick(){
             save(false);
+            setDoctor(vm.doctor);
         }
         function handleSaveAndCloseClick(){
             save(true);
@@ -155,7 +170,7 @@
 
                 result.$promise.then(function () {
                     //$location.path("/doctors");
-                    $scope.vm.handleTabCloseClicked();
+                    $scope.vm.handleTabCloseClicked(true);
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -163,15 +178,22 @@
                     loadingCover.changeIsLoading($scope, vm, false);
                 });
             }else{
-                $scope.vm.handleTabCloseClicked();
+                $scope.vm.handleTabCloseClicked(true);
             }
         }
         function handleClearClick(){
             vm.doctor = {};
         }
 
-        $scope.$on('$destroy', function () {
+        $scope.$on('$destroy', function (event) {
             console.log('Doctor Ctrl is being destroyed for Doctor: ', vm.doctor.name + ", id: " +vm.doctor.id);
+        })
+        $scope.$on('$locationChangeStart', function(event){
+            //TODO: maybe better to use tabsetCtrl's  $scope.$on('$destroy' for this?
+            console.log('$locationChangeStart, navigation to other place inside app');
+        })
+        $scope.$on('saveAndCloseEvent', function (event) {
+            handleSaveAndCloseClick();
         })
     }
 })();
