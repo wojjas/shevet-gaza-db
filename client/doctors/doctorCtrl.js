@@ -41,11 +41,20 @@
                 vm.isAddNewTab = true;
 
                 return;
+            }else{
+                vm.isAddNewTab = false;
             }
 
-            //If we failed to get data from tabset we are not editing an existing consequently
-            //we will fetch from persistent storage and thus we are NOT in the AddTab.
-            vm.isAddNewTab = false;
+            //If data exists use it, (don't get from local storage.)
+            if(currentTab.data){
+                setDoctor(currentTab.data);
+
+                return;
+            }
+
+            //We are NOT in the AddTab.
+            //If there's no data in tabset for this tab we are not editing an existing
+            //consequently we will fetch from persistent storage.
             var doctorRead = doctorsProxy.readOneDoctor(id);
 
             if(doctorRead.$promise){
