@@ -23,6 +23,7 @@
         vm.saveAndOpenInTab = saveAndOpenInTab;
         vm.updateTabHeader = updateTabHeader;
         vm.closeTabDeletedInList = closeTabDeletedInList;
+        vm.getInitiatingTab = getInitiatingTab;
 
         activate();
 
@@ -36,7 +37,7 @@
             }
             vm.tabset = tabsets.getTabset(currentList);
         }
-        function showConfirmClose(){
+        function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
                 templateUrl: 'modals/handle_unsaved.html',
                 controller: 'handleUnsaved as vm',
@@ -44,12 +45,11 @@
             });
 
             modalInstance.result.then(function (modalResult) {
-                if(modalResult == 'save'){
-                    //handleTabCloseClicked(true);
-                    $scope.$broadcast('saveAndCloseEvent');
+                if(modalResult === 'save'){
+                    $scope.$broadcast('saveAndCloseEvent', currentTab.id);
+                }else{
+                    handleTabCloseClicked();
                 }
-
-                handleTabCloseClicked(true);
             }, function () {
                 console.log('Tab close dismissed.');
             });
@@ -64,6 +64,19 @@
         function closeTabDeletedInList(data){
             tabsets.closeTabDeletedInList(currentList, data);
         }
+        //Returns the first tab found not to be initiated.
+        //Call this one from tab's controller's activate/init-functions
+        function getInitiatingTab(){
+            //Use tabset's memory to track what's initiated and what's not.
+            //initiated means, that a tab-controller has used this tab's data/info to fill its form.
+            var tabset = vm.tabset;
+            for(var i=0, len=tabset.length; i<len; i++){
+                if(!tabset[i].initiated){
+
+                    return tabset[i];
+                }
+            }
+        }
 
         //Event Handlers:
         function handleTabSelect(tab){
@@ -72,14 +85,17 @@
                 $scope.$broadcast('getAllDoctorsEvent');
             }
         }
-        function handleTabCloseClicked(confirmed){
-            console.log('Closing tab, confirmed: ' + confirmed);
+        function handleTabCloseClicked(currentTab){
+            console.log('Closing currentTab: ', currentTab);
 
-            //Check for unsaved changes and demand confirmation. Close only when confirmed.
-            if(confirmed){
-                tabsets.closeTab(currentList);
+            //If currentTab is not specified don't try to check if dirty, just close
+            var demandConfirmation = currentTab ? true : false;
+
+            //Check for unsaved changes and demand confirmation. Close only when confirmed or noting to be saved.
+            if(demandConfirmation && !currentTab.isFirstTab && currentTab.isDirty()){
+                showConfirmClose(currentTab);
             }else{
-                showConfirmClose();
+                tabsets.closeTab(currentList);
             }
         }
         function handleTableRowClicked(data){

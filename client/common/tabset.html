@@ -22,7 +22,7 @@
                         <div ng-show="!tab.isAddTab && !tab.isFirstTab">
                             {{tab.heading}}
                             <a href=""
-                               ng-click="vm.handleTabCloseClicked()">
+                               ng-click="vm.handleTabCloseClicked(tab)">
                                 <i class="glyphicon glyphicon-remove-circle tab-icon"></i>
                             </a>
                         </div>

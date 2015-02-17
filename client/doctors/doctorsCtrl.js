@@ -24,6 +24,9 @@
         //////////////////
 
         function activate() {
+            var currentTab = $scope.vm.getInitiatingTab();
+            currentTab.initiated = true;
+
             vm.table = tableService.init([]);
             fillTable();
         }
