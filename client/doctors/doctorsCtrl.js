@@ -35,7 +35,7 @@
 
             if(doctorsRead.$promise){
                 //Show, after some time that table is loading.
-                loadingCover.changeIsLoading($scope, vm, true);
+                loadingCover.changeIsLoading($scope, vm, 'readDoctors', true);
 
                 doctorsRead.$promise.then(function (response) {
                     tableService.updateData(response);
@@ -46,7 +46,7 @@
                             "");
                     window.alert(errorMessage);
                 }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, false);
+                    loadingCover.changeIsLoading($scope, vm, 'readDoctors', false);
                 });
 
             }else{
@@ -96,26 +96,17 @@
 
             var result = doctorsProxy.deleteDoctor(data._id);
 
-            //TODO:
-            // Here we cancel the
-            // delayed IsLoading in then(), this is because fillTable and Delete are using the
-            // same global variable: delayedShowIsLoadingTimer. It could be an dictionary of
-            // timers, where key should be sent in each call, set and unset, so the correct
-            // timer gets cancelled.
-            // timer gets cancelled.
             if(result.$promise){
-                loadingCover.changeIsLoading($scope, vm, true);
+                loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', true);
 
                 result.$promise.then(function () {
-                    loadingCover.changeIsLoading($scope, vm, false);
-                    $scope.vm.closeTabDeletedInList(data)
+                    $scope.vm.closeTabDeletedInList(data);
                     fillTable();
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
-                    loadingCover.changeIsLoading($scope, vm, false);
                 }).finally(function () {
-                    //changeIsLoading(false);
+                    loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', false);
                 });
             }else{
                 fillTable();

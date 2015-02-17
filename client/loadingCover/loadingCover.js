@@ -6,24 +6,18 @@
         .factory('loadingCover', loadingCover);
 
     function loadingCover($timeout) {
-        var delayedShowIsLoadingTimer;
-        var scope = {};
-        var vm = {};
+        var delayedShowIsLoadingTimers = {};
+        var currentAction = '';
         var digest = digest;
+        var vm = {};
         var delayedShowIsLoading = delayedShowIsLoading;
+
         var service = {
-            //init: init,
-            changeIsLoading: changeIsLoading
+            changeIsLoading: changeIsLoading,
+            getCurrentAction: getCurrentAction
         };
 
         return service;
-
-        ////////////////
-        //If this doesn't seem to be a good idea, send scope and vm with each call to changeIsLoading
-        //function init(controllersScope, controllersVm){
-        //    scope = controllersScope;
-        //    vm = controllersVm;
-        //}
 
         //Private functions:
         function digest(scope){
@@ -39,17 +33,24 @@
             }, delay);
         }
 
-        function changeIsLoading(scope, vm, isLoading){
+        function changeIsLoading(scope, vm, action, isLoading){
             if(isLoading){
-                delayedShowIsLoadingTimer = delayedShowIsLoading(scope, vm, 1500);
+                delayedShowIsLoadingTimers[action] = delayedShowIsLoading(scope, vm, 1500);
+                currentAction = action;
+
                 //service.isLoading = true;
             }else{
-                clearTimeout(delayedShowIsLoadingTimer);
+                clearTimeout(delayedShowIsLoadingTimers[action]);
+                delete delayedShowIsLoadingTimers[action];
+
                 //service.isLoading = false;
                 vm.showIsLoading = false;
                 digest(scope);
             }
         }
 
+        function getCurrentAction(){
+            return currentAction;
+        }
     }
 })();
