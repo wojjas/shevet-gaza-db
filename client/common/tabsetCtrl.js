@@ -62,7 +62,7 @@
             tabsets.openInTabCreateIfNeeded(currentList, data);
         }
         function closeTabDeletedInList(data){
-            tabsets.closeTabDeletedInList(currentList, data);
+            tabsets.closeSpecifiedTab(currentList, data);
         }
         //Returns the first tab found not to be initiated.
         //Call this one from tab's controller's activate/init-functions
@@ -85,17 +85,18 @@
                 $scope.$broadcast('getAllDoctorsEvent');
             }
         }
-        function handleTabCloseClicked(currentTab){
+        function handleTabCloseClicked(currentTab, doNotConfirm){
             console.log('Closing currentTab: ', currentTab);
 
-            //If currentTab is not specified don't try to check if dirty, just close
-            var demandConfirmation = currentTab ? true : false;
-
-            //Check for unsaved changes and demand confirmation. Close only when confirmed or noting to be saved.
-            if(demandConfirmation && !currentTab.isFirstTab && currentTab.isDirty()){
+            //Check for unsaved changes and demand confirmation.
+            if(!doNotConfirm && (currentTab && !currentTab.isFirstTab && currentTab.isDirty())){
                 showConfirmClose(currentTab);
             }else{
-                tabsets.closeTab(currentList);
+                if(currentTab.isAddTab){
+                    tabsets.openTab(currentList, 0);
+                }else{
+                    tabsets.closeSpecifiedTab(currentList, currentTab.data);
+                }
             }
         }
         function handleTableRowClicked(data){

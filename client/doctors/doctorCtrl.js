@@ -103,7 +103,7 @@
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
-                        $scope.vm.handleTabCloseClicked();
+                        $scope.vm.handleTabCloseClicked(currentTab, true);
                     }else if(vm.isAddNewTab){
                         $scope.vm.saveAndOpenInTab(vm.doctor);
                         vm.doctor = {};
@@ -122,7 +122,7 @@
             }else{
                 if(saveAndClose){
                     vm.doctor = {}; //Clear this object so a new one can be created next time.
-                    $scope.vm.handleTabCloseClicked();
+                    $scope.vm.handleTabCloseClicked(currentTab);
                 }
             }
         }
@@ -215,7 +215,7 @@
                 loadingCover.showLoadingCover('Deleting');
 
                 result.$promise.then(function () {
-                    $scope.vm.handleTabCloseClicked();
+                    $scope.vm.handleTabCloseClicked(currentTab);
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -223,7 +223,7 @@
                     loadingCover.hideLoadingCover();
                 });
             }else{
-                $scope.vm.handleTabCloseClicked();
+                $scope.vm.handleTabCloseClicked(currentTab);
             }
         }
         function handleClearClick(){

@@ -9,19 +9,19 @@
     function tabsets() {
         var tabsets = [[]];
         var indexOfTab = indexOfTab;
-        var openTab;
         var addTabToTabsetAndOpen = addTabToTabsetAndOpen;
+        var closeTab = closeTab;
 
         var service = {
             initTabset: initTabset,
             getTabset: getTabset,
-            //setTabset: setTabset,
             unInitTabset: unInitTabset,
+            openTab: openTab,
 
             openInTabCreateIfNeeded: openInTabCreateIfNeeded,
-            updateTabHeader: updateTabHeader,
-            closeTabDeletedInList: closeTabDeletedInList,
-            closeTab: closeTab
+            closeActiveTab: closeActiveTab,
+            closeSpecifiedTab : closeSpecifiedTab,
+            updateTabHeader: updateTabHeader
         };
 
         return service;
@@ -37,9 +37,6 @@
                 }
             }
             return -1;
-        }
-        function openTab(tabset, index){
-            tabsets[tabset][index].active = true;
         }
         function addTabToTabsetAndOpen(tabset, data){
             var currentTabset = tabsets[tabset];
@@ -64,6 +61,20 @@
             }
 
             currentTabset.splice(currentTabset.length - 1, 0, newTab);
+        }
+        function closeTab(tabset, index){
+            var currentTabset = tabsets[tabset];
+            var tabToClose = currentTabset[index];
+
+            if(tabToClose.isAddTab || tabToClose.isFirstTab){
+                console.debug('Attempted to close un-closeable tab');
+
+                return;
+            }
+            currentTabset.splice(index, 1);
+
+            //Always select tab with table, do we really want that!?
+            openTab(tabset, 0);
         }
 
         //Public Functions:
@@ -128,6 +139,9 @@
         //    var index = tabsets.indexOf(tabsetName);
         //    tabsets[index] = tabset;
         //}
+        function openTab(tabset, index){
+            tabsets[tabset][index].active = true;
+        }
 
         //Always opens data in tab, if needed after adding tab to tabset.
         function openInTabCreateIfNeeded(tabset, data){
@@ -138,7 +152,12 @@
                 openTab(tabset, tabOfRequested);
             }
         }
-        function closeTab(tabset){
+        function unInitTabset(tabset){
+            angular.forEach(tabsets[tabset], function (tab) {
+                tab.initiated = false;
+            });
+        }
+        function closeActiveTab(tabset){
             var currentTabset = tabsets[tabset];//vm.tabset;
 
             //Start at i=1 as we never want to close the FirstTab
@@ -154,22 +173,17 @@
             //Always select tab with table, do we really want that!?
             openTab(tabset, 0);
         }
-        function unInitTabset(tabset){
-            angular.forEach(tabsets[tabset], function (tab) {
-                tab.initiated = false;
-            });
+        function closeSpecifiedTab(tabset, data){
+            var index = indexOfTab(tabset, data);
+            if(index !== -1) {
+                closeTab(tabset, index);
+            }
         }
 
         function updateTabHeader(tabset, data){
             var index = indexOfTab(tabset, data);
             if(index !== -1){
                 tabsets[tabset][index].heading = data.name;
-            }
-        }
-        function closeTabDeletedInList(tabset, data){
-            var index = indexOfTab(tabset, data);
-            if(index !== -1){
-                closeTab(tabset, index);
             }
         }
     }
