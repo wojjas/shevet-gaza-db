@@ -11,7 +11,6 @@
 
         vm.title = 'doctors Ctrl';
         vm.table; // = tableService.init([]);
-        vm.showIsLoading = false;
         vm.activate = activate;
         vm.dangerMarkedDocumentId = -1;
 
@@ -35,7 +34,7 @@
 
             if(doctorsRead.$promise){
                 //Show, after some time that table is loading.
-                loadingCover.changeIsLoading($scope, vm, 'readDoctors', true);
+                loadingCover.showLoadingCover('Getting Doctors');
 
                 doctorsRead.$promise.then(function (response) {
                     tableService.updateData(response);
@@ -46,7 +45,7 @@
                             "");
                     window.alert(errorMessage);
                 }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, 'readDoctors', false);
+                    loadingCover.hideLoadingCover();
                 });
 
             }else{
@@ -54,7 +53,7 @@
             }
         }
         //TODO: duplicated, in doctorCtrl
-        function showConfirmDelete(data){
+        function showConfirmDelete(data, fromList){
             var modalInstance = $modal.open({
                 templateUrl: 'modals/confirm_delete.html',
                 controller: 'confirmDelete as vm',
@@ -69,7 +68,7 @@
 
             modalInstance.result.then(function (modalResult) {
                 if(modalResult == 'delete'){
-                    handleDeleteClick(undefined, data, true);
+                    handleDeleteClick(undefined, data, fromList);
                 }
             }, function () {
                 $log.info('Doctor deletion dismissed.');
@@ -85,11 +84,11 @@
                 vm.dangerMarkedDocumentId = id;
             }
         }
-        function handleDeleteClick($event, data){
+        function handleDeleteClick($event, data, fromList){
             //If $event exists function is called from the view, demand confirmation.
             if($event){
                 $event.stopPropagation();
-                showConfirmDelete(data);
+                showConfirmDelete(data, fromList);
 
                 return;
             }
@@ -97,16 +96,16 @@
             var result = doctorsProxy.deleteDoctor(data._id);
 
             if(result.$promise){
-                loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', true);
+                loadingCover.showLoadingCover('Deleting Doctor', fromList);
 
                 result.$promise.then(function () {
                     $scope.vm.closeTabDeletedInList(data);
-                    fillTable();
+                    loadingCover.hideLoadingCover();
+                    fillTable();    //calls server, thus hide loading cover first.
                 }).catch(function (response) {
+                    loadingCover.hideLoadingCover();
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
-                }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', false);
                 });
             }else{
                 fillTable();

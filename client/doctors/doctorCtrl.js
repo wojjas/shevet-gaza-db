@@ -58,7 +58,7 @@
             var doctorRead = doctorsProxy.readOneDoctor(id);
 
             if(doctorRead.$promise){
-                loadingCover.changeIsLoading($scope, vm, 'readOneDoctor', true);
+                loadingCover.showLoadingCover('Getting Doctor');
 
                 doctorRead.$promise.then(function (response) {
                     setDoctor(response);
@@ -66,7 +66,7 @@
                     var errorMessage = "ERROR getting doctor. " + response.statusText;
                     window.alert(errorMessage);
                 }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, 'readOneDoctor', false);
+                    loadingCover.hideLoadingCover();
                 });
             }else{
                 setDoctor(doctorRead);
@@ -98,7 +98,7 @@
             }
 
             if(actionResult.$promise){
-                loadingCover.changeIsLoading($scope, vm, 'save', true);
+                loadingCover.showLoadingCover('Saving', saveAndClose);
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
@@ -117,7 +117,7 @@
                     var errorMessage = "ERROR saving doctor. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
                 }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, 'save', false);
+                    loadingCover.hideLoadingCover();
                 });
             }else{
                 if(saveAndClose){
@@ -212,7 +212,7 @@
             $scope.vm.reloadNeeded = true;
 
             if(result.$promise){
-                loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', true);
+                loadingCover.showLoadingCover('Deleting');
 
                 result.$promise.then(function () {
                     $scope.vm.handleTabCloseClicked();
@@ -220,7 +220,7 @@
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
                 }).finally(function () {
-                    loadingCover.changeIsLoading($scope, vm, 'deleteDoctor', false);
+                    loadingCover.hideLoadingCover();
                 });
             }else{
                 $scope.vm.handleTabCloseClicked();

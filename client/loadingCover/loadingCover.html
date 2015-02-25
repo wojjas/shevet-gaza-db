@@ -4,7 +4,7 @@
         display: block;
         position: absolute;
         background-color: rgba(99,99,99,0.6);
-        z-index: 1;
+        z-index: 10;
         width: 100%;
         height: 100%;        /*TODO: maybe change to 85% later...*/
     }
@@ -21,7 +21,7 @@
     .loading-text{
         font-size: 3em;
         font-weight: bold;
-        margin:15px;
+        margin:150px 15px 15px 15px;
         color: lightgoldenrodyellow;
     }
     /*.center-middle-div {*/
@@ -58,8 +58,9 @@
 </style>
 
 <div class="loading-cover"
-     ng-controller="loadingCover as vmLC">
+     ng-controller="loadingCover as vmLC"
+     ng-show="vmLC.loadingCoverData.show">
 
     <img class="center-middle" src="/client/img/loader_transparent.gif">
-    <!--<div class="loading-text">{{vmLC.action}}...</div>-->
+    <div class="loading-text">{{vmLC.loadingCoverData.action}}...</div>
 </div>

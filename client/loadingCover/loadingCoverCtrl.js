@@ -9,7 +9,6 @@
 
     function LoadingCover(loadingCover) {
         var vm = this;
-        //TODO: not implemented yet
-        vm.action = loadingCover.getCurrentAction();
+        vm.loadingCoverData = loadingCover.data;
     }
 })();

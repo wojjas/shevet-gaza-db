@@ -9,15 +9,6 @@
 <section class="container"
          ng-controller="doctor as vmd">
 
-    <!--<legend>Doctor</legend>-->
-    <!--<div class="row center-block" ng-include="'/home/crudButtons.html'"></div>-->
-
-    <!--showIsLoading-->
-    <div class="row"
-         ng-include="'/loadingCover/loadingCover.html'"
-         ng-show="vmd.showIsLoading">
-    </div>
-
     <!-- form-horizontal makes form-groups behave like grid rows, so no need for .row -->
     <form class="form-horizontal center-block margin-top-md" ng-submit="vm.handleFormSubmit()">
         <fieldset class="container">
