@@ -48,7 +48,7 @@
                 if(modalResult === 'save'){
                     $scope.$broadcast('saveAndCloseEvent', currentTab.id);
                 }else{
-                    handleTabCloseClicked();
+                    handleTabCloseClicked(currentTab, true);
                 }
             }, function () {
                 console.log('Tab close dismissed.');
@@ -86,8 +86,6 @@
             }
         }
         function handleTabCloseClicked(currentTab, doNotConfirm){
-            console.log('Closing currentTab: ', currentTab);
-
             //Check for unsaved changes and demand confirmation.
             if(!doNotConfirm && (currentTab && !currentTab.isFirstTab && currentTab.isDirty())){
                 showConfirmClose(currentTab);
