@@ -22,7 +22,7 @@
     //            controller: 'home as vm'
             }).
             when('/tabset/:list', {
-                templateUrl: 'common/tabset.html',
+                templateUrl: 'common/tabs.html',
                 controller: 'TabsController as tabsCtrl'
             }).
             when('/patients', {
