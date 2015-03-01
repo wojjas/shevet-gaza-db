@@ -14,7 +14,7 @@
            class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="doctor in $data"
             ng-class="{danger: doctor._id == vmDoctors.dangerMarkedDocumentId}"
-                ng-click="vm.handleTableRowClicked(doctor)">
+                ng-click="tabsCtrl.handleTableRowClicked(doctor)">
                 <td data-title="'Name'"
                     sortable="'name'"
                     filter="{ 'name': 'text' }"

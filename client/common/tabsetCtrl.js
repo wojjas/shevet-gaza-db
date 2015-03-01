@@ -3,7 +3,7 @@
 
     angular
         .module('gdCommon')
-        .controller('tabset', ['$scope', '$routeParams', 'tabsets', '$modal', Tabset]);
+        .controller('TabsController', ['$scope', '$routeParams', 'tabsets', '$modal', Tabset]);
 
     function Tabset($scope, $routeParams, tabsets, $modal) {
         var vm = this;
@@ -102,7 +102,7 @@
         }
 
         $scope.$on('$destroy', function () {
-            //console.log('Destroying tabsetCtrl, save tabset ' + vm.tabset);
+            //console.log('Destroying tabsCtrl, save tabset ' + vm.tabset);
             //tabsets.setTabset(currentList, vm.tabset);
             tabsets.unInitTabset(currentList);
         })

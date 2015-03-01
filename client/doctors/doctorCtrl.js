@@ -29,7 +29,7 @@
         function activate() {
             var id = undefined;
 
-            currentTab = $scope.vm.getInitiatingTab();
+            currentTab = $scope.tabsCtrl.getInitiatingTab();
             if(currentTab){
                 currentTab.initiated = true;
                 id = currentTab.id;
@@ -89,7 +89,7 @@
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose, callback) {
             var actionResult = null;
-            $scope.vm.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
+            $scope.tabsCtrl.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
 
             if(vm.isAddNewTab){
                 actionResult = doctorsProxy.createDoctor(vm.doctor);
@@ -103,12 +103,12 @@
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
-                        $scope.vm.handleTabCloseClicked(currentTab, true);
+                        $scope.tabsCtrl.handleTabCloseClicked(currentTab, true);
                     }else if(vm.isAddNewTab){
-                        $scope.vm.saveAndOpenInTab(vm.doctor);
+                        $scope.tabsCtrl.saveAndOpenInTab(vm.doctor);
                         vm.doctor = {};
                     }else{
-                        $scope.vm.updateTabHeader(vm.doctor);
+                        $scope.tabsCtrl.updateTabHeader(vm.doctor);
                     }
                     if(callback){
                         callback();
@@ -122,7 +122,7 @@
             }else{
                 if(saveAndClose){
                     vm.doctor = {}; //Clear this object so a new one can be created next time.
-                    $scope.vm.handleTabCloseClicked(currentTab);
+                    $scope.tabsCtrl.handleTabCloseClicked(currentTab);
                 }
             }
         }
@@ -190,7 +190,7 @@
 
         //Event Handlers:
         function handleCloseClick(){
-            $scope.vm.handleTabCloseClicked(currentTab);
+            $scope.tabsCtrl.handleTabCloseClicked(currentTab);
             //vm.doctor = {};
         }
         function handleSaveClick(callback){
@@ -209,13 +209,13 @@
             }
 
             var result = doctorsProxy.deleteDoctor(vm.doctor._id);
-            $scope.vm.reloadNeeded = true;
+            $scope.tabsCtrl.reloadNeeded = true;
 
             if(result.$promise){
                 loadingCover.showLoadingCover('Deleting');
 
                 result.$promise.then(function () {
-                    $scope.vm.handleTabCloseClicked(currentTab);
+                    $scope.tabsCtrl.handleTabCloseClicked(currentTab);
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -223,7 +223,7 @@
                     loadingCover.hideLoadingCover();
                 });
             }else{
-                $scope.vm.handleTabCloseClicked(currentTab);
+                $scope.tabsCtrl.handleTabCloseClicked(currentTab);
             }
         }
         function handleClearClick(){
@@ -235,7 +235,7 @@
             console.log('currentTab.isDirty(): ' + currentTab.isDirty());
         })
         onRouteChangeOff = $scope.$on('$locationChangeStart', function($event, newUrl){
-            //TODO: maybe better to use tabsetCtrl's  $scope.$on('$destroy' for this?
+            //TODO: maybe better to use tabsCtrl's  $scope.$on('$destroy' for this?
             if(currentTab.isDirty()){
                 showConfirmLeave($event, newUrl);
             }

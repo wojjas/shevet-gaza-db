@@ -23,7 +23,7 @@
         //////////////////
 
         function activate() {
-            var currentTab = $scope.vm.getInitiatingTab();
+            var currentTab = $scope.tabsCtrl.getInitiatingTab();
             currentTab.initiated = true;
 
             vm.table = tableService.init([]);
@@ -99,7 +99,7 @@
                 loadingCover.showLoadingCover('Deleting Doctor', fromList);
 
                 result.$promise.then(function () {
-                    $scope.vm.closeTabDeletedInList(data);
+                    $scope.tabsCtrl.closeTabDeletedInList(data);
                     loadingCover.hideLoadingCover();
                     fillTable();    //calls server, thus hide loading cover first.
                 }).catch(function (response) {

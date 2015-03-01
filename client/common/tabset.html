@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-md-12">
             <tabset justified="false">
-                <tab ng-repeat="tab in vm.tabset"
+                <tab ng-repeat="tab in tabsCtrl.tabset"
                      active="tab.active"
-                     select="vm.handleTabSelect(tab)">
+                     select="tabsCtrl.handleTabSelect(tab)">
                     <!--Different heading depending on tab-type-->
                     <tab-heading>
                         <!--The first tab with the table-->
@@ -22,7 +22,7 @@
                         <div ng-show="!tab.isAddTab && !tab.isFirstTab">
                             {{tab.heading}}
                             <a href=""
-                               ng-click="vm.handleTabCloseClicked(tab)">
+                               ng-click="tabsCtrl.handleTabCloseClicked(tab)">
                                 <i class="glyphicon glyphicon-remove-circle tab-icon"></i>
                             </a>
                         </div>
