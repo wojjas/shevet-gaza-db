@@ -21,7 +21,7 @@
                 templateUrl: 'home/home.html'
     //            controller: 'home as vm'
             }).
-            when('/tabset/:list', {
+            when('/tabs/:list', {
                 templateUrl: 'common/tabs.html',
                 controller: 'TabsController as tabsCtrl'
             }).

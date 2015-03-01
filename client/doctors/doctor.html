@@ -7,7 +7,7 @@
 </style>
 
 <section class="container"
-         ng-controller="doctor as vmd">
+         ng-controller="DoctorController as doctorCtrl">
 
     <!-- form-horizontal makes form-groups behave like grid rows, so no need for .row -->
     <form class="form-horizontal center-block margin-top-md" ng-submit="vm.handleFormSubmit()">
@@ -17,8 +17,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="Name">Name</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="Name"
-                           ng-model="vmd.doctor.name"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.name"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text"
                            placeholder="doctor's full name" class="form-control input-md">
                 </div>
@@ -28,8 +28,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="cellPhone">Cell Phone</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="cellPhone"
-                           ng-model="vmd.doctor.cellPhone"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.cellPhone"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text"
                            placeholder="cell phone"
                            class="form-control input-md">
@@ -40,8 +40,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="OfficePhone">Office Phone</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="OfficePhone"
-                           ng-model="vmd.doctor.officePhone"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.officePhone"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text"
                            placeholder="office phone"
                            class="form-control input-md">
@@ -53,8 +53,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="officeFax">Office Fax</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="officeFax"
-                           ng-model="vmd.doctor.officeFax"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.officeFax"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text" placeholder="office fax" class="form-control input-md">
 
                 </div>
@@ -64,8 +64,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="homeFax">Home Fax</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="homeFax"
-                           ng-model="vmd.doctor.homeFax"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.homeFax"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text" placeholder="home fax" class="form-control input-md">
 
                 </div>
@@ -75,8 +75,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="homePhone">Home Phone</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="homePhone"
-                           ng-model="vmd.doctor.homePhone"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.homePhone"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text" placeholder="home phone" class="form-control input-md">
 
                 </div>
@@ -86,8 +86,8 @@
                 <label class="col-md-3 col-sm-2 control-label" for="email">Email</label>
                 <div class="col-md-6 col-sm-8">
                     <input id="email"
-                           ng-model="vmd.doctor.email"
-                           ng-readonly="vmd.isReadonly"
+                           ng-model="doctorCtrl.doctor.email"
+                           ng-readonly="doctorCtrl.isReadonly"
                            type="text" placeholder="email" class="form-control input-md">
 
                 </div>
@@ -100,25 +100,25 @@
                         <div class="row">
                             <div class="col-sm-3 col-xs-2 text-left">
                                 <button class="btn btn-primary"
-                                        ng-click="vmd.handleCloseClick()">Close</button>
+                                        ng-click="doctorCtrl.handleCloseClick()">Close</button>
                             </div>
 
                             <div class="text-center col-sm-6 col-xs-8">
                                 <div class="btn-group">
                                     <button class="btn btn-default"
-                                            ng-click="vmd.handleSaveClick()">Save</button>
+                                            ng-click="doctorCtrl.handleSaveClick()">Save</button>
                                     <button class="btn btn-default"
-                                            ng-click="vmd.handleSaveAndCloseClick()">Save & Close</button>
+                                            ng-click="doctorCtrl.handleSaveAndCloseClick()">Save & Close</button>
                                 </div>
                             </div>
 
                             <div class="col-sm-3 col-xs-2 text-right">
                                 <button class="btn btn-danger"
-                                        ng-click="vmd.handleDeleteClick()"
-                                        ng-hide="vmd.isAddNewTab">Delete</button>
+                                        ng-click="doctorCtrl.handleDeleteClick()"
+                                        ng-hide="doctorCtrl.isAddNewTab">Delete</button>
                                 <button class="btn btn-default"
-                                        ng-click="vmd.handleClearClick()"
-                                        ng-show="vmd.isAddNewTab">Clear</button>
+                                        ng-click="doctorCtrl.handleClearClick()"
+                                        ng-show="doctorCtrl.isAddNewTab">Clear</button>
                             </div>
                         </div>
                     </div>

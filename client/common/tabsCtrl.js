@@ -3,16 +3,16 @@
 
     angular
         .module('gdCommon')
-        .controller('TabsController', ['$scope', '$routeParams', 'tabsets', '$modal', Tabset]);
+        .controller('TabsController', ['$scope', '$routeParams', 'tabsets', '$modal', Tabs]);
 
-    function Tabset($scope, $routeParams, tabsets, $modal) {
+    function Tabs($scope, $routeParams, tabsets, $modal) {
         var vm = this;
 
         var tabTemplate = '';
         var currentList = '';
 
-        vm.title = 'Tabset Ctrl tabsets-style';
-        vm.tabset = [];
+        vm.title = 'Tabs Ctrl';
+        vm.tabs = [];
         vm.reloadNeeded = false;
 
         vm.activate = activate;
@@ -35,7 +35,7 @@
             if(!tabsets.getTabset(currentList)){
                 tabsets.initTabset(currentList);
             }
-            vm.tabset = tabsets.getTabset(currentList);
+            vm.tabs = tabsets.getTabset(currentList);
         }
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
@@ -67,9 +67,9 @@
         //Returns the first tab found not to be initiated.
         //Call this one from tab's controller's activate/init-functions
         function getInitiatingTab(){
-            //Use tabset's memory to track what's initiated and what's not.
+            //Use tabs's memory to track what's initiated and what's not.
             //initiated means, that a tab-controller has used this tab's data/info to fill its form.
-            var tabset = vm.tabset;
+            var tabset = vm.tabs;
             for(var i=0, len=tabset.length; i<len; i++){
                 if(!tabset[i].initiated){
 
@@ -102,8 +102,8 @@
         }
 
         $scope.$on('$destroy', function () {
-            //console.log('Destroying tabsCtrl, save tabset ' + vm.tabset);
-            //tabsets.setTabset(currentList, vm.tabset);
+            //console.log('Destroying tabsCtrl, save tabs ' + vm.tabs);
+            //tabsets.setTabset(currentList, vm.tabs);
             tabsets.unInitTabset(currentList);
         })
     }

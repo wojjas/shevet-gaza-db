@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('gdDoctors').controller('doctor', Doctor);
+    angular.module('gdDoctors').controller('DoctorController', Doctor);
 
     Doctor.$inject = ['$scope', '$location', 'doctorsProxy', 'loadingCover', '$modal', '$log'];
 
@@ -53,7 +53,7 @@
             }
 
             //We are NOT in the AddTab.
-            //If there's no data in tabset for this tab we are not editing an existing
+            //If there's no data in tabs for this tab we are not editing an existing
             //consequently we will fetch from persistent storage.
             var doctorRead = doctorsProxy.readOneDoctor(id);
 

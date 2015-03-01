@@ -30,7 +30,7 @@
 
         //Private Functions:
         function indexOfTab(tabset, data){
-            var currentTabset = tabsets[tabset]; // vm.tabset;
+            var currentTabset = tabsets[tabset]; // vm.tabs;
             for(var i=1, len=currentTabset.length; i < len; i++){
                 if(data._id && currentTabset[i].id === data._id){
                     return i;
@@ -135,15 +135,15 @@
         function getTabset(tabset) {
             return tabsets[tabset];
         }
-        //function setTabset(tabsetName, tabset){
+        //function setTabset(tabsetName, tabs){
         //    var index = tabsets.indexOf(tabsetName);
-        //    tabsets[index] = tabset;
+        //    tabsets[index] = tabs;
         //}
         function openTab(tabset, index){
             tabsets[tabset][index].active = true;
         }
 
-        //Always opens data in tab, if needed after adding tab to tabset.
+        //Always opens data in tab, if needed after adding tab to tabs.
         function openInTabCreateIfNeeded(tabset, data){
             var tabOfRequested = indexOfTab(tabset, data);
             if(tabOfRequested === -1){
@@ -158,7 +158,7 @@
             });
         }
         function closeActiveTab(tabset){
-            var currentTabset = tabsets[tabset];//vm.tabset;
+            var currentTabset = tabsets[tabset];//vm.tabs;
 
             //Start at i=1 as we never want to close the FirstTab
             for(var i=1, len=currentTabset.length; i < len; i++){
