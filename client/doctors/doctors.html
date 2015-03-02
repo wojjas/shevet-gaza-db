@@ -4,6 +4,9 @@
             /*.body {*/
                 /*background: rgba(213,190,96,0.2);*/
             /*}*/
+            .btn-column{
+                max-width: 55px;
+            }
         </style>
 
 <section class="body"
@@ -23,7 +26,7 @@
                 <td data-title="'Cell Phone'"
                     filter="{ 'cellPhone': 'text' }"
                     sortable="'cellPhone'"
-                    class="col-sm-2">
+                    class="col-sm-3">
                     {{doctor.cellPhone}}</td>
                 <td data-title="'Office Phone'"
                     sortable="'officePhone'"
@@ -43,14 +46,9 @@
                 <td data-title="'Home Phone'"
                     sortable="'homePhone'"
                     filter="{ 'homePhone': 'text' }"
-                    class="col-sm-1">
-                    {{doctor.homePhone}}</td>
-                <td data-title="'Email'"
-                    sortable="'email'"
-                    filter="{ 'email': 'text' }"
                     class="col-sm-2">
-                    {{doctor.email}}</td>
-                <td>
+                    {{doctor.homePhone}}</td>
+                <td class="btn-column">
                     <button class="btn btn-default "
                             ng-class="{'btn-danger': doctor._id == DoctorsCtrl.dangerMarkedDocumentId}"
                             ng-mouseover="DoctorsCtrl.handleHoverOverDeleteBtn(doctor._id)"
