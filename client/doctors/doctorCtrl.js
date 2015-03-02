@@ -130,7 +130,7 @@
         function showConfirmDelete(){
             var modalInstance = $modal.open({
                 templateUrl: 'modals/confirm_delete.html',
-                controller: 'confirmDelete as vm',
+                controller: 'ConfirmDeleteController as confirmDeleteCtrl',
                 backdrop: 'static',
                 size: 'sm',
                 resolve: {
@@ -157,7 +157,7 @@
 
             var modalInstance = $modal.open({
                 templateUrl: 'modals/handle_unsaved.html',
-                controller: 'handleUnsaved as vm',
+                controller: 'HandleUnsavedController as handleUnsavedCtrl',
                 backdrop: 'static'
             });
 

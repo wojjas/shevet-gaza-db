@@ -3,7 +3,7 @@
 
     angular
         .module('gdLoadingCover')
-        .controller('loadingCover', LoadingCover);
+        .controller('LoadingCoverController', LoadingCover);
 
     LoadingCover.$inject = ['loadingCover'];
 

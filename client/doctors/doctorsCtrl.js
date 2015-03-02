@@ -1,7 +1,7 @@
 (function(){
     angular
         .module('gdDoctors')
-        .controller('doctors', ['$scope', 'config', 'doctorsProxy',
+        .controller('DoctorsController', ['$scope', 'config', 'doctorsProxy',
                                'tableService','loadingCover', '$modal', '$log',
                     Doctors]);
 
@@ -56,7 +56,7 @@
         function showConfirmDelete(data, fromList){
             var modalInstance = $modal.open({
                 templateUrl: 'modals/confirm_delete.html',
-                controller: 'confirmDelete as vm',
+                controller: 'ConfirmDeleteController as confirmDeleteCtrl',
                 backdrop: 'static',
                 size: 'sm',
                 resolve: {

@@ -3,7 +3,7 @@
 
     angular
         .module('gdHome')
-        .controller('header', Header);
+        .controller('HeaderController', Header);
 
     Header.$inject = ['config'];
 

@@ -7,13 +7,13 @@
         </style>
 
 <section class="body"
-         ng-controller="doctors as vmDoctors">
+         ng-controller="DoctorsController as DoctorsCtrl">
 
-    <table ng-table="vmDoctors.table"
+    <table ng-table="DoctorsCtrl.table"
            show-filter="true"
            class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="doctor in $data"
-            ng-class="{danger: doctor._id == vmDoctors.dangerMarkedDocumentId}"
+            ng-class="{danger: doctor._id == DoctorsCtrl.dangerMarkedDocumentId}"
                 ng-click="tabsCtrl.handleTableRowClicked(doctor)">
                 <td data-title="'Name'"
                     sortable="'name'"
@@ -52,10 +52,10 @@
                     {{doctor.email}}</td>
                 <td>
                     <button class="btn btn-default "
-                            ng-class="{'btn-danger': doctor._id == vmDoctors.dangerMarkedDocumentId}"
-                            ng-mouseover="vmDoctors.handleHoverOverDeleteBtn(doctor._id)"
-                            ng-mouseleave="vmDoctors.handleHoverOverDeleteBtn(-1)"
-                            ng-click="vmDoctors.handleDeleteClick($event, doctor, true)">
+                            ng-class="{'btn-danger': doctor._id == DoctorsCtrl.dangerMarkedDocumentId}"
+                            ng-mouseover="DoctorsCtrl.handleHoverOverDeleteBtn(doctor._id)"
+                            ng-mouseleave="DoctorsCtrl.handleHoverOverDeleteBtn(-1)"
+                            ng-click="DoctorsCtrl.handleDeleteClick($event, doctor, true)">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </td>

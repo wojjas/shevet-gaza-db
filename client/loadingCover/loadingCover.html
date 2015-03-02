@@ -58,9 +58,9 @@
 </style>
 
 <div class="loading-cover"
-     ng-controller="loadingCover as vmLC"
-     ng-show="vmLC.loadingCoverData.show">
+     ng-controller="LoadingCoverController as loadingCoverCtrl"
+     ng-show="loadingCoverCtrl.loadingCoverData.show">
 
     <img class="center-middle" src="/client/img/loader_transparent.gif">
-    <div class="loading-text">{{vmLC.loadingCoverData.action}}...</div>
+    <div class="loading-text">{{loadingCoverCtrl.loadingCoverData.action}}...</div>
 </div>

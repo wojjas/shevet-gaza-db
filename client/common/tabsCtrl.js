@@ -40,7 +40,7 @@
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
                 templateUrl: 'modals/handle_unsaved.html',
-                controller: 'handleUnsaved as vm',
+                controller: 'HandleUnsavedController as handleUnsavedCtrl',
                 backdrop: 'static'
             });
 

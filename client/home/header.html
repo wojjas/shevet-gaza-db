@@ -25,7 +25,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid header"
-         ng-controller="header as vm">
+         ng-controller="HeaderController as headerCtrl">
 
         <div class="row">
             <div class="col-xs-2">
@@ -41,9 +41,9 @@
                 </nav>
             </div>
             <div class="col-xs-2 vertical-middle" ng-show="false">
-                <p ng-click="vm.handleOfflineModeChanged()">Offline Mode:
+                <p ng-click="headerCtrl.handleOfflineModeChanged()">Offline Mode:
                     <input type="checkbox"
-                           ng-model="vm.offline">
+                           ng-model="headerCtrl.offline">
                 </p>
             </div>
         </div>

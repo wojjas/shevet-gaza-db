@@ -3,7 +3,7 @@
 
     angular
         .module('gdModals')
-        .controller('handleUnsaved', HandleUnsaved);
+        .controller('HandleUnsavedController', HandleUnsaved);
 
     //HandleUnsaved.$inject = ['$modal'];
 

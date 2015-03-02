@@ -3,7 +3,7 @@
 
     angular
         .module('gdModals')
-        .controller('confirmDelete', ConfirmDelete);
+        .controller('ConfirmDeleteController', ConfirmDelete);
 
     //ConfirmDelete.$inject = ['$modal'];
 
