@@ -61,8 +61,8 @@
         function saveAndOpenInTab(data){
             tabsets.openInTabCreateIfNeeded(currentList, data);
         }
-        function closeTabDeletedInList(data){
-            tabsets.closeSpecifiedTab(currentList, data);
+        function closeTabDeletedInList(id){
+            tabsets.closeSpecifiedTab(currentList, id);
         }
         //Returns the first tab found not to be initiated.
         //Call this one from tab's controller's activate/init-functions
@@ -93,7 +93,7 @@
                 if(currentTab.isAddTab){
                     tabsets.openTab(currentList, 0);
                 }else{
-                    tabsets.closeSpecifiedTab(currentList, currentTab.data);
+                    tabsets.closeSpecifiedTab(currentList, currentTab.id);
                 }
             }
         }

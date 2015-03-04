@@ -29,11 +29,22 @@
         function activate() {
             var id = undefined;
 
-            currentTab = $scope.tabsCtrl.getInitiatingTab();
-            if(currentTab){
-                currentTab.initiated = true;
-                id = currentTab.id;
+            //currentTab = $scope.tabsCtrl.getInitiatingTab();
+            currentTab = angular.copy(vm.doctorTab);
+
+            if(!currentTab){
+                console.debug('Failed to init current tab in Doctor Controller');
+
+                return;
             }
+            if(currentTab.isFirstTab){
+                return;
+            }
+            id = currentTab.id;
+            //if(!currentTab.isFirstTab && !currentTab.isAddTab){
+            //    currentTab.initiated = true;
+            //    id = currentTab.id;
+            //}
 
             //We are in addNewTab, creating a new doctor:
             if(!id && currentTab && currentTab.isAddTab){
@@ -81,9 +92,10 @@
         }
         function setDoctor(doctor){
             if(currentTab){
-                currentTab.data = doctor;
-                currentTab.dataBkp = cloneObject(doctor);
-                vm.doctor = currentTab.data;
+   //             currentTab.data = doctor;
+   //             currentTab.dataBkp = cloneObject(doctor);
+   //             vm.doctorBkp = doctor
+                vm.doctor = angular.copy(doctor);//currentTab.data;
             }
         }
         //Will update or create depending on current state, edit/add.

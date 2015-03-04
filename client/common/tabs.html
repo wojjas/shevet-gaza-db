@@ -32,7 +32,8 @@
                             <i class="glyphicon glyphicon-plus-sign tab-icon"></i>
                         </div>
                     </tab-heading>
-                    <div ng-include="tab.template"></div>
+                    <div ng-include="tab.template" ng-show="tab.isFirstTab"></div>
+                    <doctor-directive doctor-tab="tab" ng-show="!tab.isFirstTab"></doctor-directive>
                 </tab>
             </tabset>
         </div>
