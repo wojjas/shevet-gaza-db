@@ -15,7 +15,13 @@
         // 
         var directive = {
             restrict: 'E',
-            scope: {doctorTab: "="},
+            scope: {
+                doctorTab: "=",
+                reloadNeeded: "=",
+
+                handleTabCloseClicked: "&",
+                saveAndOpenInTab: "&"
+            },
             templateUrl:'/doctors/doctor.html',
             controller: 'DoctorController',
             controllerAs: 'doctorCtrl',

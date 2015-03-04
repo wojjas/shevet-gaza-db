@@ -13,7 +13,7 @@
 
         vm.title = 'Tabs Ctrl';
         vm.tabs = [];
-        vm.reloadNeeded = false;
+        vm.reloadNeeded = false;  //Reload of first-tab, the table, is needed
 
         vm.activate = activate;
         vm.handleTabSelect = handleTabSelect;
@@ -21,7 +21,6 @@
         vm.handleTableRowClicked = handleTableRowClicked;
 
         vm.saveAndOpenInTab = saveAndOpenInTab;
-        vm.updateTabHeader = updateTabHeader;
         vm.closeTabDeletedInList = closeTabDeletedInList;
         vm.getInitiatingTab = getInitiatingTab;
 
@@ -55,9 +54,6 @@
             });
         }
 
-        function updateTabHeader(data){
-            tabsets.updateTabHeader(currentList, data);
-        }
         function saveAndOpenInTab(data){
             tabsets.openInTabCreateIfNeeded(currentList, data);
         }

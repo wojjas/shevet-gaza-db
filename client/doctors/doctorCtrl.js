@@ -9,7 +9,7 @@
     function Doctor($scope, $location, doctorsProxy, loadingCover, $modal, $log) {
         /* jshint validthis: true */
         var vm = this;
-        var currentTab = {};
+        var currentTab = {};                //Reference to parent scope's tab for this controller
         var onRouteChangeOff = undefined;
 
         vm.isAddNewTab = true;
@@ -29,8 +29,7 @@
         function activate() {
             var id = undefined;
 
-            //currentTab = $scope.tabsCtrl.getInitiatingTab();
-            currentTab = angular.copy(vm.doctorTab);
+            currentTab = vm.doctorTab;
 
             if(!currentTab){
                 console.debug('Failed to init current tab in Doctor Controller');
@@ -41,13 +40,9 @@
                 return;
             }
             id = currentTab.id;
-            //if(!currentTab.isFirstTab && !currentTab.isAddTab){
-            //    currentTab.initiated = true;
-            //    id = currentTab.id;
-            //}
 
             //We are in addNewTab, creating a new doctor:
-            if(!id && currentTab && currentTab.isAddTab){
+            if(!id && currentTab.isAddTab){
                 setDoctor({});
                 vm.isAddNewTab = true;
 
@@ -56,7 +51,7 @@
                 vm.isAddNewTab = false;
             }
 
-            //If data exists use it, (don't get from local storage.)
+            //If data exists use it, (don't get from persistent storage.)
             if(currentTab.data){
                 setDoctor(currentTab.data);
 
@@ -92,18 +87,17 @@
         }
         function setDoctor(doctor){
             if(currentTab){
-   //             currentTab.data = doctor;
-   //             currentTab.dataBkp = cloneObject(doctor);
-   //             vm.doctorBkp = doctor
-                vm.doctor = angular.copy(doctor);//currentTab.data;
+                currentTab.data = doctor;
+                currentTab.dataBkp = angular.copy(doctor); //cloneObject(doctor);
+                vm.doctor = currentTab.data;
             }
         }
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose, callback) {
             var actionResult = null;
-            $scope.tabsCtrl.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
+            vm.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
 
-            if(vm.isAddNewTab){
+            if(currentTab.isAddTab){
                 actionResult = doctorsProxy.createDoctor(vm.doctor);
             }else{
                 actionResult = doctorsProxy.updateDoctor(vm.doctor);
@@ -115,12 +109,12 @@
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
-                        $scope.tabsCtrl.handleTabCloseClicked(currentTab, true);
-                    }else if(vm.isAddNewTab){
-                        $scope.tabsCtrl.saveAndOpenInTab(vm.doctor);
+                        vm.handleTabCloseClicked({doNotConfirm: true});
+                    }else if(currentTab.isAddTab){
+                        vm.saveAndOpenInTab({data: vm.doctor});
                         vm.doctor = {};
                     }else{
-                        $scope.tabsCtrl.updateTabHeader(vm.doctor);
+                        vm.doctorTab.heading = vm.doctor.name;
                     }
                     if(callback){
                         callback();
@@ -134,7 +128,7 @@
             }else{
                 if(saveAndClose){
                     vm.doctor = {}; //Clear this object so a new one can be created next time.
-                    $scope.tabsCtrl.handleTabCloseClicked(currentTab);
+                    vm.handleTabCloseClicked();
                 }
             }
         }
@@ -202,7 +196,7 @@
 
         //Event Handlers:
         function handleCloseClick(){
-            $scope.tabsCtrl.handleTabCloseClicked(currentTab);
+            vm.handleTabCloseClicked();
             //vm.doctor = {};
         }
         function handleSaveClick(callback){
@@ -221,13 +215,13 @@
             }
 
             var result = doctorsProxy.deleteDoctor(vm.doctor._id);
-            $scope.tabsCtrl.reloadNeeded = true;
+            vm.reloadNeeded = true;
 
             if(result.$promise){
                 loadingCover.showLoadingCover('Deleting');
 
                 result.$promise.then(function () {
-                    $scope.tabsCtrl.handleTabCloseClicked(currentTab);
+                    vm.handleTabCloseClicked();
                 }).catch(function (response) {
                     var errorMessage = "ERROR deleting doctor. " + response.statusText;
                     window.alert(errorMessage);
@@ -235,7 +229,7 @@
                     loadingCover.hideLoadingCover();
                 });
             }else{
-                $scope.tabsCtrl.handleTabCloseClicked(currentTab);
+                vm.handleTabCloseClicked();
             }
         }
         function handleClearClick(){
@@ -243,12 +237,11 @@
         }
 
         $scope.$on('$destroy', function (event) {
-            console.log('Doctor Ctrl is being destroyed for Doctor: ', vm.doctor.name + ", id: " +vm.doctor.id);
-            console.log('currentTab.isDirty(): ' + currentTab.isDirty());
+            console.log('Doctor Ctrl is being destroyed for Doctor: ', vm.doctor.name + ", id: " +vm.doctor._id);
         })
         onRouteChangeOff = $scope.$on('$locationChangeStart', function($event, newUrl){
             //TODO: maybe better to use tabsCtrl's  $scope.$on('$destroy' for this?
-            if(currentTab.isDirty()){
+            if(!currentTab.isFirstTab && currentTab.isDirty()){
                 showConfirmLeave($event, newUrl);
             }
         })

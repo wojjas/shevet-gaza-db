@@ -33,7 +33,11 @@
                         </div>
                     </tab-heading>
                     <div ng-include="tab.template" ng-show="tab.isFirstTab"></div>
-                    <doctor-directive doctor-tab="tab" ng-show="!tab.isFirstTab"></doctor-directive>
+                    <doctor-directive ng-show="!tab.isFirstTab"
+                            doctor-tab="tab"
+                            reload-needed="tabsCtrl.reloadNeeded"
+                            handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
+                            save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></doctor-directive>
                 </tab>
             </tabset>
         </div>

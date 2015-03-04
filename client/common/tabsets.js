@@ -41,30 +41,11 @@
         function addTabToTabsetAndOpen(tabset, data){
             var currentTabset = tabsets[tabset];
 
-            /*
             var newTab = {
+                active: true,
                 heading: data.name,
                 id: data._id,
-                template: currentTabset[currentTabset.length - 1].template,
-                active: true,
-                //This tab's data is considered dirty if its dataBkp differs from its data
-                isDirty: function(){
-                    if(this.dataBkp && this.data){
-                        var dataBkpStr = JSON.stringify(this.dataBkp);
-                        var dataStr = JSON.stringify(this.data);
 
-                        return dataBkpStr !== "" && dataBkpStr !== dataStr;
-                    }else{
-                        //if we have no way of saying, we assume it is
-                        return true;
-                    }
-                }
-            }
-            */
-            var newTab = {
-                active: true,
-                heading: data.name,
-                id: data._id,
                 isDirty: function(){
                     if(this.dataBkp && this.data){
                         var dataBkpStr = JSON.stringify(this.dataBkp);
