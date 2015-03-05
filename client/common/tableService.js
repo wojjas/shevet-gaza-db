@@ -2,7 +2,7 @@
     'use strict';
 
     //ngTable constructor takes two objects, parameters and settings.
-    angular.module('gdDoctors').factory('tableService', TableService);
+    angular.module('gdCommon').factory('tableService', TableService);
 
     TableService.$inject = ['$filter', 'ngTableParams'];
 
