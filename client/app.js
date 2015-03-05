@@ -10,6 +10,7 @@
         //gazaDB modules:
         'gdCommon',
         'gdDoctors',
+        'gdPatients',
         'gdHome',
         'gdLoadingCover',
         'gdModals'

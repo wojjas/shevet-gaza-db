@@ -1,7 +1,8 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-var doctorsCtrl = require('./server/controllers/doctorsCtrl');
+var doctorsCtrl = require('./server/controllers/crudCtrl')('doctor');
+var patientsCtrl = require('./server/controllers/crudCtrl')('patient');
 
 var app = express();
 
@@ -27,6 +28,12 @@ app.get('/api/doctors/:id', doctorsCtrl.getOne);
 app.delete('/api/doctors/:id', doctorsCtrl.deleteOne);
 app.post('/api/doctors/', doctorsCtrl.createOne);
 app.put('/api/doctors/', doctorsCtrl.updateOne);
+
+app.get('/api/patients', patientsCtrl.getAll);
+app.get('/api/patients/:id', patientsCtrl.getOne);
+app.delete('/api/patients/:id', patientsCtrl.deleteOne);
+app.post('/api/patients/', patientsCtrl.createOne);
+app.put('/api/patients/', patientsCtrl.updateOne);
 
 //Server:
 app.listen(3000, function () {

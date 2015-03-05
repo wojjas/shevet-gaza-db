@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<p>Patients view</p>
-</body>
-</html>
+<!--Patients list/table partial-->
+<link rel="stylesheet" href="../main.css">
+<style>
+    /*.body {*/
+    /*background: rgba(213,190,96,0.2);*/
+    /*}*/
+    .btn-column{
+        max-width: 55px;
+    }
+</style>
+
+<section class="body"
+         ng-controller="PatientsController as patientsCtrl">
+
+    <table ng-table="patientsCtrl.table"
+           show-filter="true"
+           class="table table-bordered table-hover table-striped table-responsive">
+        <tr ng-repeat="patient in $data"
+            ng-class="{danger: patient._id == patientsCtrl.dangerMarkedDocumentId}"
+            ng-click="tabsCtrl.handleTableRowClicked(patient)">
+
+            <td data-title="'Child Id'"
+                sortable="'childId'"
+                filter="{ 'childId': 'text' }"
+                class="col-sm-2">
+                {{patient.childId}}</td>
+
+            <td data-title="'First Name'"
+                sortable="'firstName'"
+                filter="{ 'firstName': 'text' }"
+                class="col-sm-2">
+                {{patient.firstName}}</td>
+            <td data-title="'Middle Name'"
+                sortable="'middleName'"
+                filter="{ 'middleName': 'text' }"
+                class="col-sm-3">
+                {{patient.middleName}}</td>
+            <td data-title="'Last Name'"
+                sortable="'lastName'"
+                filter="{ 'lastName': 'text' }"
+                class="col-sm-2">
+                {{patient.lastName}}</td>
+
+            <td data-title="'Gender'"
+                sortable="'gender'"
+                filter="{ 'gender': 'text' }"
+                class="col-sm-1">
+                {{patient.gender}}</td>
+
+            <td data-title="'Day of Birth'"
+                sortable="'birthDate'"
+                filter="{ 'birthDate': 'text' }"
+                class="col-sm-2">
+                {{patient.birthDate}}</td>
+            
+            <td class="btn-column">
+                <button class="btn btn-default "
+                        ng-class="{'btn-danger': patient._id == patientsCtrl.dangerMarkedDocumentId}"
+                        ng-mouseover="patientsCtrl.handleHoverOverDeleteBtn(patient._id)"
+                        ng-mouseleave="patientsCtrl.handleHoverOverDeleteBtn(-1)"
+                        ng-click="patientsCtrl.handleDeleteClick($event, patient, true)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</section>
