@@ -7,10 +7,11 @@
 
     //ConfirmDelete.$inject = ['$modal'];
 
-    function ConfirmDelete($modalInstance, doctorName) {
+    function ConfirmDelete($modalInstance, contextData) {
         var vm = this;
 
-        vm.doctorName = '';
+        vm.objectName = '';
+        vm.objectType = '';
         vm.activate = activate;
         vm.handleDeleteClick = handleDeleteClick;
         vm.handleCancelClick = handleCancelClick;
@@ -20,7 +21,8 @@
         ////////////////
 
         function activate() {
-            vm.doctorName = doctorName;
+            vm.objectName = contextData.name;
+            vm.objectType = contextData.type;
         }
 
         function handleDeleteClick() {

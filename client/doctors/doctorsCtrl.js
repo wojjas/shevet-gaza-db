@@ -55,13 +55,17 @@
         //TODO: duplicated, in doctorCtrl
         function showConfirmDelete(data, fromList){
             var modalInstance = $modal.open({
-                templateUrl: 'modals/confirm_delete.html',
+                templateUrl: '/modals/confirm_delete.html',
                 controller: 'ConfirmDeleteController as confirmDeleteCtrl',
                 backdrop: 'static',
                 size: 'sm',
                 resolve: {
-                    doctorName: function () {
-                        return data.name;
+                    contextData: function () {
+                        var contextData = {
+                            name: data.name,
+                            type: 'doctor'
+                        }
+                        return contextData;
                     }
                 }
             });

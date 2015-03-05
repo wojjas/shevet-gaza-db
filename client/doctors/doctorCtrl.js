@@ -138,13 +138,17 @@
         //TODO: duplicated, in doctorsCtrl
         function showConfirmDelete(){
             var modalInstance = $modal.open({
-                templateUrl: 'modals/confirm_delete.html',
+                templateUrl: '/modals/confirm_delete.html',
                 controller: 'ConfirmDeleteController as confirmDeleteCtrl',
                 backdrop: 'static',
                 size: 'sm',
                 resolve: {
-                    doctorName: function () {
-                        return vm.doctor.name;
+                    contextData: function () {
+                        var contextData = {
+                            name: vm.doctor.name,
+                            type: 'doctor'
+                        }
+                        return contextData;
                     }
                 }
             });
