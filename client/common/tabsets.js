@@ -21,7 +21,6 @@
             openInTabCreateIfNeeded: openInTabCreateIfNeeded,
             closeActiveTab: closeActiveTab,
             closeSpecifiedTab : closeSpecifiedTab,
-            updateTabHeader: updateTabHeader
         };
 
         return service;
@@ -38,6 +37,18 @@
             }
             return -1;
         }
+        //This tab's data is considered dirty if its dataBkp differs from its data
+        function isDirty(){
+            if(this.dataBkp && this.data){
+                var dataBkpStr = JSON.stringify(this.dataBkp);
+                var dataStr = JSON.stringify(this.data);
+
+                return dataBkpStr !== "" && dataBkpStr !== dataStr;
+            }else{
+                //if we have no way of saying, we assume it is
+                return true;
+            }
+        }
         function addTabToTabsetAndOpen(tabset, data){
             var currentTabset = tabsets[tabset];
 
@@ -46,17 +57,7 @@
                 heading: data.name,
                 id: data._id,
 
-                isDirty: function(){
-                    if(this.dataBkp && this.data){
-                        var dataBkpStr = JSON.stringify(this.dataBkp);
-                        var dataStr = JSON.stringify(this.data);
-
-                        return dataBkpStr !== "" && dataBkpStr !== dataStr;
-                    }else{
-                        //if we have no way of saying, we assume it is
-                        return true;
-                    }
-                }
+                isDirty: isDirty
             }
 
             currentTabset.splice(currentTabset.length - 1, 0, newTab);
@@ -112,19 +113,8 @@
                 "heading": 'Add new',
                 "active": false,
                 "template" : tabTemplateURL,
-                //This tab's data is considered dirty if its dataBkp differs from its data
-                "isDirty": function(){
-                    //TODO: Duplicated when creating new tab.
-                    if(this.dataBkp && this.data){
-                        var dataBkpStr = JSON.stringify(this.dataBkp);
-                        var dataStr = JSON.stringify(this.data);
 
-                        return dataBkpStr !== "" && dataBkpStr !== dataStr;
-                    }else{
-                        //if we have no way of saying, we assume it is
-                        return true;
-                    }
-                }
+                isDirty: isDirty
             }
             ];
 
@@ -176,13 +166,6 @@
             var index = indexOfTab(tabset, id);
             if(index !== -1) {
                 closeTab(tabset, index);
-            }
-        }
-
-        function updateTabHeader(tabset, data){
-            var index = indexOfTab(tabset, data);
-            if(index !== -1){
-                tabsets[tabset][index].heading = data.name;
             }
         }
     }

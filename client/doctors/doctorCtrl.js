@@ -52,7 +52,10 @@
             }
 
             //If data exists use it, (don't get from persistent storage.)
-            if(currentTab.data){
+            //SetDoctor resets the backup object, we don't want to do that
+            //(here where we reconsruct the tab with data) if
+            //currentTab is considered dirty, because then we will loose that info.
+            if(currentTab.data && !currentTab.isDirty()){
                 setDoctor(currentTab.data);
 
                 return;
