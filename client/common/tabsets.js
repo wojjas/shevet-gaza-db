@@ -49,12 +49,44 @@
                 return true;
             }
         }
+        function getObjectsName(data){
+            var retVal = '[Unknown Name]';
+
+            if(data.name){
+                retVal = name;
+
+                //Objects with "name" have only one field for it
+                return;
+            }
+
+            //First, Middle, (Nick), Last:
+            if(data.firstName){
+                retVal = data.firstName;
+
+                if(data.lastName){
+                    retVal = retVal + ' ' + data.lastName;
+                }else if(data.middleName){
+                    retVal = retVal + ' ' + data.middleName;
+                }
+            }else{
+                if(data.middleName){
+                    retVal = data.middleName;
+                }
+
+                if(data.lastName){
+                    retVal = data.middleName ? data.middleName + ' ' + data.lastName :
+                            data.lastName;
+                }
+            }
+
+            return retVal;
+        }
         function addTabToTabsetAndOpen(tabset, data){
             var currentTabset = tabsets[tabset];
 
             var newTab = {
                 active: true,
-                heading: data.name,
+                heading: getObjectsName(data),
                 id: data._id,
 
                 isDirty: isDirty

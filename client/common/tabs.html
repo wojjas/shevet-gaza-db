@@ -32,12 +32,22 @@
                             <i class="glyphicon glyphicon-plus-sign tab-icon"></i>
                         </div>
                     </tab-heading>
+
                     <div ng-include="tab.template" ng-show="tab.isFirstTab"></div>
-                    <doctor-directive ng-show="!tab.isFirstTab"
+
+                    <doctor-directive
+                            ng-if="!tab.isFirstTab && tabsCtrl.currentList === 'doctors'"
                             doctor-tab="tab"
                             reload-needed="tabsCtrl.reloadNeeded"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
                             save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></doctor-directive>
+
+                    <patient-directive
+                            ng-if="!tab.isFirstTab && tabsCtrl.currentList === 'patients'"
+                            patient-tab="tab"
+                            reload-needed="tabsCtrl.reloadNeeded"
+                            handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
+                            save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></patient-directive>
                 </tab>
             </tabset>
         </div>

@@ -1,10 +1,124 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<p>Patient view</p>
-</body>
-</html>
+<!--Doctor detail info partial-->
+<link rel="stylesheet" href="../main.css">
+<style>
+    .margin-top-md{
+        margin-top: 25px;
+    }
+</style>
+
+<section class="container">
+
+    <!-- form-horizontal makes form-groups behave like grid rows, so no need for .row -->
+    <form class="form-horizontal center-block margin-top-md" ng-submit="vm.handleFormSubmit()">
+        <fieldset class="container">
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="firstName">First Name</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="firstName"
+                           ng-model="patientCtrl.patient.firstName"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text"
+                           placeholder="patient's first name" class="form-control input-sm">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="firstName">Middle Names</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="firstName"
+                           ng-model="patientCtrl.patient.middleName"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text"
+                           placeholder="patient's middle names" class="form-control input-sm">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="lastName">Last Name</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="lastName"
+                           ng-model="patientCtrl.patient.lastName"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text"
+                           placeholder="patient's last name" class="form-control input-sm">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="cellPhone">Cell Phone</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="cellPhone"
+                           ng-model="patientCtrl.patient.cellPhone"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text"
+                           placeholder="cell phone"
+                           class="form-control input-md">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="OfficePhone">Office Phone</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="OfficePhone"
+                           ng-model="patientCtrl.patient.officePhone"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text"
+                           placeholder="office phone"
+                           class="form-control input-md">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="officeFax">Office Fax</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="officeFax"
+                           ng-model="patientCtrl.patient.officeFax"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text" placeholder="office fax" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="homeFax">Home Fax</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="homeFax"
+                           ng-model="patientCtrl.patient.homeFax"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text" placeholder="home fax" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="homePhone">Home Phone</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="homePhone"
+                           ng-model="patientCtrl.patient.homePhone"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text" placeholder="home phone" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 col-sm-2 control-label" for="email">Email</label>
+                <div class="col-md-6 col-sm-8">
+                    <input id="email"
+                           ng-model="patientCtrl.patient.email"
+                           ng-readonly="patientCtrl.isReadonly"
+                           type="text" placeholder="email" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <div class="form-group margin-top-md">
+                <div class="col-md-3 col-sm-2"></div>
+                <crud-buttons-directive></crud-buttons-directive>
+                <div class="col-md-3 col-xs-2"></div>
+            </div>
+
+        </fieldset>
+    </form>
+
+</section>
