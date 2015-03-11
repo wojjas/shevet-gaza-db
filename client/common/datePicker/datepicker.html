@@ -1,0 +1,13 @@
+<div class="input-group">
+    <input type="text" class="form-control"
+           datepicker-popup="{{format}}"
+           ng-model="datePickerCtrl.date"
+           is-open="datePickerCtrl.opened"
+           min-date="datePickerCtrl.minDate"
+           max-date="datePickerCtrl.maxDate"
+           datepicker-options="datePickerCtrl.dateOptions"
+            />
+    <a href="" class="input-group-addon" ng-click="datePickerCtrl.handleOpen($event)">
+        <i class="glyphicon glyphicon-calendar"></i>
+    </a>
+</div>

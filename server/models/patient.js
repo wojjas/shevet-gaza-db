@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
             middleName: {type: String, trim: true},
             lastName: {type: String, trim: true},
             gender: "String",
-            birthDate: "String",    /*TODO: Use Date*/
+            birthDate: {type: String, trim: true},    /*TODO: Use Date*/
             address: {type: String, trim: true},
             countryRegion: {type: String, trim: true},
             homePhone: {type: String, trim: true},
@@ -23,6 +23,7 @@ var mongoose = require('mongoose');
             siblings: {type: Number, min: 0, max: 32},
             siblingsWithHartDisease: "Boolean",
             parentsRelated: "Boolean",
+            religion: {type: String, trim: true},
             diagnosis: {type: String, trim: true},
             dateReferredToUs: "String",     //TODO: Use Date
             dateFirstEval: "String",        //TODO: Use Date

@@ -12,104 +12,152 @@
     <form class="form-horizontal center-block margin-top-md" ng-submit="vm.handleFormSubmit()">
         <fieldset class="container">
 
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="firstName">First Name</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="firstName"
-                           ng-model="patientCtrl.patient.firstName"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text"
-                           placeholder="patient's first name" class="form-control input-sm">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="firstName">Middle Names</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="firstName"
-                           ng-model="patientCtrl.patient.middleName"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text"
-                           placeholder="patient's middle names" class="form-control input-sm">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="lastName">Last Name</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="lastName"
-                           ng-model="patientCtrl.patient.lastName"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text"
-                           placeholder="patient's last name" class="form-control input-sm">
-                </div>
-            </div>
+            <div class="container" style="margin-top:15px;">
+                <form class="form-horizontal" role="form">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 personal-data">
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Id</label>
+                                <div class=" col-sm-9">
+                                    <input class="form-control"
+                                           type="text"
+                                            ng-model="patientCtrl.patient.childId"
+                                            placeholder="child Id"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">First</label>
+                                <div class=" col-sm-9">
+                                <input class="form-control"
+                                       type="text"
+                                       ng-model="patientCtrl.patient.firstName"
+                                       placeholder="patient's first name"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Middle</label>
+                                <div class=" col-sm-9">
+                                <input class="form-control"
+                                       type="text"
+                                       ng-model="patientCtrl.patient.middleName"
+                                       placeholder="middle name"/>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Last</label>
+                                <div class=" col-sm-9">
+                                <input class="form-control"
+                                       type="text"
+                                       ng-model="patientCtrl.patient.lastName"
+                                       placeholder="last name"/>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Gender</label>
+                                <div class=" col-sm-9">
+                                    <select class="form-control"
+                                            ng-options="gender.value as gender.label for gender in patientCtrl.genders"
+                                            ng-selected="patientCtrl.selectedGender"
+                                            ng-model="patientCtrl.selectedGender"
+                                            ng-change="patientCtrl.handleGenderSelected()">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3 center-block">
+                            <div class="patient-photo"></div>
+                        </div>
+                        <div class="col-md-4 col-sm-5 treatment-data">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">Doctor</label>
+                                <div class="col-sm-9">
+                                <input class="form-control"
+                                       type="text"
+                                       ng-model="patientCtrl.patient.doctor"
+                                       placeholder="referring doctor"/>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-12 control-label">Referred</label>
+                                <div class="col-sm-9">
+                                    <date-picker context='referred' date='patientCtrl.patient.dateReferredToUs'></date-picker>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Deceased</label>
+                                <div class="col-sm-9">
+                                    <date-picker context='deceased' date='patientCtrl.patient.dateDeceased'></date-picker>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Religion</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control"
+                                            ng-options="religion.value as religion.label for religion in patientCtrl.religions"
+                                            ng-selected="patientCtrl.selectedReligion"
+                                            ng-model="patientCtrl.selectedReligion"
+                                            ng-change="patientCtrl.handleReligionSelected()">
+                                    </select>
+                                </div>
+                            </div>
 
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="cellPhone">Cell Phone</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="cellPhone"
-                           ng-model="patientCtrl.patient.cellPhone"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text"
-                           placeholder="cell phone"
-                           class="form-control input-md">
-                </div>
-            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Siblings with heart disease
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Parent related
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row treatment-data">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Born</label>
+                                <div class="col-sm-9">
+                                    <date-picker context='birth' date="patientCtrl.patient.birthDate"></date-picker>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-3 col-xs-12 control-label">Address</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" type="text-area" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-xs-12" style="margin-top:5px;">
+                            <label class="col-sm-12 col-xs-12">Diagnosis</label>
+                            <div class="col-sm-12 col-xs-12">
+                                <textarea class="form-control" type="text-area" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="OfficePhone">Office Phone</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="OfficePhone"
-                           ng-model="patientCtrl.patient.officePhone"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text"
-                           placeholder="office phone"
-                           class="form-control input-md">
+                    <div class="row related-persons margin-top">
+                        <tabset>
+                            <tab heading="Related Persons and Contacts">
+                                <contact-list></contact-list>
+                            </tab>
+                            <tab heading="Add New">
+                                <contact-details></contact-details>
+                            </tab>
+                        </tabset>
+                    </div>
 
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="officeFax">Office Fax</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="officeFax"
-                           ng-model="patientCtrl.patient.officeFax"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text" placeholder="office fax" class="form-control input-md">
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="homeFax">Home Fax</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="homeFax"
-                           ng-model="patientCtrl.patient.homeFax"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text" placeholder="home fax" class="form-control input-md">
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="homePhone">Home Phone</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="homePhone"
-                           ng-model="patientCtrl.patient.homePhone"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text" placeholder="home phone" class="form-control input-md">
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 col-sm-2 control-label" for="email">Email</label>
-                <div class="col-md-6 col-sm-8">
-                    <input id="email"
-                           ng-model="patientCtrl.patient.email"
-                           ng-readonly="patientCtrl.isReadonly"
-                           type="text" placeholder="email" class="form-control input-md">
-
-                </div>
+                    <div class="row related-persons margin-top">
+                        <tabset>
+                            <tab heading="Visits">
+                                <visit-list></visit-list>
+                            </tab>
+                            <tab heading="Add New">
+                                <visit-details></visit-details>
+                            </tab>
+                        </tabset>
+                    </div>
+                </form>
             </div>
 
             <div class="form-group margin-top-md">

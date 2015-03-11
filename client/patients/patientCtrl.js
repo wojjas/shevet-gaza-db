@@ -16,6 +16,8 @@
         vm.title = 'Patient Ctrl';
         vm.patient = {};
         vm.activate = activate;
+        vm.handleGenderSelected = handleGenderSelected;
+        vm.handleReligionSelected = handleReligionSelected;
         vm.handleCloseClick = handleCloseClick;
         vm.handleSaveClick = handleSaveClick;
         vm.handleSaveAndCloseClick = handleSaveAndCloseClick;
@@ -93,6 +95,25 @@
                 currentTab.data = patient;
                 currentTab.dataBkp = angular.copy(patient); //cloneObject(patient);
                 vm.patient = currentTab.data;
+
+                //Handle drop-downs:
+                vm.genders = [{
+                    label:'Unknown', value:'unknown'},{
+                    label:'Female', value:'female'},{
+                    label:'Male', value:'male'
+                }];
+                vm.selectedGender = vm.patient.gender && vm.patient.gender !== "" ?
+                                    vm.patient.gender :
+                                    vm.genders[0].value;
+
+                vm.religions = [{
+                    label:'Other', value:'Other'},{
+                    label:'Muslim', value:'Muslim'},{
+                    label:'Christian', value:'Christian'
+                }];
+                vm.selectedReligion = vm.patient.religion && (vm.patient.religion === 'Christian' ||  vm.patient.religion === 'Muslim') ?
+                                    vm.patient.religion :
+                                    vm.religions[0].value;
             }
         }
         //Will update or create depending on current state, edit/add.
@@ -202,6 +223,12 @@
         }
 
         //Event Handlers:
+        function handleGenderSelected(){
+            vm.patient.gender = vm.selectedGender;
+        }
+        function handleReligionSelected(){
+            vm.patient.religion = vm.selectedReligion;
+        }
         function handleCloseClick(){
             vm.handleTabCloseClicked();
             //vm.patient = {};
