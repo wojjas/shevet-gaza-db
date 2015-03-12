@@ -24,7 +24,7 @@
 
         function activate() {
             var currentTab = $scope.tabsCtrl.getInitiatingTab();
-            currentTab.initiated = true;
+            currentTab.initiated = true;    //TODO: remove as the whole initiated-stuff is depricated since use of directives
 
             vm.table = tableService.init([]);
             fillTable();
@@ -116,7 +116,7 @@
             }
         }
 
-        $scope.$on('getAllDoctorsEvent', function () {
+        $scope.$on('reloadTableEvent', function () {
             fillTable();
         })
     }

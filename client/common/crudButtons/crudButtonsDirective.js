@@ -11,6 +11,14 @@
         // Creates:
         // 
         var directive = {
+            scope: {
+                close: '&',
+                save: '&',
+                saveAndClose: '&',
+                isAddNewTab: "=",
+                delete: '&',
+                clear: '&'
+            },
             restrict: 'E',
             templateUrl: '/common/crudButtons/crudbuttons.html'
         };

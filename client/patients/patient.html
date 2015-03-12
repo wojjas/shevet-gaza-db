@@ -4,6 +4,16 @@
     .margin-top-md{
         margin-top: 25px;
     }
+    .photo{
+        width:1px;
+        height:200px;
+        border: 1px black;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .design-time-color{
+        background-color:lightgray;
+    }
 </style>
 
 <section class="container">
@@ -64,8 +74,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-3 center-block">
-                            <div class="patient-photo"></div>
+                        <div class="col-md-4 col-sm-3 center-block design-time-color">
+                            <div class="photo"></div>
                         </div>
                         <div class="col-md-4 col-sm-5 treatment-data">
                             <div class="form-group">
@@ -162,7 +172,13 @@
 
             <div class="form-group margin-top-md">
                 <div class="col-md-3 col-sm-2"></div>
-                <crud-buttons-directive></crud-buttons-directive>
+                <crud-buttons-directive close="patientCtrl.handleCloseClick()"
+                                        save="patientCtrl.handleSaveClick()"
+                                        save-and-close="patientCtrl.handleSaveAndCloseClick()"
+                                        is-add-new-tab="patientCtrl.isAddNewTab"
+                                        delete="patientCtrl.handleDeleteClick()"
+                                        clear="patientCtrl.handleClearClick()"></crud-buttons-directive>
+
                 <div class="col-md-3 col-xs-2"></div>
             </div>
 

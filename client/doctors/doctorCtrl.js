@@ -98,7 +98,7 @@
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose, callback) {
             var actionResult = null;
-            vm.reloadNeeded = true; //Even if save will fail, it won't hurt with a reload
+            vm.reloadTableNeeded = true; //Even if save will fail, it won't hurt with a reload
 
             if(currentTab.isAddTab){
                 actionResult = doctorsProxy.createDoctor(vm.doctor);
@@ -222,7 +222,7 @@
             }
 
             var result = doctorsProxy.deleteDoctor(vm.doctor._id);
-            vm.reloadNeeded = true;
+            vm.reloadTableNeeded = true;
 
             if(result.$promise){
                 loadingCover.showLoadingCover('Deleting');

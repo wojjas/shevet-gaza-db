@@ -17,7 +17,7 @@
             restrict: 'E',
             scope: {
                 doctorTab: "=",
-                reloadNeeded: "=",
+                reloadTableNeeded: "=",
 
                 handleTabCloseClicked: "&",
                 saveAndOpenInTab: "&"

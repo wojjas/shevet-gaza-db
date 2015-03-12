@@ -53,10 +53,8 @@
             var retVal = '[Unknown Name]';
 
             if(data.name){
-                retVal = name;
-
                 //Objects with "name" have only one field for it
-                return;
+                return data.name;
             }
 
             //First, Middle, (Nick), Last:

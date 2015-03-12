@@ -13,7 +13,7 @@
         vm.title = 'Tabs Ctrl';
         vm.currentList = '';
         vm.tabs = [];
-        vm.reloadNeeded = false;  //Reload of first-tab, the table, is needed
+        vm.reloadTableNeeded = false;  //Reload of first-tab, the table, is needed
 
         vm.activate = activate;
         vm.handleTabSelect = handleTabSelect;
@@ -76,9 +76,10 @@
 
         //Event Handlers:
         function handleTabSelect(tab){
-            if(tab.isFirstTab && vm.reloadNeeded){
-                vm.reloadNeeded = false;
-                $scope.$broadcast('getAllDoctorsEvent');
+            if(tab.isFirstTab && vm.reloadTableNeeded){
+                vm.reloadTableNeeded = false;
+                //reloadTableEvent
+                $scope.$broadcast('reloadTableEvent');
             }
         }
         function handleTabCloseClicked(currentTab, doNotConfirm){

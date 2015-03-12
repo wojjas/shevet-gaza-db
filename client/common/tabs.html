@@ -38,14 +38,14 @@
                     <doctor-directive
                             ng-if="!tab.isFirstTab && tabsCtrl.currentList === 'doctors'"
                             doctor-tab="tab"
-                            reload-needed="tabsCtrl.reloadNeeded"
+                            reload-table-needed="tabsCtrl.reloadTableNeeded"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
                             save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></doctor-directive>
 
                     <patient-directive
                             ng-if="!tab.isFirstTab && tabsCtrl.currentList === 'patients'"
                             patient-tab="tab"
-                            reload-needed="tabsCtrl.reloadNeeded"
+                            reload-table-needed="tabsCtrl.reloadTableNeeded"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
                             save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></patient-directive>
                 </tab>

@@ -118,7 +118,7 @@
             }
         }
 
-        $scope.$on('getAllPatientsEvent', function () {
+        $scope.$on('reloadTableEvent', function () {
             fillTable();
         })
     }

@@ -94,7 +94,12 @@
 
             <div class="form-group margin-top-md">
                 <div class="col-md-3 col-sm-2"></div>
-                    <crud-buttons-directive></crud-buttons-directive>
+                    <crud-buttons-directive close="doctorCtrl.handleCloseClick()"
+                                            save="doctorCtrl.handleSaveClick()"
+                                            save-and-close="doctorCtrl.handleSaveAndCloseClick()"
+                                            is-add-new-tab="doctorCtrl.isAddNewTab"
+                                            delete="doctorCtrl.handleDeleteClick()"
+                                            clear="doctorCtrl.handleClearClick()"></crud-buttons-directive>
                 <div class="col-md-3 col-xs-2"></div>
             </div>
 
