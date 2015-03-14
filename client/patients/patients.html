@@ -54,9 +54,9 @@
                 {{patient.birthDate}}</td>
             
             <td class="btn-column">
-                <button class="btn btn-default "
-                        ng-class="{'btn-danger': patient._id == patientsCtrl.dangerMarkedDocumentId}"
-                        ng-mouseover="patientsCtrl.handleHoverOverDeleteBtn(patient._id)"
+                <button class="btn btn-default"
+                        ng-class="{'btn-danger': patient._id === patientsCtrl.dangerMarkedDocumentId}"
+                        ng-mouseenter="patientsCtrl.handleHoverOverDeleteBtn(patient._id)"
                         ng-mouseleave="patientsCtrl.handleHoverOverDeleteBtn(-1)"
                         ng-click="patientsCtrl.handleDeleteClick($event, patient, true)">
                     <span class="glyphicon glyphicon-trash"></span>

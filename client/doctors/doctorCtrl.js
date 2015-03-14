@@ -180,16 +180,16 @@
                         //stop listening for location changes:
                         onRouteChangeOff();
                         //re-fire canceled navigation-request:
-                        var urlTmp = newUrl.substr(newUrl.lastIndexOf('/') + 1);
-                        $location.path(urlTmp);
+                        var urlToGoTo = 'tabs/' + newUrl.substr(newUrl.lastIndexOf('/') + 1);
+                        $location.path(urlToGoTo);
                     });
                 }
                 if(modalResult == 'continue'){
                     //stop listening for location changes:
                     onRouteChangeOff();
                     //re-fire canceled navigation-request:
-                    var urlTmp = newUrl.substr(newUrl.lastIndexOf('/') + 1);
-                    $location.path(urlTmp);
+                    var urlToGoTo = 'tabs/' + newUrl.substr(newUrl.lastIndexOf('/') + 1);
+                    $location.path(urlToGoTo);
                 }
             }, function () {
                 $log.info('Tab leave dismissed.');

@@ -84,9 +84,7 @@
             config.setOfflineMode(vm.offline);
         }
         function handleHoverOverDeleteBtn(id){
-            if(vm.dangerMarkedDocumentId){
-                vm.dangerMarkedDocumentId = id;
-            }
+            vm.dangerMarkedDocumentId = id;
         }
         function handleDeleteClick($event, data, fromList){
             //If $event exists function is called from the view, demand confirmation.
