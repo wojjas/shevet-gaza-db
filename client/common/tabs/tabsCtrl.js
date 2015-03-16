@@ -29,7 +29,8 @@
         ////////////////
 
         function activate() {
-            vm.currentList = $routeParams.list;
+            console.log('tabsCtrl: ' + vm.view);
+            vm.currentList = vm.view; //$routeParams.list;
 
             if(!tabsets.getTabset(vm.currentList)){
                 tabsets.initTabset(vm.currentList);

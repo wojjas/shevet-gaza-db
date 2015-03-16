@@ -4,8 +4,8 @@ module.exports = function(model){
 
 // There is a configurable delay in each server-response.
 // Use it for debug-purposes. Set min and max to 0 to disable it.
-    const MIN_DELAY = 500;
-    const MAX_DELAY = 500;
+    const MIN_DELAY = 0;
+    const MAX_DELAY = 0;
     function generateRandomDelay(){
         return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1)) + MIN_DELAY;
     }
