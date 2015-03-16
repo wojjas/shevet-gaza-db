@@ -1,9 +1,6 @@
 <!--Doctor detail info partial-->
 <link rel="stylesheet" href="../main.css">
 <style>
-    .margin-top-md{
-        margin-top: 25px;
-    }
     .photo{
         width:1px;
         height:200px;
@@ -13,6 +10,10 @@
     }
     .design-time-color{
         background-color:lightgray;
+    }
+    .contacts {
+        overflow: none;
+        height: 300px;
     }
 </style>
 
@@ -111,16 +112,13 @@
                                 </div>
                             </div>
 
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Siblings with heart disease
-                                </label>
+                            <div class="form-group">
+                                <input class="col-sm-2 from-control" type="checkbox" value="syblingsWithHD" />Syblings with heart deseases
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Parent related
-                                </label>
+                            <div class="form-group">
+                                <input class="col-sm-2" type="checkbox" value="parentRelated" />Parent related
                             </div>
+
                         </div>
                     </div>
                     <div class="row treatment-data">
@@ -146,18 +144,18 @@
                         </div>
                     </div>
 
-                    <div class="row related-persons margin-top">
+                    <div class="row contacts margin-top-md">
                         <tabset>
                             <tab heading="Related Persons and Contacts">
                                 <contact-list></contact-list>
                             </tab>
                             <tab heading="Add New">
-                                <contact-details></contact-details>
+                                <contact-directive></contact-directive>
                             </tab>
                         </tabset>
                     </div>
 
-                    <div class="row related-persons margin-top">
+                    <div class="row contacts margin-top">
                         <tabset>
                             <tab heading="Visits">
                                 <visit-list></visit-list>

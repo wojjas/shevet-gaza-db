@@ -1,0 +1,121 @@
+<!--Contact detail info partial-->
+
+<link rel="stylesheet" href="../main.css" xmlns="http://www.w3.org/1999/html">
+<style>
+    input {
+        border: 0px;
+        width: 100%;
+    }
+    table {
+        table-layout: fixed;
+    }
+    .div-table-content {
+        height: 90px;
+        overflow-y: auto;
+    }
+    .btn-column{
+        width: 65px;
+    }
+    .horizontal-center {
+        float: none;
+        margin: 0 auto;
+    }
+</style>
+
+<section class="container">
+
+    <form class="form-horizontal margin-top-md" role="form">
+        <fieldset class="container">
+            <div class="col-sm-4 personal-data">
+                <div class="form-group" ng-hide="contactCtrl.hideRelation">
+                    <label class=" col-sm-3 col-xs-12 control-label">Relation</label>
+                    <div class=" col-sm-9">
+                        <input class="form-control" type="text" ng-model="contactCtrl.contact.relation" placeholder="relation to patient" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-sm-3 col-xs-12 control-label">Id</label>
+                    <div class=" col-sm-9">
+                        <input class="form-control" type="text" ng-model="contactCtrl.contact.id" placeholder="contact id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label">Notes</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" type="text-area" rows="{{ contactCtrl.hideRelation ? 5 : 3 }}"></textarea>
+                    </div>
+                </div>
+                <!--
+                <div class="form-group col-xs-12">
+                    <label class="col-sm-3 col-xs-12"></label>
+                    <div class="col-sm-9">
+                        <button class="btn btn-primary" ng-click="contactCtrl.handleSave()">Save</button>
+                        <button class="btn btn-default" ng-click="contactCtrl.handleCancel()">Cancel</button>
+                    </div>
+                </div>
+                -->
+            </div>
+
+            <div class="col-sm-8 ">
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-xs-12 control-label">Name</label>
+                    <div class=" col-sm-10">
+                        <input class="form-control" type="text" ng-model="contactCtrl.contact.name" placeholder="contact's full name" />
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <table class="table header-fixed table-condensed">
+                        <thead>
+                        <tr>
+                            <th class="col-xs-6">Description</th>
+                            <th class="col-xs-5">Number</th>
+                            <th class="btn-column col-xs-1">Edit</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div class="div-table-content">
+                        <table class="table table-bordered header-fixed table-condensed">
+                            <tbody>
+                            <tr ng-repeat="contactData in contactCtrl.contactDataTable" contenteditable="false">
+                                <td class="col-xs-6" style="vertical-align:middle;">
+                                    <input type="text" placeholder="home / office / etc." ng-model="contactData.description" />
+                                </td>
+                                <td class="col-xs-5">
+                                    <input type="text" placeholder="fax number / phone number" ng-model="contactData.number" />
+                                </td>
+                                <td class="btn-column" ng-hide="$index === contactCtrl.contactDataTable.length - 1">
+                                    <button class="btn btn-default" ng-click="contactCtrl.handleDeleteRow($index)">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                                <td class="btn-column col-xs-1" ng-show="$index === contactCtrl.contactDataTable.length - 1">
+                                    <button class="btn btn-default" ng-click="contactCtrl.handleAddRow()">
+                                        <i class="glyphicon glyphicon-plus-sign tab-icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group ">
+                    <div class="col-md-3 col-sm-2"></div>
+                    <crud-buttons-directive close="contactCtrl.handleCloseClick()"
+                                            save="contactCtrl.handleSaveClick()"
+                                            save-and-close="contactCtrl.handleSaveAndCloseClick()"
+                                            is-add-new-tab="contactCtrl.isAddNewTab"
+                                            delete="contactCtrl.handleDeleteClick()"
+                                            clear="contactCtrl.handleClearClick()"></crud-buttons-directive>
+                    <div class="col-md-3 col-xs-2"></div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</section>

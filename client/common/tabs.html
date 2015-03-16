@@ -48,6 +48,14 @@
                             reload-table-needed="tabsCtrl.reloadTableNeeded"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
                             save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></patient-directive>
+
+                    <contact-directive
+                            ng-if="!tab.isFirstTab && tabsCtrl.currentList === 'contacts'"
+                            contact-tab="tab"
+                            reload-table-needed="tabsCtrl.reloadTableNeeded"
+                            hide-relation={{true}}
+                            handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)"
+                            save-and-open-in-tab="tabsCtrl.saveAndOpenInTab(data)"></contact-directive>
                 </tab>
             </tabset>
         </div>

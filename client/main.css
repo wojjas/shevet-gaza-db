@@ -16,3 +16,10 @@
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
     vertical-align: middle;
 }
+/*Make the other columns add up to 12*/
+.btn-column{
+    max-width: 55px;
+}
+.margin-top-md{
+     margin-top: 25px;
+}

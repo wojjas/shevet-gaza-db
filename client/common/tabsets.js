@@ -125,6 +125,11 @@
                     listTabTemplateURL = 'client/patients/patients.html';
                     tabTemplateURL = 'client/patients/patient.html';
                     break;
+                case 'contacts':
+                    listTabHeading = 'Contacts';
+                    listTabTemplateURL = 'client/contacts/contacts.html';
+                    tabTemplateURL = 'client/contacts/contact.html';
+                    break;
                 default:
                     console.debug('ERROR: Tabset controller called with unhandled list parameter.');
             }

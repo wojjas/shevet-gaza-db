@@ -9,6 +9,7 @@
 
         //gazaDB modules:
         'gdCommon',
+        'gdContacts',
         'gdDoctors',
         'gdPatients',
         'gdHome',

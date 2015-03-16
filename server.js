@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
+var contactsCtrl = require('./server/controllers/crudCtrl')('contact');
 var doctorsCtrl = require('./server/controllers/crudCtrl')('doctor');
 var patientsCtrl = require('./server/controllers/crudCtrl')('patient');
 
@@ -23,6 +24,12 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/client/partials/home.html');
 });
 //REST API:
+app.get('/api/contacts', contactsCtrl.getAll);      //this is for the Contacts.query(...
+app.get('/api/contacts/:id', contactsCtrl.getOne);
+app.delete('/api/contacts/:id', contactsCtrl.deleteOne);
+app.post('/api/contacts/', contactsCtrl.createOne);
+app.put('/api/contacts/', contactsCtrl.updateOne);
+
 app.get('/api/doctors', doctorsCtrl.getAll);      //this is for the Doctors.query(...
 app.get('/api/doctors/:id', doctorsCtrl.getOne);
 app.delete('/api/doctors/:id', doctorsCtrl.deleteOne);

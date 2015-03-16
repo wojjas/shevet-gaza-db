@@ -4,9 +4,6 @@
     /*.body {*/
     /*background: rgba(213,190,96,0.2);*/
     /*}*/
-    .btn-column{
-        max-width: 55px;
-    }
 </style>
 
 <section class="body"
@@ -18,13 +15,11 @@
         <tr ng-repeat="patient in $data"
             ng-class="{danger: patient._id == patientsCtrl.dangerMarkedDocumentId}"
             ng-click="tabsCtrl.handleTableRowClicked(patient)">
-
             <td data-title="'Child Id'"
                 sortable="'childId'"
                 filter="{ 'childId': 'text' }"
                 class="col-sm-2">
                 {{patient.childId}}</td>
-
             <td data-title="'First Name'"
                 sortable="'firstName'"
                 filter="{ 'firstName': 'text' }"
@@ -40,14 +35,12 @@
                 filter="{ 'lastName': 'text' }"
                 class="col-sm-2">
                 {{patient.lastName}}</td>
-
             <td data-title="'Gender'"
                 sortable="'gender'"
                 filter="{ 'gender': 'text' }"
                 class="col-sm-1">
                 {{patient.gender}}</td>
-
-            <td data-title="'Day of Birth'"
+            <td data-title="'Born'"
                 sortable="'birthDate'"
                 filter="{ 'birthDate': 'text' }"
                 class="col-sm-2">
