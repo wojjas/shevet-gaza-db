@@ -1,0 +1,65 @@
+<style>
+    /*SOLUTION: */
+    /*Override BS3's vertical-align: */
+    /*Else: "style="vertical-align:middle;" can be used on each td*/
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
+        vertical-align: middle;
+    }
+    input {
+        border: 0px;
+        width: 100%;
+    }
+    table {
+        table-layout: auto;
+        /*default*/
+    }
+    .div-table-content-high {
+        height: 130px;
+        overflow-y: auto;
+    }
+    .div-table-content-low {
+        height: 120px;
+        overflow-y: auto;
+    }
+</style>
+
+<div class="panel panel-default">
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th class="col-xs-5">Contact</th>
+            <th class="col-xs-7">Number</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+    <div ng-class="contactNumbersCtrl.getTableContentClass()">
+        <table class="table table-condensed table-bordered">
+            <tbody>
+            <tr ng-repeat="contact in contactNumbersCtrl.data" contenteditable="false">
+                <td class="col-xs-5" style="vertical-align:middle;">
+                    <input type="text" placeholder="description" ng-model="contact.contactDescription" />
+                </td>
+                <td class="col-xs-7">
+                    <input type="text" placeholder="phone number" ng-model="contact.contactData" />
+                </td>
+                <td class="btn-column" ng-hide="$index === contactNumbersCtrl.data.length - 1">
+                    <button class="btn btn-default" ng-click="contactNumbersCtrl.handleDeleteRow($index)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </td>
+                <td class="btn-column" ng-show="$index === contactNumbersCtrl.data.length - 1">
+                    <button class="btn btn-default" ng-click="contactNumbersCtrl.handleAddRow()" ng-disabled="contactNumbersCtrl.disableAddButton($index)">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -23,7 +23,7 @@
                 handleTabCloseClicked: "&",
                 saveAndOpenInTab: "&"
             },
-            templateUrl:'/contacts/contact.html',
+            templateUrl:'/client/contacts/contact.html',
             controller: 'ContactController',
             controllerAs: 'contactCtrl',
             bindToController: true

@@ -22,7 +22,7 @@
                 handleTabCloseClicked: "&",
                 saveAndOpenInTab: "&"
             },
-            templateUrl:'/doctors/doctor.html',
+            templateUrl:'/client/doctors/doctor.html',
             controller: 'DoctorController',
             controllerAs: 'doctorCtrl',
             bindToController: true
