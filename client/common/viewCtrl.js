@@ -9,7 +9,7 @@
         var vm = this;
 
         vm.title = 'View';
-        vm.currentView = 'home'; //$routeParams.list;
+        vm.currentView = 'home';
         vm.activate = activate;
 
         activate();

@@ -101,7 +101,7 @@
                 loadingCover.showLoadingCover('Deleting Doctor', fromList);
 
                 result.$promise.then(function () {
-                    $scope.tabsCtrl.closeTabDeletedInList(data._id);
+                    $scope.tabsCtrl.closeTabDeletedInTable(data._id);
                     loadingCover.hideLoadingCover();
                     fillTable();    //calls server, thus hide loading cover first.
                 }).catch(function (response) {

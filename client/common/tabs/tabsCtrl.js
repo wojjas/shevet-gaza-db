@@ -11,7 +11,7 @@
         var tabTemplate = '';
 
         vm.title = 'Tabs Ctrl';
-        vm.currentList = '';
+        vm.currentView = '';
         vm.tabs = [];
         vm.reloadTableNeeded = false;  //Reload of first-tab, the table, is needed
 
@@ -21,7 +21,7 @@
         vm.handleTableRowClicked = handleTableRowClicked;
 
         vm.saveAndOpenInTab = saveAndOpenInTab;
-        vm.closeTabDeletedInList = closeTabDeletedInList;
+        vm.closeTabDeletedInTable = closeTabDeletedInTable;
         vm.getInitiatingTab = getInitiatingTab;
 
         activate();
@@ -30,12 +30,12 @@
 
         function activate() {
             console.log('tabsCtrl: ' + vm.view);
-            vm.currentList = vm.view; //$routeParams.list;
+            vm.currentView = vm.view;
 
-            if(!tabsets.getTabset(vm.currentList)){
-                tabsets.initTabset(vm.currentList);
+            if(!tabsets.getTabset(vm.currentView)){
+                tabsets.initTabset(vm.currentView);
             }
-            vm.tabs = tabsets.getTabset(vm.currentList);
+            vm.tabs = tabsets.getTabset(vm.currentView);
         }
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
@@ -56,10 +56,10 @@
         }
 
         function saveAndOpenInTab(data){
-            tabsets.openInTabCreateIfNeeded(vm.currentList, data);
+            tabsets.openInTabCreateIfNeeded(vm.currentView, data);
         }
-        function closeTabDeletedInList(id){
-            tabsets.closeSpecifiedTab(vm.currentList, id);
+        function closeTabDeletedInTable(id){
+            tabsets.closeSpecifiedTab(vm.currentView, id);
         }
         //Returns the first tab found not to be initiated.
         //Call this one from tab's controller's activate/init-functions
@@ -89,20 +89,20 @@
                 showConfirmClose(currentTab);
             }else{
                 if(currentTab.isAddTab){
-                    tabsets.openTab(vm.currentList, 0);
+                    tabsets.openTab(vm.currentView, 0);
                 }else{
-                    tabsets.closeSpecifiedTab(vm.currentList, currentTab.id);
+                    tabsets.closeSpecifiedTab(vm.currentView, currentTab.id);
                 }
             }
         }
         function handleTableRowClicked(data){
-            tabsets.openInTabCreateIfNeeded(vm.currentList, data);
+            tabsets.openInTabCreateIfNeeded(vm.currentView, data);
         }
 
         $scope.$on('$destroy', function () {
             //console.log('Destroying tabsCtrl, save tabs ' + vm.tabs);
-            //tabsets.setTabset(vm.currentList, vm.tabs);
-            tabsets.unInitTabset(vm.currentList);
+            //tabsets.setTabset(vm.currentView, vm.tabs);
+            tabsets.unInitTabset(vm.currentView);
         })
     }
 })();

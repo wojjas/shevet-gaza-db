@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    //app.factory('tabsets', tabsets);
     angular
         .module('gdCommon')
         .factory('tabsets', tabsets);
@@ -20,7 +19,7 @@
 
             openInTabCreateIfNeeded: openInTabCreateIfNeeded,
             closeActiveTab: closeActiveTab,
-            closeSpecifiedTab : closeSpecifiedTab,
+            closeSpecifiedTab : closeSpecifiedTab
         };
 
         return service;
@@ -28,8 +27,8 @@
         ////////////////
 
         //Private Functions:
-        function indexOfTab(tabset, id){
-            var currentTabset = tabsets[tabset]; // vm.tabs;
+        function indexOfTab(view, id){
+            var currentTabset = tabsets[view]; // vm.tabs;
             for(var i=1, len=currentTabset.length; i < len; i++){
                 if(id && currentTabset[i].id === id){
                     return i;
@@ -79,8 +78,8 @@
 
             return retVal;
         }
-        function addTabToTabsetAndOpen(tabset, data){
-            var currentTabset = tabsets[tabset];
+        function addTabToTabsetAndOpen(view, data){
+            var currentTabset = tabsets[view];
 
             var newTab = {
                 active: true,
@@ -92,8 +91,8 @@
 
             currentTabset.splice(currentTabset.length - 1, 0, newTab);
         }
-        function closeTab(tabset, index){
-            var currentTabset = tabsets[tabset];
+        function closeTab(view, index){
+            var currentTabset = tabsets[view];
             var tabToClose = currentTabset[index];
 
             if(tabToClose.isAddTab || tabToClose.isFirstTab){
@@ -104,85 +103,85 @@
             currentTabset.splice(index, 1);
 
             //Always select tab with table, do we really want that!?
-            openTab(tabset, 0);
+            openTab(view, 0);
         }
 
         //Public Functions:
-        function initTabset(list) {
-            var currentList = list;
-            var listTabHeading = '';
-            var listTabTemplateURL = '';
-            var tabTemplateURL = '';
+        function initTabset(view) {
+            var currentList = view;
+            var tableTabHeading = '';
+            var tableTabTemplateURL = '';
+            var detailTabTemplateURL = '';
 
-            switch(list){
+            switch(view){
                 case 'doctors':
-                    listTabHeading = 'Doctors';
-                    listTabTemplateURL = 'client/doctors/doctors.html';
-                    tabTemplateURL = 'client/doctors/doctor.html';
+                    tableTabHeading = 'Doctors';
+                    tableTabTemplateURL = 'client/doctors/doctors.html';
+                    detailTabTemplateURL = 'client/doctors/doctor.html';
                     break;
                 case 'patients':
-                    listTabHeading = 'Patients';
-                    listTabTemplateURL = 'client/patients/patients.html';
-                    tabTemplateURL = 'client/patients/patient.html';
+                    tableTabHeading = 'Patients';
+                    tableTabTemplateURL = 'client/patients/patients.html';
+                    detailTabTemplateURL = 'client/patients/patient.html';
                     break;
                 case 'contacts':
-                    listTabHeading = 'Contacts';
-                    listTabTemplateURL = 'client/contacts/contacts.html';
-                    tabTemplateURL = 'client/contacts/contact.html';
+                    tableTabHeading = 'Contacts';
+                    tableTabTemplateURL = 'client/contacts/contacts.html';
+                    detailTabTemplateURL = 'client/contacts/contact.html';
                     break;
                 default:
-                    console.debug('ERROR: Tabset controller called with unhandled list parameter.');
+                    console.debug('ERROR: Tabset controller called with unhandled view parameter.');
             }
 
             var tabs = [{
-                //Tab used to show list of posts (table)
+                //Tab used to show view of posts (table)
                 "isFirstTab": true,
                 "hideCloseIcon": true,
-                "heading": listTabHeading,
+                "heading": tableTabHeading,
                 "active": true,
-                "template" : listTabTemplateURL
+                "template" : tableTabTemplateURL
             },{
                 //The tab used for adding a post
                 "hideCloseIcon": true,
                 "isAddTab": true,
                 "heading": 'Add new',
                 "active": false,
-                "template" : tabTemplateURL,
+                "template" : detailTabTemplateURL,
 
                 isDirty: isDirty
             }
             ];
 
-            tabsets[list] = tabs;
+            tabsets[view] = tabs;
         }
 
-        function getTabset(tabset) {
-            return tabsets[tabset];
+        function getTabset(view) {
+            return tabsets[view];
         }
         //function setTabset(tabsetName, tabs){
         //    var index = tabsets.indexOf(tabsetName);
         //    tabsets[index] = tabs;
         //}
-        function openTab(tabset, index){
-            tabsets[tabset][index].active = true;
+        function openTab(view, index){
+            tabsets[view][index].active = true;
         }
 
         //Always opens data in tab, if needed after adding tab to tabs.
-        function openInTabCreateIfNeeded(tabset, data){
-            var tabOfRequested = indexOfTab(tabset, data._id);
+        function openInTabCreateIfNeeded(view, data){
+            var tabOfRequested = indexOfTab(view, data._id);
             if(tabOfRequested === -1){
-                addTabToTabsetAndOpen(tabset, data);
+                addTabToTabsetAndOpen(view, data);
             }else{
-                openTab(tabset, tabOfRequested);
+                openTab(view, tabOfRequested);
             }
         }
-        function unInitTabset(tabset){
-            angular.forEach(tabsets[tabset], function (tab) {
+        function unInitTabset(view){
+            angular.forEach(tabsets[view], function (tab) {
                 tab.initiated = false;
             });
         }
-        function closeActiveTab(tabset){
-            var currentTabset = tabsets[tabset];//vm.tabs;
+        function closeActiveTab(view){
+            var currentTabset = tabsets[view];//vm.tabs;
 
             //Start at i=1 as we never want to close the FirstTab
             for(var i=1, len=currentTabset.length; i < len; i++){
@@ -195,12 +194,12 @@
             }
 
             //Always select tab with table, do we really want that!?
-            openTab(tabset, 0);
+            openTab(view, 0);
         }
-        function closeSpecifiedTab(tabset, id){
-            var index = indexOfTab(tabset, id);
+        function closeSpecifiedTab(view, id){
+            var index = indexOfTab(view, id);
             if(index !== -1) {
-                closeTab(tabset, index);
+                closeTab(view, index);
             }
         }
     }
