@@ -6,15 +6,14 @@
             /*}*/
         </style>
 
-<section class="body"
-         ng-controller="DoctorsController as doctorsCtrl">
+<section class="body">
 
-    <table ng-table="doctorsCtrl.table"
+    <table ng-table="tableCtrl.table"
            show-filter="true"
            class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="doctor in $data"
-            ng-class="{danger: doctor._id == doctorsCtrl.dangerMarkedDocumentId}"
-                ng-click="tabsCtrl.handleTableRowClicked(doctor)">
+            ng-class="{danger: doctor._id == tableCtrl.dangerMarkedDocumentId}"
+                ng-click="tableCtrl.handleTableRowClicked({data: doctor})">
                 <td data-title="'Name'"
                     sortable="'name'"
                     filter="{ 'name': 'text' }"
@@ -47,10 +46,10 @@
                     {{doctor.homePhone}}</td>
                 <td class="btn-column">
                     <button class="btn btn-default"
-                            ng-class="{'btn-danger': doctor._id === doctorsCtrl.dangerMarkedDocumentId}"
-                            ng-mouseenter="doctorsCtrl.handleHoverOverDeleteBtn(doctor._id)"
-                            ng-mouseleave="doctorsCtrl.handleHoverOverDeleteBtn(-1)"
-                            ng-click="doctorsCtrl.handleDeleteClick($event, doctor, true)">
+                            ng-class="{'btn-danger': doctor._id === tableCtrl.dangerMarkedDocumentId}"
+                            ng-mouseenter="tableCtrl.handleHoverOverDeleteBtn(doctor._id)"
+                            ng-mouseleave="tableCtrl.handleHoverOverDeleteBtn(-1)"
+                            ng-click="tableCtrl.handleDeleteClick($event, doctor, true)">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </td>

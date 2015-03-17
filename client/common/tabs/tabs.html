@@ -33,7 +33,24 @@
                         </div>
                     </tab-heading>
 
-                    <div ng-include="tab.template" ng-show="tab.isFirstTab"></div>
+                    <doctors-table
+                            ng-if="tab.isFirstTab && tabsCtrl.currentView === 'doctors'"
+                            view="{{tabsCtrl.currentView}}"
+                            template-path="{{tab.template}}"
+                            handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
+                            close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)"></doctors-table>
+                    <patients-table
+                            ng-if="tab.isFirstTab && tabsCtrl.currentView === 'patients'"
+                            view="{{tabsCtrl.currentView}}"
+                            template-path="{{tab.template}}"
+                            handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
+                            close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)"></patients-table>
+                    <contacts-table
+                            ng-if="tab.isFirstTab && tabsCtrl.currentView === 'contacts'"
+                            view="{{tabsCtrl.currentView}}"
+                            template-path="{{tab.template}}"
+                            handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
+                            close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)"></contacts-table>
 
                     <doctor-directive
                             ng-if="!tab.isFirstTab && tabsCtrl.currentView === 'doctors'"

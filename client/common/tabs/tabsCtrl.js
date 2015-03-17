@@ -22,7 +22,6 @@
 
         vm.saveAndOpenInTab = saveAndOpenInTab;
         vm.closeTabDeletedInTable = closeTabDeletedInTable;
-        vm.getInitiatingTab = getInitiatingTab;
 
         activate();
 
@@ -60,19 +59,6 @@
         }
         function closeTabDeletedInTable(id){
             tabsets.closeSpecifiedTab(vm.currentView, id);
-        }
-        //Returns the first tab found not to be initiated.
-        //Call this one from tab's controller's activate/init-functions
-        function getInitiatingTab(){
-            //Use tabs's memory to track what's initiated and what's not.
-            //initiated means, that a tab-controller has used this tab's data/info to fill its form.
-            var tabset = vm.tabs;
-            for(var i=0, len=tabset.length; i<len; i++){
-                if(!tabset[i].initiated){
-
-                    return tabset[i];
-                }
-            }
         }
 
         //Event Handlers:

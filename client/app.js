@@ -26,9 +26,6 @@
                 templateUrl: 'common/view.html',
                 controller: 'ViewController as viewCtrl'
             }).
-            when('/patients', {
-                templateUrl: 'patients/patients.html'
-            }).
             when('/settings', {
                 templateUrl: 'settings/settings.html'
             }).

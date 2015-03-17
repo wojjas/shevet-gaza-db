@@ -1,16 +1,16 @@
 (function(){
     angular
-        .module('gdDoctors')
-        .controller('DoctorsController', ['$scope', 'config', 'doctorsProxy',
+        .module('gdCommon')
+        .controller('TableController', ['$scope', 'config', 'rdProxy',
                                'tableService','loadingCover', '$modal', '$log',
-                    Doctors]);
+                    Table]);
 
-    function Doctors($scope, config, doctorsProxy,
+    function Table($scope, config, rdProxy,
                      tableService, loadingCover, $modal, $log) {
         var vm = this;
 
-        vm.title = 'doctors Ctrl';
-        vm.table; // = tableService.init([]);
+        vm.title = 'table Ctrl';
+        vm.table;
         vm.activate = activate;
         vm.dangerMarkedDocumentId = -1;
 
@@ -22,24 +22,25 @@
 
         //////////////////
 
+        function removeLastChar(str){
+            return str.substring(0, str.length - 1);
+        }
+        
         function activate() {
-            var currentTab = $scope.tabsCtrl.getInitiatingTab();
-            currentTab.initiated = true;    //TODO: remove as the whole initiated-stuff is depricated since use of directives
-
             vm.table = tableService.init([]);
             fillTable();
         }
         function fillTable(){
-            var doctorsRead = doctorsProxy.readAllDoctors();
+            var documentsRead = rdProxy.readAll(vm.view);
 
-            if(doctorsRead.$promise){
+            if(documentsRead.$promise){
                 //Show, after some time that table is loading.
-                loadingCover.showLoadingCover('Getting Doctors');
+                loadingCover.showLoadingCover('Getting ' + vm.view);
 
-                doctorsRead.$promise.then(function (response) {
+                documentsRead.$promise.then(function (response) {
                     tableService.updateData(response);
                 }).catch(function (response) {
-                    var errorMessage = "ERROR getting doctors. " +
+                    var errorMessage = "ERROR getting documents. " +
                         (response.statusText.length > 0 ?
                         "Server Response: " + response.statusText :
                             "");
@@ -49,10 +50,10 @@
                 });
 
             }else{
-                tableService.updateData(doctorsRead);
+                tableService.updateData(documentsRead);
             }
         }
-        //TODO: duplicated, in doctorCtrl
+        //TODO: duplicated, in detail-Ctrl
         function showConfirmDelete(data, fromList){
             var modalInstance = $modal.open({
                 templateUrl: '/modals/confirm_delete.html',
@@ -63,7 +64,7 @@
                     contextData: function () {
                         var contextData = {
                             name: data.name,
-                            type: 'doctor'
+                            type: vm.view
                         }
                         return contextData;
                     }
@@ -75,7 +76,7 @@
                     handleDeleteClick(undefined, data, fromList);
                 }
             }, function () {
-                $log.info('Doctor deletion dismissed.');
+                $log.info('Document deletion dismissed.');
             });
         }
 
@@ -95,18 +96,18 @@
                 return;
             }
 
-            var result = doctorsProxy.deleteDoctor(data._id);
+            var result = rdProxy.deleteOne(vm.view, data._id);
 
             if(result.$promise){
-                loadingCover.showLoadingCover('Deleting Doctor', fromList);
+                loadingCover.showLoadingCover('Deleting ' + removeLastChar(vm.view), fromList);
 
                 result.$promise.then(function () {
-                    $scope.tabsCtrl.closeTabDeletedInTable(data._id);
+                    vm.closeTabDeletedInTable({id: data._id});
                     loadingCover.hideLoadingCover();
                     fillTable();    //calls server, thus hide loading cover first.
                 }).catch(function (response) {
                     loadingCover.hideLoadingCover();
-                    var errorMessage = "ERROR deleting doctor. " + response.statusText;
+                    var errorMessage = "ERROR deleting " + removeLastChar(vm.view) +". " + response.statusText;
                     window.alert(errorMessage);
                 });
             }else{
