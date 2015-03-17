@@ -187,7 +187,7 @@
                         //stop listening for location changes:
                         onRouteChangeOff();
                         //re-fire canceled navigation-request:
-                        var urlToGoTo = 'tabs/' + newUrl.substr(newUrl.lastIndexOf('/') + 1);
+                        var urlToGoTo = newUrl.substring(newUrl.lastIndexOf('#')+2, newUrl.length);
                         $location.path(urlToGoTo);
                     });
                 }
@@ -195,7 +195,7 @@
                     //stop listening for location changes:
                     onRouteChangeOff();
                     //re-fire canceled navigation-request:
-                    var urlToGoTo = 'tabs/' + newUrl.substr(newUrl.lastIndexOf('/') + 1);
+                    var urlToGoTo = newUrl.substring(newUrl.lastIndexOf('#')+2, newUrl.length);
                     $location.path(urlToGoTo);
                 }
             }, function () {
