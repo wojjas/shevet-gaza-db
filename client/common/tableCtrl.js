@@ -2,11 +2,11 @@
     angular
         .module('gdCommon')
         .controller('TableController', ['$scope', 'config', 'rdProxy',
-                               'tableService','loadingCover', '$modal', '$log',
+                               'tableService', 'relatedContactsTableService','loadingCover', '$modal', '$log',
                     Table]);
 
     function Table($scope, config, rdProxy,
-                     tableService, loadingCover, $modal, $log) {
+                     tableService, relatedContactsTableService, loadingCover, $modal, $log) {
         var vm = this;
 
         vm.title = 'table Ctrl';
@@ -25,9 +25,16 @@
         function removeLastChar(str){
             return str.substring(0, str.length - 1);
         }
+        function getTableService(){
+            if(vm.view === 'relatedContacts'){
+                return relatedContactsTableService;
+            }else{
+                return tableService;
+            }
+        }
 
         function activate() {
-            vm.table = tableService.init([]);
+            vm.table = getTableService().init([]);
             fillTable();
         }
         function fillTable(){
@@ -38,7 +45,7 @@
                 loadingCover.showLoadingCover('Getting ' + vm.view);
 
                 documentsRead.$promise.then(function (response) {
-                    tableService.updateData(response);
+                    getTableService().updateData(response);
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting documents. " +
                         (response.statusText.length > 0 ?
@@ -50,7 +57,7 @@
                 });
 
             }else{
-                tableService.updateData(documentsRead);
+                getTableService().updateData(documentsRead);
             }
         }
         //TODO: duplicated, in detail-Ctrl

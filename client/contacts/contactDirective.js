@@ -5,10 +5,7 @@
         .module('gdContacts')
         .directive('contactDirective', contactDirective);
 
-    contactDirective.$inject = ['$window'];
-
-    /* @ngInject */
-    function contactDirective($window) {
+    function contactDirective() {
         // Usage:
         // 
         // Creates:

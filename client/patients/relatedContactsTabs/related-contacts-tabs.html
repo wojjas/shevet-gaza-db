@@ -1,0 +1,60 @@
+<style>
+    .tab-icon{
+        margin-left: 1em;
+    }
+</style>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <tabset justified="false">
+                <tab ng-repeat="tab in tabsCtrl.tabs"
+                     active="tab.active"
+                     select="tabsCtrl.handleTabSelect(tab)">
+                    <!--Different heading depending on tab-type-->
+                    <tab-heading>
+                        <!--The first tab with the table-->
+                        <div ng-show="tab.isFirstTab">
+                            {{tab.heading}}
+                            <i class="glyphicon glyphicon-list tab-icon"></i>
+                        </div>
+                        <!--The detail-info tabs-->
+                        <div ng-show="!tab.isAddTab && !tab.isFirstTab">
+                            {{tab.heading}}
+                            <a href=""
+                               ng-click="tabsCtrl.handleTabCloseClicked(tab)">
+                                <i class="glyphicon glyphicon-remove-circle tab-icon"></i>
+                            </a>
+                        </div>
+                        <!--The Add New Tab-->
+                        <div ng-show="tab.isAddTab">
+                            {{tab.heading}}
+                            <i class="glyphicon glyphicon-plus-sign tab-icon"></i>
+                        </div>
+                    </tab-heading>
+
+                    <!--<p>currentView: {{tabsCtrl.currentView}}</p>-->
+                    <!--<p>tab.template: {{tab.template}}</p>-->
+                    <!--<p>tab.isFirstTab: {{tab.isFirstTab}}</p>-->
+
+                    <related-contacts-table
+                            ng-if="tab.isFirstTab && tabsCtrl.currentView === 'relatedContacts'"
+                            view="{{tabsCtrl.currentView}}"
+                            template-path="{{tab.template}}"
+                            handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
+                            close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)">
+                    </related-contacts-table>
+
+                    <contact-directive
+                            ng-if="!tab.isFirstTab && tabsCtrl.currentView === 'relatedContacts'"
+                            contact-tab="tab"
+                            reload-table-needed="tabsCtrl.reloadTableNeeded"
+                            hide-relation={{false}}
+                            handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)">
+                    </contact-directive>
+
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

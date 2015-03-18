@@ -2,17 +2,19 @@
     'use strict';
 
     angular
-        .module('gdCommon')
-        .directive('tabs', tabs);
+        .module('gdPatients')
+        .directive('relatedContactsTabs', relatedContactsTabs);
 
-    function tabs() {
+        function relatedContactsTabs()
+        {
         // Usage:
         // 
         // Creates:
         // 
         var directive = {
             restrict: 'E',
-            templateUrl: '/client/common/tabs/tabs.html',
+            //templateUrl: '/client/common/tabs/tabs.html',
+            templateUrl: '/client/patients/relatedContactsTabs/related-contacts-tabs.html',
             controller: 'TabsController',
             controllerAs: 'tabsCtrl',
             bindToController: true,
@@ -20,6 +22,7 @@
                 view: '@'
             }
         };
+
         return directive;
     }
 })();

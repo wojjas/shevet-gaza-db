@@ -145,7 +145,8 @@
                     </div>
 
                     <div class="row contacts margin-top-md">
-                        <!--<tabs view="'contacts'"></tabs>-->
+                        <!--<related-contacts></related-contacts>-->
+                        <related-contacts-tabs ng-if="!patientCtrl.isAddNewTab" view="relatedContacts"></related-contacts-tabs>
                         <!--<tabset>-->
                             <!--<tab heading="Related Persons and Contacts">-->
                                 <!--<contact-list></contact-list>-->

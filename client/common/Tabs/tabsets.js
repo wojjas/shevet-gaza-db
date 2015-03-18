@@ -126,10 +126,19 @@
                     break;
                 case 'contacts':
                     tableTabHeading = 'Contacts';
-                    tableTabTemplateURL = 'client/contacts/contacts.html';
+                    tableTabTemplateURL = 'client/contacts/related-contacts-table.html';
+                    detailTabTemplateURL = 'client/contacts/contact.html';
+                    break;
+                case 'relatedContacts':
+                    tableTabHeading = 'Contacts Related to Patient';
+                    //TODO: use the same as for contacts above?
+                    tableTabTemplateURL = 'client/relatedContactsTabs/related-contacts-table.html';
                     detailTabTemplateURL = 'client/contacts/contact.html';
                     break;
                 default:
+                    tableTabHeading = 'Undefined';
+                    tableTabTemplateURL = '';
+                    detailTabTemplateURL = '';
                     console.debug('ERROR: Tabset controller called with unhandled view parameter.');
             }
 

@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var contactsCtrl = require('./server/controllers/crudCtrl')('contact');
 var doctorsCtrl = require('./server/controllers/crudCtrl')('doctor');
 var patientsCtrl = require('./server/controllers/crudCtrl')('patient');
+var relatedContactsCtrl = require('./server/controllers/relatedContactsCtrl')();
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.get('/api/patients/:id', patientsCtrl.getOne);
 app.delete('/api/patients/:id', patientsCtrl.deleteOne);
 app.post('/api/patients/', patientsCtrl.createOne);
 app.put('/api/patients/', patientsCtrl.updateOne);
+app.get('/api/relatedContacts/', relatedContactsCtrl.getAll);
 
 //Server:
 app.listen(3000, function () {
