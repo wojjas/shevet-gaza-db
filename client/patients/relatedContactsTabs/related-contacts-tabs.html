@@ -40,6 +40,8 @@
                     <related-contacts-table
                             ng-if="tab.isFirstTab && tabsCtrl.currentView === 'relatedContacts'"
                             view="{{tabsCtrl.currentView}}"
+                            rows="{{4}}"
+                            show-relation="true"
                             template-path="{{tab.template}}"
                             handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
                             close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)">
@@ -49,7 +51,7 @@
                             ng-if="!tab.isFirstTab && tabsCtrl.currentView === 'relatedContacts'"
                             contact-tab="tab"
                             reload-table-needed="tabsCtrl.reloadTableNeeded"
-                            hide-relation={{false}}
+                            hide-relation="false"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)">
                     </contact-directive>
 

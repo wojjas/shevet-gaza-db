@@ -27,8 +27,8 @@
         }
 
         function activate() {
-            tableObject = new tableService.tableObject([]);
-            tableObject.init([]);
+            tableObject = new tableService.tableObject();
+            tableObject.init([], vm.rows, vm.showRelation);
 
             fillTable();
         }

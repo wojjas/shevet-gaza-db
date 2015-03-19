@@ -14,6 +14,8 @@
             restrict: 'E',
             scope: {
                 view: '@',
+                rows: '@',
+                showRelation: '=',
                 templatePath: '@',
                 handleTableRowClicked: "&",
                 closeTabDeletedInTable: "&"

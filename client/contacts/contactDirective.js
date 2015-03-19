@@ -15,7 +15,7 @@
             scope: {
                 contactTab: "=",
                 reloadTableNeeded: "=",
-                hideRelation: "@",
+                hideRelation: "=",
 
                 handleTabCloseClicked: "&",
                 saveAndOpenInTab: "&"

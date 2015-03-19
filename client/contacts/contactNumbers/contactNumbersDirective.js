@@ -17,7 +17,7 @@
             controllerAs: 'contactNumbersCtrl',
             scope: {
                 data: '=',
-                high: '@'
+                high: '='
             },
             bindToController: true
         };
