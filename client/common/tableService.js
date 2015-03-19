@@ -8,50 +8,52 @@
 
     /* @ngInject */
     function TableService($filter, ngTableParams) {
-        var table;
-        var data = [];           //The array with all the data.
-        var service = {
-            updateData: updateData,
-            parameters: {
-                page: 1,
-                count: 17,
-                filter: {
-                },
-                sorting: {
-                    name: 'asc'     //Initial sorting column and order.
-                }
-            },
-            settings: {
-                filterDelay:200,
-                total: data.length,
-                getData: function($defer, params){
-                    // use build-in angular filter
-                    var filteredData = params.filter() ?
-                        $filter('filter')(data, params.filter()) :
-                        data;
-                    var orderedData = params.sorting() ?
-                        $filter('orderBy')(filteredData, params.orderBy()) :
-                        filteredData;
 
-                    params.total(orderedData.length); //Set total for recalculate pagination
-                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            },
-            init: init
+       function TableServiceInstance(tableData){
+           this.table;
+           this.data = tableData;           //The array with all the data.
+
+           this.parameters = {
+               page: 1,
+                   count: 17,
+                   filter: {
+               },
+               sorting: {
+                   name: 'asc'     //Initial sorting column and order.
+               }
+           };
+           this.settings = {
+               filterDelay: 200,
+               total: this.data.length,
+               getData: function ($defer, params) {
+                   // use build-in angular filter
+                   var filteredData = params.filter() ?
+                       $filter('filter')(TableServiceInstance.prototype.data, params.filter()) :
+                       this.data;
+                   var orderedData = params.sorting() ?
+                       $filter('orderBy')(filteredData, params.orderBy()) :
+                       filteredData;
+
+                   params.total(orderedData.length); //Set total for recalculate pagination
+                   $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+               }
+           };
+       };
+       TableServiceInstance.prototype.updateData = function(docs){
+           TableServiceInstance.prototype.data = docs;
+           this.table.reload();
+
+           return this.table;
+       };
+        TableServiceInstance.prototype.init = function(docs){
+            TableServiceInstance.prototype.data = docs;
+            this.table = new ngTableParams(this.parameters, this.settings);
+
+            return this.table;
         };
 
-        return service;
-
-        ////////////////
-
-        function init(docs) {
-            data = docs;
-            table = new ngTableParams(service.parameters, service.settings);
-            return table;
-        }
-        function updateData(docs){
-            data = docs;
-            table.reload();
+        return {
+            tableObject : TableServiceInstance
         }
     }
 })();

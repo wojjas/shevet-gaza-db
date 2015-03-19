@@ -2,14 +2,14 @@
     angular
         .module('gdCommon')
         .controller('TableController', ['$scope', 'config', 'rdProxy',
-                               'tableService', 'relatedContactsTableService','loadingCover', '$modal', '$log',
+                               'tableService', 'loadingCover', '$modal', '$log',
                     Table]);
 
     function Table($scope, config, rdProxy,
-                     tableService, relatedContactsTableService, loadingCover, $modal, $log) {
+                     tableService, loadingCover, $modal, $log) {
         var vm = this;
+        var tableObject = {};
 
-        vm.title = 'table Ctrl';
         vm.table;
         vm.activate = activate;
         vm.dangerMarkedDocumentId = -1;
@@ -25,16 +25,11 @@
         function removeLastChar(str){
             return str.substring(0, str.length - 1);
         }
-        function getTableService(){
-            if(vm.view === 'relatedContacts'){
-                return relatedContactsTableService;
-            }else{
-                return tableService;
-            }
-        }
 
         function activate() {
-            vm.table = getTableService().init([]);
+            tableObject = new tableService.tableObject([]);
+            tableObject.init([]);
+
             fillTable();
         }
         function fillTable(){
@@ -45,7 +40,9 @@
                 loadingCover.showLoadingCover('Getting ' + vm.view);
 
                 documentsRead.$promise.then(function (response) {
-                    getTableService().updateData(response);
+                    tableObject.updateData(response);
+                    vm.table = tableObject.table;
+
                 }).catch(function (response) {
                     var errorMessage = "ERROR getting documents. " +
                         (response.statusText.length > 0 ?
@@ -57,7 +54,8 @@
                 });
 
             }else{
-                getTableService().updateData(documentsRead);
+                tableObject.updateData(documentsRead);
+                vm.table = tableObject.table;
             }
         }
         //TODO: duplicated, in detail-Ctrl
