@@ -26,8 +26,7 @@
             return !vm.data[row].contactDescription && !vm.data[row].contactData;
         }
         function getTableContentClass(){
-            //TODO: make this work for that precious extra 10 visual px. In patient-details.
-            return !vm.high ? 'div-table-content-high' : 'div-table-content-low';
+            return vm.high ? 'div-table-content-high' : 'div-table-content-low';
         }
     }
 })();

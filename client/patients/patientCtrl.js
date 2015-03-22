@@ -98,7 +98,7 @@
 
                 //Handle drop-downs:
                 vm.genders = [{
-                    label:'Unknown', value:'unknown'},{
+                    label:'', value: ''},{
                     label:'Female', value:'female'},{
                     label:'Male', value:'male'
                 }];
@@ -107,13 +107,12 @@
                                     vm.genders[0].value;
 
                 vm.religions = [{
+                    label:'', value:''},{
                     label:'Other', value:'Other'},{
                     label:'Muslim', value:'Muslim'},{
                     label:'Christian', value:'Christian'
                 }];
-                vm.selectedReligion = vm.patient.religion && (vm.patient.religion === 'Christian' ||  vm.patient.religion === 'Muslim') ?
-                                    vm.patient.religion :
-                                    vm.religions[0].value;
+                vm.selectedReligion = vm.patient.religion || vm.religions[0].value;
             }
         }
         //Will update or create depending on current state, edit/add.

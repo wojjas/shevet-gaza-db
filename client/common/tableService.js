@@ -12,6 +12,9 @@
        function TableServiceInstance(){
            this.table = {};
            this.data = [];           //The array with all the data.
+           this.showPagination = false;
+
+           var that = this;
 
            this.parameters = {
                page: 1,
@@ -29,12 +32,12 @@
                getData: function ($defer, params) {
                    // use build-in angular filter
                    var filteredData = params.filter() ?
-                       $filter('filter')(TableServiceInstance.prototype.data, params.filter()) :
-                       TableServiceInstance.prototype.data;
+                       $filter('filter')(that.data, params.filter()) :
+                       that.data;
                    var orderedData = params.sorting() ?
                        $filter('orderBy')(filteredData, params.orderBy()) :
                        filteredData;
-                   var total = TableServiceInstance.prototype.hidePagination ? 0 : orderedData.length;
+                   var total = that.showPagination ? orderedData.length : 0;
 
                    params.total(total); //Set total for recalculate pagination
                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
@@ -42,17 +45,17 @@
            };
        };
        TableServiceInstance.prototype.updateData = function(docs){
-           TableServiceInstance.prototype.data = docs;
+           this.data = docs;
            this.table.reload();
 
            return this.table;
        };
         TableServiceInstance.prototype.init = function(docs, numberOfRows, showRelation){
-            TableServiceInstance.prototype.data = docs;
+            this.data = docs;
             this.parameters.count = numberOfRows || 12;
 
-            if(showRelation){
-                TableServiceInstance.prototype.hidePagination = showRelation;
+            this.showPagination = !showRelation;
+            if(showRelation) {
                 this.settings.counts = [];
             }
 
