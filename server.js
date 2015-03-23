@@ -42,7 +42,7 @@ app.get('/api/patients/:id', patientsCtrl.getOne);
 app.delete('/api/patients/:id', patientsCtrl.deleteOne);
 app.post('/api/patients/', patientsCtrl.createOne);
 app.put('/api/patients/', patientsCtrl.updateOne);
-app.get('/api/relatedContacts/', relatedContactsCtrl.getAll);
+app.get('/api/relatedContacts/:id', relatedContactsCtrl.getAll);
 
 //Server:
 app.listen(3000, function () {

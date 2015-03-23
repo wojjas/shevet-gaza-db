@@ -30,7 +30,11 @@ var mongoose = require('mongoose');
             currentlyInHospital: "Boolean",
             dateDeceased: "String",        //TODO: Use Date
             parentsCalling: "Boolean",
-            doctor: {type: String, trim: true}               //TODO: Use id to doctor instead!?
+            doctor: {type: String, trim: true},               //TODO: Use id to doctor instead!?
+            relatedContacts: [{
+                relation : String,
+                id : mongoose.Schema.ObjectId
+            }]
         }, {
             collection:'patients' //Optional but helps to understand what's going on.
         }                         //If omitted mongoose will add an "s" to Patient below and
