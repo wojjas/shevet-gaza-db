@@ -16,6 +16,7 @@
                 contactTab: "=",
                 reloadTableNeeded: "=",
                 showRelation: "=",
+                relatedContacts: "=",
 
                 handleTabCloseClicked: "&",
                 saveAndOpenInTab: "&"

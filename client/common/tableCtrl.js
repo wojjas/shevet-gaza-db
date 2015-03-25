@@ -30,7 +30,12 @@
             tableObject = new tableService.tableObject();
             tableObject.init([], vm.rows, vm.showRelation);
 
-            fillTable();
+            vm.showRelation || fillTable();
+        }
+        function fillTableFromPatient(){
+            console.log('Related contacts for this Patient:', vm.relatedContacts);
+            tableObject.updateData(vm.relatedContacts);
+            vm.table = tableObject.table;
         }
         function fillTable(){
             var documentsRead = rdProxy.readAll(vm.view);
@@ -123,5 +128,11 @@
         $scope.$on('reloadTableEvent', function () {
             fillTable();
         })
+
+        $scope.$watch(function(){
+            return vm.relatedContacts;
+        }, function(){
+            vm.relatedContacts && fillTableFromPatient();
+        });
     }
 })();

@@ -14,8 +14,9 @@
             restrict: 'E',
             scope: {
                 view: '@',
-                rows: '@',
-                showRelation: '=',
+                rows: '@',              //for relatedContacts
+                showRelation: '=',      //for relatedContacts
+                relatedContacts: '=',   //for relatedContacts
                 templatePath: '@',
                 handleTableRowClicked: "&",
                 closeTabDeletedInTable: "&"

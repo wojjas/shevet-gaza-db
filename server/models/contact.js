@@ -7,8 +7,11 @@ var mongoose = require('mongoose');
         {
             id: {type: Number, min: 0},
             name: {type: String, trim: true},
-            birthDate: {type: String, trim: true}    /*TODO: Use Date*/
-            /*TODO: add contactData, array with description and data in each element*/
+            birthDate: {type: String, trim: true},    /*TODO: Use Date*/
+            contactNumbers : [{
+                "description" : {type: String, trim: true},
+                "number" : {type: String, trim: true}
+            }]
         }, {
             collection:'contacts' //Optional but helps to understand what's going on.
         }                         //If omitted mongoose will add an "s" to Contact below and

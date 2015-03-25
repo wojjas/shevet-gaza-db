@@ -63,7 +63,28 @@
 
             //We are NOT in the AddTab.
             //If there's no data in tabs for this tab we are not editing an existing
-            //consequently we will fetch from persistent storage.
+            //consequently we will fetch from persistent storage or already gotten Patient document
+            if(vm.relatedContacts){
+                readOneRelatedContactFromPatient(id);
+            }else {
+                readOneContactFromPersistentStorage(id);
+            }
+        }
+
+        //Private functions:
+        function readOneRelatedContactFromPatient(id){
+            for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
+                var relatedContact = vm.relatedContacts[i];
+                if (relatedContact.contact._id === id){
+                    //Put relation into contact-object for convenience:
+                    relatedContact.contact.relation = relatedContact.relation;
+                    setContact(relatedContact.contact);
+
+                    return;
+                }
+            }
+        }
+        function readOneContactFromPersistentStorage(id){
             var contactRead = contactsProxy.readOneContact(id);
 
             if(contactRead.$promise){
@@ -82,24 +103,18 @@
                 vm.isLoading = false;
             }
         }
-
-        //Private functions:
-        //TODO: Move this function to some global tool-box:
-        function cloneObject(object){
-            return JSON.parse(JSON.stringify(object));
-        }
         function setContact(contact){
             if(currentTab){
                 currentTab.data = contact;
                 currentTab.dataBkp = angular.copy(contact); //cloneObject(contact);
                 vm.contact = currentTab.data;
 
-                //Handle contacts table:
-                vm.contactDataTable = angular.copy(vm.contact.contactData);
-                if(!vm.contactDataTable){
-                    vm.contactDataTable = [];
+                //Init contact numbers table:
+                vm.contactNumbers = angular.copy(vm.contact.contactNumbers);
+                if(!vm.contactNumbers){
+                    vm.contactNumbers = [];
                 }
-                vm.contactDataTable.push({});
+                vm.contactNumbers.push({});
             }
         }
         //Will update or create depending on current state, edit/add.

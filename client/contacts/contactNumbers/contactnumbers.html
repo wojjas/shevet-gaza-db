@@ -43,10 +43,10 @@
             <tbody>
             <tr ng-repeat="contact in contactNumbersCtrl.data" contenteditable="false">
                 <td class="col-xs-5" style="vertical-align:middle;">
-                    <input type="text" placeholder="description" ng-model="contact.contactDescription" />
+                    <input type="text" placeholder="description" ng-model="contact.description" />
                 </td>
                 <td class="col-xs-7">
-                    <input type="text" placeholder="phone number" ng-model="contact.contactData" />
+                    <input type="text" placeholder="phone/fax number" ng-model="contact.number" />
                 </td>
                 <td class="btn-column" ng-hide="$index === contactNumbersCtrl.data.length - 1">
                     <button class="btn btn-default" ng-click="contactNumbersCtrl.handleDeleteRow($index)">

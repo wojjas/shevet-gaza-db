@@ -28,7 +28,8 @@
         ////////////////
 
         function activate() {
-            console.log('tabsCtrl: ' + vm.view);
+            console.log('tabsCtrl.view: ' + vm.view);
+            console.log('tabsCtrl.relatedContacts: ', vm.relatedContacts);
             vm.currentView = vm.view;
 
             if(!tabsets.getTabset(vm.currentView)){

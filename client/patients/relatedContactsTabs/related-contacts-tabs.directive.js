@@ -19,7 +19,8 @@
             controllerAs: 'tabsCtrl',
             bindToController: true,
             scope: {
-                view: '@'
+                view: '@',
+                relatedContacts: '='
             }
         };
 

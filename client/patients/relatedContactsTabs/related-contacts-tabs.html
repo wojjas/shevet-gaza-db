@@ -33,15 +33,12 @@
                         </div>
                     </tab-heading>
 
-                    <!--<p>currentView: {{tabsCtrl.currentView}}</p>-->
-                    <!--<p>tab.template: {{tab.template}}</p>-->
-                    <!--<p>tab.isFirstTab: {{tab.isFirstTab}}</p>-->
-
                     <related-contacts-table
                             ng-if="tab.isFirstTab && tabsCtrl.currentView === 'relatedContacts'"
                             view="{{tabsCtrl.currentView}}"
                             rows="{{4}}"
                             show-relation="true"
+                            related-contacts="tabsCtrl.relatedContacts"
                             template-path="{{tab.template}}"
                             handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"
                             close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)">
@@ -52,6 +49,7 @@
                             contact-tab="tab"
                             reload-table-needed="tabsCtrl.reloadTableNeeded"
                             show-relation="true"
+                            related-contacts="tabsCtrl.relatedContacts"
                             handle-tab-close-clicked="tabsCtrl.handleTabCloseClicked(tab, doNotConfirm)">
                     </contact-directive>
 

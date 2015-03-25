@@ -13,19 +13,19 @@
            class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="contact in $data"
             ng-class="{danger: contact._id == tableCtrl.dangerMarkedDocumentId}"
-            ng-click="tableCtrl.handleTableRowClicked({data: contact})">
+            ng-click="tableCtrl.handleTableRowClicked({data: contact.contact})">
             <td data-title="'Id'"
                 sortable="'id'"
                 class="col-sm-2">
-                {{contact.id}}</td>
+                {{contact.contact.id}}</td>
             <td data-title="'Relation'"
                 sortable="'relation'"
                 class="col-sm-2">
-                {{contact.birthDate}}</td>
+                {{contact.relation}}</td>
             <td data-title="'Name'"
                 sortable="'name'"
                 class="col-sm-8">
-                {{contact.name}}</td>
+                {{contact.contact.name}}</td>
             <td class="btn-column">
                 <button class="btn btn-default"
                         ng-class="{'btn-danger': contact._id === tableCtrl.dangerMarkedDocumentId}"

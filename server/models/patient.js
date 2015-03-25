@@ -33,6 +33,7 @@ var Schema = mongoose.Schema;
             parentsCalling: "Boolean",
             doctor: {type: String, trim: true},               //TODO: Use id to doctor instead!?
             relatedContacts: [{
+                //Patient-Contact-relation, typically Mother, Father, Uncle:
                 relation: "String",
                 contact: {
                     type: Schema.ObjectId,
