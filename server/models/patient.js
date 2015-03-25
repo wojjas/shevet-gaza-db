@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 (function () {
     'use strict;'
 
-    var PatientSchema = mongoose.Schema(
+    var PatientSchema = Schema(
         {
-            childId: {type: String, trim: true},
+            childId: {type: Number, min: 0},
             firstName: {type: String, trim: true},
             middleName: {type: String, trim: true},
             lastName: {type: String, trim: true},
@@ -32,8 +33,11 @@ var mongoose = require('mongoose');
             parentsCalling: "Boolean",
             doctor: {type: String, trim: true},               //TODO: Use id to doctor instead!?
             relatedContacts: [{
-                relation : String,
-                id : mongoose.Schema.ObjectId
+                relation: "String",
+                contact: {
+                    type: Schema.ObjectId,
+                    ref: 'Contact'
+                }
             }]
         }, {
             collection:'patients' //Optional but helps to understand what's going on.

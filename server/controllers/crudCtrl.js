@@ -1,6 +1,8 @@
+var mongoose = require('mongoose');
+
 module.exports = function(model){
-    var model = '../models/' + model + '.js';
-    var Collection = require(model);
+    var modelDefinitionFile = '../models/' + model + '.js';
+    var Model = require(modelDefinitionFile);
 
 // There is a configurable delay in each server-response.
 // Use it for debug-purposes. Set min and max to 0 to disable it.
@@ -17,7 +19,7 @@ module.exports = function(model){
         console.log("Getting all documents from db. Delay: " +delay + "ms");
 
         setTimeout(function(){
-            Collection.find({}, function (err, documents) {
+            Model.find({}, function (err, documents) {
                 if(err !== null){
                     console.log("Failed to get all documents ", err);
                 }
@@ -29,29 +31,42 @@ module.exports = function(model){
     module.getOne = function (req, res) {
         var delay = generateRandomDelay();
         console.log("Getting one document from db. Delay: " +delay+ "ms");
-        var searchParameter = decodeURI(req.url.substr(req.url.lastIndexOf('/') + 1));
+        var searchParameter = req.params.id;
         console.log("Search Parameter: " + searchParameter);
 
         setTimeout(function () {
-            Collection.findOne({"_id":searchParameter}, function (err, document) {
-                if(err !== null){
-                    console.log("Failed to get one document ", err);
-                }
-                if(document === null){
-                    console.log("No document matched the search parameter");
-                }
+            Model.findOne({"_id":searchParameter}, function (err, document) {
+                err && console.log("Failed to get one document ", err);
+                document == null &&  console.log("No document matched the search parameter");
 
-                res.send(document);
+                //Populate with related-contacts if patient
+                if(model === 'patient'){
+                    Model.populate(document, {path:'relatedContacts.contact'}, function(err, document) {
+                        err && console.log('Failed to populate Patient with related contacts: ' + err);
+                        //TODO: check if each relation has a contact-object that is not null,
+                        // (if it is it indicates failure of finding Contact)
+                        var nofRelatedContacts = document._doc.relatedContacts.length;
+                        for(var i = 0; i < nofRelatedContacts; i++){
+                            if(!document._doc.relatedContacts[i].contact){
+                                console.log('Failed to populate Patient with related contact: %s.',
+                                             document._doc.relatedContacts[i].relation);
+                            }
+                        }
+                        res.send(document);
+                    });
+                }else{
+                    res.send(document);
+                }
             });
         }, delay);
     };
 
     module.getMatching = function (req, res) {
         console.log("Getting one document from db.");
-        var searchParameter = req.url.substr(req.url.lastIndexOf('/') + 1);
+        var searchParameter = req.params.id;
         console.log("Search Parameter: " + searchParameter);
 
-        //Collection.find()
+        //Model.find()
 
         res.send({"name":"SomeDoc"});
     };
@@ -59,11 +74,11 @@ module.exports = function(model){
     module.deleteOne = function (req, res) {
         var delay = generateRandomDelay();
         console.log("Deleting one document from db. Delay: " +delay+ "ms");
-        var searchParameter = req.url.substr(req.url.lastIndexOf('/') + 1);
+        var searchParameter = req.params.id;
         console.log("Search Parameter: " + searchParameter);
 
         setTimeout(function () {
-            Collection.remove({"_id": searchParameter}, function (err, document) {
+            Model.remove({"_id": searchParameter}, function (err, document) {
                 var retMessage = "OK";
 
                 if(err !== null){
@@ -90,7 +105,7 @@ module.exports = function(model){
         var query = {"_id": documentToSave._id};
 
         setTimeout(function () {
-            Collection.update(query, documentToSave, function (err, numberAffected) {
+            Model.update(query, documentToSave, function (err, numberAffected) {
                 if(err !== null){
                     console.log("Failed to update one document ", err);
                     retMessage = "Error, updating document:" + err.message;
@@ -107,7 +122,7 @@ module.exports = function(model){
         console.log("Creating one document in db. Delay: " +delay+ "ms");
 
         var retMessage = "OK";
-        var newDocument = new Collection(req.body);
+        var newDocument = new Model(req.body);
 
         setTimeout(function () {
             newDocument.save(function (err, result) {

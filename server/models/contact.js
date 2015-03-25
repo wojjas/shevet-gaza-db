@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
     var ContactSchema = mongoose.Schema(
         {
-            id: {type: String, trim: true},
+            id: {type: Number, min: 0},
             name: {type: String, trim: true},
             birthDate: {type: String, trim: true}    /*TODO: Use Date*/
             /*TODO: add contactData, array with description and data in each element*/
