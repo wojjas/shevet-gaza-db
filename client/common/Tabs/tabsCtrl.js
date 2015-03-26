@@ -8,11 +8,11 @@
     function Tabs($scope, $routeParams, tabsets, $modal) {
         var vm = this;
 
-        var tabTemplate = '';
+        var tabset;
 
         vm.title = 'Tabs Ctrl';
         vm.currentView = '';
-        vm.tabs = [];
+        vm.tabs = [{}, {}, {}];
         vm.reloadTableNeeded = false;  //Reload of first-tab, the table, is needed
 
         vm.activate = activate;
@@ -29,13 +29,11 @@
 
         function activate() {
             console.log('tabsCtrl.view: ' + vm.view);
-            console.log('tabsCtrl.relatedContacts: ', vm.relatedContacts);
             vm.currentView = vm.view;
 
-            if(!tabsets.getTabset(vm.currentView)){
-                tabsets.initTabset(vm.currentView);
-            }
-            vm.tabs = tabsets.getTabset(vm.currentView);
+            tabset = new tabsets.tabsets();
+            tabset.getTabset().length == 0 && tabset.initTabset(vm.currentView);
+            vm.tabs = tabset.getTabset();
         }
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
@@ -56,10 +54,10 @@
         }
 
         function saveAndOpenInTab(data){
-            tabsets.openInTabCreateIfNeeded(vm.currentView, data);
+            tabset.openInTabCreateIfNeeded(vm.currentView, data);
         }
         function closeTabDeletedInTable(id){
-            tabsets.closeSpecifiedTab(vm.currentView, id);
+            tabset.closeSpecifiedTab(vm.currentView, id);
         }
 
         //Event Handlers:
@@ -76,20 +74,20 @@
                 showConfirmClose(currentTab);
             }else{
                 if(currentTab.isAddTab){
-                    tabsets.openTab(vm.currentView, 0);
+                    tabset.openTab(vm.currentView, 0);
                 }else{
-                    tabsets.closeSpecifiedTab(vm.currentView, currentTab.id);
+                    tabset.closeSpecifiedTab(vm.currentView, currentTab.id);
                 }
             }
         }
         function handleTableRowClicked(data){
-            tabsets.openInTabCreateIfNeeded(vm.currentView, data);
+            tabset.openInTabCreateIfNeeded(vm.currentView, data);
         }
 
         $scope.$on('$destroy', function () {
             //console.log('Destroying tabsCtrl, save tabs ' + vm.tabs);
-            //tabsets.setTabset(vm.currentView, vm.tabs);
-            tabsets.unInitTabset(vm.currentView);
+            //tabset.setTabset(vm.currentView, vm.tabs);
+            tabset.unInitTabset(vm.currentView);
         })
     }
 })();

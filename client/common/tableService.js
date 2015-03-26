@@ -14,8 +14,6 @@
            this.data = [];           //The array with all the data.
            this.showPagination = false;
 
-           var that = this;
-
            this.parameters = {
                page: 1,
                count: 12,
@@ -25,10 +23,14 @@
                    name: 'asc'     //Initial sorting column and order.
                }
            };
+
+           var that = this;
+
            this.settings = {
                filterDelay: 200,
                total: this.data.length,
                counts: [10, 25, 100, 200],
+
                getData: function ($defer, params) {
                    // use build-in angular filter
                    var filteredData = params.filter() ?
