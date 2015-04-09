@@ -12,7 +12,7 @@
         // 
         var directive = {
             restrict: 'E',
-            templateUrl: '/client/common/Tabs/tabs.html',
+            templateUrl: '/client/common/tabs/tabs.html',
             controller: 'TabsController',
             controllerAs: 'tabsCtrl',
             bindToController: true,
