@@ -3,16 +3,16 @@
 
     angular
         .module('gdCommon')
-        .controller('TabsController', ['$scope', '$routeParams', 'tabsets', '$modal', Tabs]);
+        .controller('TabsController', ['$scope', '$routeParams', 'tabset', 'openedTabs', '$modal', Tabs]);
 
-    function Tabs($scope, $routeParams, tabsets, $modal) {
+    function Tabs($scope, $routeParams, tabset, openedTabs, $modal) {
         var vm = this;
 
         var tabset;
 
         vm.title = 'Tabs Ctrl';
         vm.currentView = '';
-        vm.tabs = [{}, {}, {}];
+        vm.tabs = [];
         vm.reloadTableNeeded = false;  //Reload of first-tab, the table, is needed
 
         vm.activate = activate;
@@ -31,8 +31,8 @@
             console.log('tabsCtrl.view: ' + vm.view);
             vm.currentView = vm.view;
 
-            tabset = new tabsets.tabsets();
-            tabset.getTabset().length == 0 && tabset.initTabset(vm.currentView);
+            tabset = new tabset.tabset(vm.currentView);
+            //tabset.getTabset().length == 0 && tabset.initTabset(vm.currentView);
             vm.tabs = tabset.getTabset();
         }
         function showConfirmClose(currentTab){
@@ -87,7 +87,8 @@
         $scope.$on('$destroy', function () {
             //console.log('Destroying tabsCtrl, save tabs ' + vm.tabs);
             //tabset.setTabset(vm.currentView, vm.tabs);
-            tabset.unInitTabset(vm.currentView);
+            //tabset.unInitTabset(vm.currentView);
+            openedTabs.setTabset(vm.currentView, vm.tabs);
         })
     }
 })();
