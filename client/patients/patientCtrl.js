@@ -16,6 +16,7 @@
         vm.title = 'Patient Ctrl';
         vm.patient = {};
         vm.activate = activate;
+        vm.relatedContactsTabsId = relatedContactsTabsId;
         vm.handleGenderSelected = handleGenderSelected;
         vm.handleReligionSelected = handleReligionSelected;
         vm.handleCloseClick = handleCloseClick;
@@ -219,6 +220,9 @@
             //since we will handle it together with modal's promisse
             //(once the user chooses action in modal)
             $event.preventDefault();
+        }
+        function relatedContactsTabsId(){
+            return 'relatedContacts_' + vm.patient._id;
         }
 
         //Event Handlers:

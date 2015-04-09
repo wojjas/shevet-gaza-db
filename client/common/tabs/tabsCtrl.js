@@ -30,10 +30,7 @@
         function activate() {
             console.log('tabsCtrl.view: ' + vm.view);
             vm.currentView = vm.view;
-
-            tabset = new tabset.tabset(vm.currentView);
-            //tabset.getTabset().length == 0 && tabset.initTabset(vm.currentView);
-            vm.tabs = tabset.getTabset();
+            tabset = new tabset.tabset();
         }
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
@@ -90,5 +87,30 @@
             //tabset.unInitTabset(vm.currentView);
             openedTabs.setTabset(vm.currentView, vm.tabs);
         })
+
+        //The tabset, instantiated in activate(), is initiated here, after the view is set
+        //because some view's names are built using an id-part unknown at creation of this ctrl.
+        $scope.$watch(function(){
+            return vm.view;
+        }, function(){
+            var tmp = vm.view.split('_');
+
+            //No id part:
+            if(tmp.length === 1) {
+                vm.currentView = vm.view;
+                tabset.initTabset(vm.view);
+                vm.tabs = tabset.getTabset();
+            }
+            //Related contacts with undefined id-part => addNew-tab:
+            if(tmp[1] === 'undefined'){
+                return; //TODO: handle this in some smart way.
+            }
+            //Related contacts with valid patient-id:
+            if(tmp[0] === "relatedContacts" && tmp[1] !== 'undefined'){
+                vm.currentView = vm.view;
+                tabset.initTabset(vm.view);
+                vm.tabs = tabset.getTabset();
+            }
+        });
     }
 })();

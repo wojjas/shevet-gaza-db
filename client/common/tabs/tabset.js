@@ -6,79 +6,12 @@
         .factory('tabset', ['openedTabs', tabset]);
 
     function tabset(openedTabs) {
-        var Tabsets = function(view){
+        var Tabsets = function(){
             var tabset = [];
             //var currentView = '';     //TODO: rename currentView to view.
             var that = this;
 
-            initTabset(view);
-
             //Private functions:
-            function initTabset(view) {
-                var tableTabHeading = '';
-                var tableTabTemplateURL = '';
-                var detailTabTemplateURL = '';
-
-                //currentView = view;
-                tabset = openedTabs.getTabset(view);
-
-                //If there's nothing for specified view, init one:
-                if(!tabset || tabset.length == 0){
-
-                    var viewRelevantPart = (view.indexOf('_') === -1) ?
-                        view :
-                        view.substring(0, view.indexOf('_'));
-
-                    switch(viewRelevantPart){
-                        case 'doctors':
-                            tableTabHeading = 'Doctors';
-                            tableTabTemplateURL = 'client/doctors/doctors.html';
-                            detailTabTemplateURL = 'client/doctors/doctor.html';
-                            break;
-                        case 'patients':
-                            tableTabHeading = 'Patients';
-                            tableTabTemplateURL = 'client/patients/patients.html';
-                            detailTabTemplateURL = 'client/patients/patient.html';
-                            break;
-                        case 'contacts':
-                            tableTabHeading = 'Contacts';
-                            tableTabTemplateURL = 'client/contacts/related-contacts-table.html';
-                            detailTabTemplateURL = 'client/contacts/contact.html';
-                            break;
-                        case 'relatedContacts':
-                            tableTabHeading = 'Contacts Related to Patient';
-                            //TODO: use the same as for contacts above?
-                            tableTabTemplateURL = 'client/relatedContactsTabs/related-contacts-table.html';
-                            detailTabTemplateURL = 'client/contacts/contact.html';
-                            break;
-                        default:
-                            tableTabHeading = 'Undefined';
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
-                            console.debug('ERROR: Tabset controller called with unhandled view parameter.');
-                    }
-
-                    var tabs = [{
-                        //Tab used to show view of posts (table)
-                        "isFirstTab": true,
-                        "hideCloseIcon": true,
-                        "heading": tableTabHeading,
-                        "active": true,
-                        "template" : tableTabTemplateURL
-                    },{
-                        //The tab used for adding a post
-                        "hideCloseIcon": true,
-                        "isAddTab": true,
-                        "heading": 'Add new',
-                        "active": false,
-                        "template" : detailTabTemplateURL,
-
-                        isDirty: isDirty
-                    }];
-
-                    tabset = tabs;
-                }
-            }
             function indexOfTab(view, id){
                 for(var i = 1, len = tabset.length; i < len; i++){
                     if(id && tabset[i].id === id){
@@ -143,6 +76,71 @@
             }
 
             //Privileged functions:
+            this.initTabset = function initTabset(view) {
+                var tableTabHeading = '';
+                var tableTabTemplateURL = '';
+                var detailTabTemplateURL = '';
+
+                //currentView = view;
+                tabset = openedTabs.getTabset(view);
+
+                //If there's nothing for specified view, init one:
+                if(!tabset || tabset.length == 0){
+
+                    var viewRelevantPart = (view.indexOf('_') === -1) ?
+                        view :
+                        view.substring(0, view.indexOf('_'));
+
+                    switch(viewRelevantPart){
+                        case 'doctors':
+                            tableTabHeading = 'Doctors';
+                            tableTabTemplateURL = 'client/doctors/doctors.html';
+                            detailTabTemplateURL = 'client/doctors/doctor.html';
+                            break;
+                        case 'patients':
+                            tableTabHeading = 'Patients';
+                            tableTabTemplateURL = 'client/patients/patients.html';
+                            detailTabTemplateURL = 'client/patients/patient.html';
+                            break;
+                        case 'contacts':
+                            tableTabHeading = 'Contacts';
+                            tableTabTemplateURL = 'client/contacts/related-contacts-table.html';
+                            detailTabTemplateURL = 'client/contacts/contact.html';
+                            break;
+                        case 'relatedContacts':
+                            tableTabHeading = 'Contacts Related to Patient';
+                            //TODO: use the same as for contacts above?
+                            tableTabTemplateURL = 'client/relatedContactsTabs/related-contacts-table.html';
+                            detailTabTemplateURL = 'client/contacts/contact.html';
+                            break;
+                        default:
+                            tableTabHeading = 'Undefined';
+                            tableTabTemplateURL = '';
+                            detailTabTemplateURL = '';
+                            console.debug('ERROR: Tabset controller called with unhandled view parameter.');
+                    }
+
+                    var tabs = [{
+                        //Tab used to show view of posts (table)
+                        "isFirstTab": true,
+                        "hideCloseIcon": true,
+                        "heading": tableTabHeading,
+                        "active": true,
+                        "template" : tableTabTemplateURL
+                    },{
+                        //The tab used for adding a post
+                        "hideCloseIcon": true,
+                        "isAddTab": true,
+                        "heading": 'Add new',
+                        "active": false,
+                        "template" : detailTabTemplateURL,
+
+                        isDirty: isDirty
+                    }];
+
+                    tabset = tabs;
+                }
+            }
             this.getTabset = function getTabset(view) {
                 return tabset;
             }
