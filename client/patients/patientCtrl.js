@@ -93,6 +93,14 @@
         }
         function setPatient(patient){
             if(currentTab){
+                //For each related-contact put relation into contact-object for convenience:
+                if(patient && patient.relatedContacts && patient.relatedContacts.length > 0){
+                    for(var i = 0, len = patient.relatedContacts.length; i < len; i++){
+                        var relatedContact = patient.relatedContacts[i];
+                        relatedContact.contact.relation = relatedContact.relation;
+                    }
+                }
+
                 currentTab.data = patient;
                 currentTab.dataBkp = angular.copy(patient); //cloneObject(patient);
                 vm.patient = currentTab.data;

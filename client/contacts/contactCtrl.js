@@ -63,7 +63,9 @@
 
             //We are NOT in the AddTab.
             //If there's no data in tabs for this tab we are not editing an existing
-            //consequently we will fetch from persistent storage or already gotten Patient document
+            //consequently we will fetch from persistent storage or already gotten Patient document.
+            //From already gotten Patient document if vm.relatedContacts exists, if it does it means this controller is
+            //part of a directive inside the patient-detail-page. Else it's a part of a directive in the contact-detail-page
             if(vm.relatedContacts){
                 readOneRelatedContactFromPatient(id);
             }else {
@@ -76,8 +78,6 @@
             for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
                 var relatedContact = vm.relatedContacts[i];
                 if (relatedContact.contact._id === id){
-                    //Put relation into contact-object for convenience:
-                    relatedContact.contact.relation = relatedContact.relation;
                     setContact(relatedContact.contact);
 
                     return;

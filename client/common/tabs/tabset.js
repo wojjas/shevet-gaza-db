@@ -182,8 +182,8 @@
         //This tab's data is considered dirty if its dataBkp differs from its data
         function isDirty(){
             if(this.dataBkp && this.data){
-                var dataBkpStr = JSON.stringify(this.dataBkp);
-                var dataStr = JSON.stringify(this.data);
+                var dataBkpStr = angular.toJson(this.dataBkp);
+                var dataStr = angular.toJson(this.data);
 
                 return dataBkpStr !== "" && dataBkpStr !== dataStr;
             }else{
