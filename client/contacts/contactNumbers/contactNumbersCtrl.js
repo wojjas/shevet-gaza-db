@@ -23,7 +23,7 @@
             vm.data.push({});
         }
         function disableAddButton(row){
-            return !vm.data[row].contactDescription && !vm.data[row].contactData;
+            return !vm.data[row].description && !vm.data[row].number;
         }
         function getTableContentClass(){
             return vm.high ? 'div-table-content-high' : 'div-table-content-low';

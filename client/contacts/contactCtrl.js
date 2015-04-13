@@ -105,16 +105,18 @@
         }
         function setContact(contact){
             if(currentTab){
-                currentTab.data = contact;
-                currentTab.dataBkp = angular.copy(contact); //cloneObject(contact);
-                vm.contact = currentTab.data;
-
                 //Init contact numbers table:
-                vm.contactNumbers = angular.copy(vm.contact.contactNumbers);
-                if(!vm.contactNumbers){
-                    vm.contactNumbers = [];
+                if(contact.contactNumbers){
+                    vm.contactNumbers = contact.contactNumbers;
+                    if(!vm.contactNumbers){
+                        vm.contactNumbers = [];
+                    }
+                    vm.contactNumbers.push({});
                 }
-                vm.contactNumbers.push({});
+
+                currentTab.data = contact;
+                currentTab.dataBkp = angular.copy(contact);
+                vm.contact = currentTab.data;
             }
         }
         //Will update or create depending on current state, edit/add.
