@@ -106,13 +106,9 @@
         function setContact(contact){
             if(currentTab){
                 //Init contact numbers table:
-                if(contact.contactNumbers){
-                    vm.contactNumbers = contact.contactNumbers;
-                    if(!vm.contactNumbers){
-                        vm.contactNumbers = [];
-                    }
-                    vm.contactNumbers.push({});
-                }
+                contact.contactNumbers = contact.contactNumbers || []; //in case of AddNew
+                vm.contactNumbers = contact.contactNumbers;
+                vm.contactNumbers.push({});
 
                 currentTab.data = contact;
                 currentTab.dataBkp = angular.copy(contact);
@@ -123,6 +119,13 @@
         function save(saveAndClose, callback) {
             var actionResult = null;
             vm.reloadTableNeeded = true; //Even if save will fail, it won't hurt with a reload
+
+            //Remove last empty object from contac-numbers! (sometimes added by this ctrl)
+            if(vm.contact && vm.contact.contactNumbers &&
+                (!vm.contact.contactNumbers[vm.contact.contactNumbers.length - 1].description &&
+                !vm.contact.contactNumbers[vm.contact.contactNumbers.length - 1].number)){
+                vm.contact.contactNumbers.pop();
+            }
 
             if(currentTab.isAddTab){
                 actionResult = contactsProxy.createContact(vm.contact);
@@ -135,13 +138,14 @@
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
-                        vm.contact = {}; //Clear this object so a new one can be created next time.
                         vm.handleTabCloseClicked({doNotConfirm: true});
+                        setContact({}); //Clear this object for AddNew tab's form
                     }else if(currentTab.isAddTab){
                         vm.saveAndOpenInTab({data: vm.contact});
-                        vm.contact = {};
+                        setContact({}); //Clear this object for AddNew tab's form
                     }else{
                         vm.contactTab.heading = vm.contact.name;
+                        setContact(vm.contact);
                     }
                     if(callback){
                         callback();
@@ -232,11 +236,9 @@
         }
         function handleSaveClick(callback){
             save(false, callback);
-            setContact(vm.contact);
         }
         function handleSaveAndCloseClick(){
             save(true);
-            setContact(vm.contact);
         }
         function handleDeleteClick(confirmed){
             if(!confirmed){

@@ -42,7 +42,7 @@
                 <div class="form-group">
                         <label class="col-sm-3 col-xs-12 control-label">Notes</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" type="text-area" rows="{{ contactCtrl.showRelation ? 5 : 7 }}"></textarea>
+                        <textarea class="form-control" type="text-area" ng-model="contactCtrl.contact.notes" placeholder="contact related notes"  rows="{{ contactCtrl.showRelation ? 5 : 7 }}"></textarea>
                     </div>
                 </div>
                 <!--

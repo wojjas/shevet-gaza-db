@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
             id: {type: Number, min: 0},
             name: {type: String, trim: true},
             birthDate: {type: String, trim: true},    /*TODO: Use Date*/
+            notes: {type: String, trim: true},
             contactNumbers : [{
                 "description" : {type: String, trim: true},
                 "number" : {type: String, trim: true}
