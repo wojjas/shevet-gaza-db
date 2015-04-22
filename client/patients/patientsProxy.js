@@ -68,7 +68,7 @@
             }else{
                 console.log('client requests all patients from Server');
                 return Patient.query(function (response) {
-                    window.localStorage['patients'] = JSON.stringify(response.data);
+                    window.localStorage['patients'] = angular.toJson(response.data);
                 }, function (error) {
                     console.debug("Error getting patients: ", error);
                 });
@@ -91,7 +91,7 @@
                 console.log("client requests one patient from Server, with parameter: " + searchParameter);
 
                 return Patient.get({"_id":searchParameter}, function (response) {
-                    window.localStorage['patient'] = JSON.stringify(response);
+                    window.localStorage['patient'] = angular.toJson(response);
                 }, function (error) {
                     console.debug("Error getting patient: ", error);
                 });
@@ -106,7 +106,7 @@
                 for(var i = 0, len = patients.length; i<len; i++){
                     if(patients[i]._id === searchParameter){
                         patients.splice(i, 1);
-                        window.localStorage['patients'] = JSON.stringify(patients);
+                        window.localStorage['patients'] = angular.toJson(patients);
 
                         return {};
                     }
@@ -126,7 +126,7 @@
                 var patients = JSON.parse(window.localStorage['patients']);
                 patient._id = createTmpLocalId();
                 patients.push(patient);
-                window.localStorage['patients'] = JSON.stringify(patients);
+                window.localStorage['patients'] = angular.toJson(patients);
 
                 return {};
             }else{
@@ -154,7 +154,7 @@
                 for(var i = 0, len = patients.length; i<len; i++){
                     if(patients[i]._id === patient._id){
                         patients[i] = patient;
-                        window.localStorage['patients'] = JSON.stringify(patients);
+                        window.localStorage['patients'] = angular.toJson(patients);
 
                         return {};
                     }

@@ -103,12 +103,29 @@
                 vm.isLoading = false;
             }
         }
+        function isLastContactNumberDummy(contact){
+            return contact && contact.contactNumbers && contact.contactNumbers.length > 0 &&
+                (!contact.contactNumbers[contact.contactNumbers.length - 1].description &&
+                !contact.contactNumbers[contact.contactNumbers.length - 1].number);
+        }
+        //Add a dummy-contact-number as the last contact-number
+        //Only add if a dummy isn't there yet. Only remove if the last one is a dummy.
+        function addOrRemoveDummyContactNumber(contact, add){
+            //add
+            if(add && !isLastContactNumberDummy(contact)){
+                vm.contactNumbers.push({});
+            }
+            //remove
+            if(!add && isLastContactNumberDummy(contact)){
+                contact.contactNumbers.pop();
+            }
+        }
         function setContact(contact){
             if(currentTab){
                 //Init contact numbers table:
                 contact.contactNumbers = contact.contactNumbers || []; //in case of AddNew
                 vm.contactNumbers = contact.contactNumbers;
-                vm.contactNumbers.push({});
+                addOrRemoveDummyContactNumber(contact, true);
 
                 currentTab.data = contact;
                 currentTab.dataBkp = angular.copy(contact);
@@ -121,11 +138,10 @@
             vm.reloadTableNeeded = true; //Even if save will fail, it won't hurt with a reload
 
             //Remove last empty object from contac-numbers! (sometimes added by this ctrl)
-            if(vm.contact && vm.contact.contactNumbers &&
-                (!vm.contact.contactNumbers[vm.contact.contactNumbers.length - 1].description &&
-                !vm.contact.contactNumbers[vm.contact.contactNumbers.length - 1].number)){
-                vm.contact.contactNumbers.pop();
-            }
+            addOrRemoveDummyContactNumber(vm.contact, false);
+
+            //Remove "relation" added (by this ctrl) to the contact object
+            delete vm.contact.relation; //TODO: test.
 
             if(currentTab.isAddTab){
                 actionResult = contactsProxy.createContact(vm.contact);

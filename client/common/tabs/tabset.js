@@ -185,6 +185,12 @@
                 var dataBkpStr = angular.toJson(this.dataBkp);
                 var dataStr = angular.toJson(this.data);
 
+                //Ignore empty objects by removing them before comparison:
+                //This is a hack to handle Patient's related-contact's contact-number's dummy object
+                //This dummy is added when a related contact tab is opened (by then patien's dataBkp is already set)
+                dataBkpStr = dataBkpStr.replace(',{}', '');
+                dataStr = dataStr.replace(',{}', '');
+
                 return dataBkpStr !== "" && dataBkpStr !== dataStr;
             }else{
                 //if we have no way of saying, we assume it is

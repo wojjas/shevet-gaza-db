@@ -84,10 +84,6 @@
         }
 
         //Private functions:
-        //TODO: Move this function to some global tool-box:
-        function cloneObject(object){
-            return JSON.parse(JSON.stringify(object));
-        }
         function setDoctor(doctor){
             if(currentTab){
                 currentTab.data = doctor;

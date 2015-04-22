@@ -38,7 +38,8 @@ var Schema = mongoose.Schema;
                 contact: {
                     type: Schema.ObjectId,
                     ref: 'Contact'
-                }
+                },
+                _id: false          //Prevents Mongoose from adding _id to each element, default is true
             }]
         }, {
             collection:'patients' //Optional but helps to understand what's going on.

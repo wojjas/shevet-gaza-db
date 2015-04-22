@@ -10,8 +10,9 @@ var mongoose = require('mongoose');
             birthDate: {type: String, trim: true},    /*TODO: Use Date*/
             notes: {type: String, trim: true},
             contactNumbers : [{
-                "description" : {type: String, trim: true},
-                "number" : {type: String, trim: true}
+                description : {type: String, trim: true},
+                number : {type: String, trim: true},
+                _id : false
             }]
         }, {
             collection:'contacts' //Optional but helps to understand what's going on.

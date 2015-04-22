@@ -87,19 +87,9 @@
         }
 
         //Private functions:
-        //TODO: Move this function to some global tool-box:
-        function cloneObject(object){
-            return JSON.parse(JSON.stringify(object));
-        }
         function setPatient(patient){
             if(currentTab){
-                //For each related-contact put relation into contact-object for convenience:
-                if(patient && patient.relatedContacts && patient.relatedContacts.length > 0){
-                    for(var i = 0, len = patient.relatedContacts.length; i < len; i++){
-                        var relatedContact = patient.relatedContacts[i];
-                        relatedContact.contact.relation = relatedContact.relation;
-                    }
-                }
+                setOrUnsetRelatedContacts(patient);
 
                 currentTab.data = patient;
                 currentTab.dataBkp = angular.copy(patient); //cloneObject(patient);
@@ -124,10 +114,39 @@
                 vm.selectedReligion = vm.patient.religion || vm.religions[0].value;
             }
         }
+        //Set happens after new object has been fetched from persistent storage,
+        // unset just before it's time to store it.
+        //If parameter patient is null, this function un-sets (previously set vm.patient)
+        function setOrUnsetRelatedContacts(patient){
+            if(patient){
+                //For each related-contact put relation into contact-object for convenience:
+                if(patient.relatedContacts && patient.relatedContacts.length > 0){
+                    for(var i = 0, len = patient.relatedContacts.length; i < len; i++){
+                        var relatedContact = patient.relatedContacts[i];
+                        relatedContact.contact.relation = relatedContact.relation;
+                    }
+                }
+            }else{
+                //Unset related contacts:
+                for(var i=0, len=vm.patient.relatedContacts.length; i < len; i++){
+                    var contact = vm.patient.relatedContacts[i].contact;
+                    //Remove last empty object from related-contacts contact-numbers! (added by controller for the View)
+                    if(contact && contact.contactNumbers &&
+                        (!contact.contactNumbers[contact.contactNumbers.length - 1].description &&
+                        !contact.contactNumbers[contact.contactNumbers.length - 1].number)){
+                        contact.contactNumbers.pop();
+                    }
+                    //Remove "relation" added (by this ctrl) to the contact object
+                    contact.relation && delete contact.relation;
+                }
+            }
+        }
         //Will update or create depending on current state, edit/add.
         function save(saveAndClose, callback) {
             var actionResult = null;
             vm.reloadTableNeeded = true; //Even if save will fail, it won't hurt with a reload
+
+            setOrUnsetRelatedContacts(null);
 
             if(currentTab.isAddTab){
                 actionResult = patientsProxy.createPatient(vm.patient);
@@ -140,13 +159,14 @@
 
                 actionResult.$promise.then(function () {
                     if(saveAndClose){
-                        vm.patient = {}; //Clear this object so a new one can be created next time.
                         vm.handleTabCloseClicked({doNotConfirm: true});
+                        setPatient({}); //Clear this object for AddNew tab's form
                     }else if(currentTab.isAddTab){
                         vm.saveAndOpenInTab({data: vm.patient});
-                        vm.patient = {};
+                        setPatient({}); //Clear this object for AddNew tab's form
                     }else{
                         vm.patientTab.heading = vm.patient.firstName;
+                        setPatient(vm.patient);
                     }
                     if(callback){
                         callback();
@@ -246,11 +266,9 @@
         }
         function handleSaveClick(callback){
             save(false, callback);
-            setPatient(vm.patient);
         }
         function handleSaveAndCloseClick(){
             save(true);
-            setPatient(vm.patient);
         }
         function handleDeleteClick(confirmed){
             if(!confirmed){

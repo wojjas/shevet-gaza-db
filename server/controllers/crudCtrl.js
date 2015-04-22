@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 module.exports = function(model){
     var modelDefinitionFile = '../models/' + model + '.js';
     var Model = require(modelDefinitionFile);
+    var ContactModel = (model === 'patient') && require('../models/contact.js');
 
 // There is a configurable delay in each server-response.
 // Use it for debug-purposes. Set min and max to 0 to disable it.
@@ -16,7 +17,7 @@ module.exports = function(model){
 
     module.getAll = function (req, res) {
         var delay = generateRandomDelay();
-        console.log("Getting all documents from db. Delay: " +delay + "ms");
+        console.log("Getting all %s documents from db. Delay: " +delay + "ms", model);
 
         setTimeout(function(){
             Model.find({}, function (err, documents) {
@@ -30,7 +31,7 @@ module.exports = function(model){
 
     module.getOne = function (req, res) {
         var delay = generateRandomDelay();
-        console.log("Getting one document from db. Delay: " +delay+ "ms");
+        console.log("Getting one %s document from db. Delay: " +delay+ "ms", model);
         var searchParameter = req.params.id;
         console.log("Search Parameter: " + searchParameter);
 
@@ -73,7 +74,7 @@ module.exports = function(model){
 
     module.deleteOne = function (req, res) {
         var delay = generateRandomDelay();
-        console.log("Deleting one document from db. Delay: " +delay+ "ms");
+        console.log("Deleting one %s document from db. Delay: " +delay+ "ms", model);
         var searchParameter = req.params.id;
         console.log("Search Parameter: " + searchParameter);
 
@@ -97,7 +98,7 @@ module.exports = function(model){
 
     module.updateOne = function(req, res){
         var delay = generateRandomDelay();
-        console.log("Updating one document in db. Delay: " +delay+ "ms");
+        console.log("Updating one %s document in db. Delay: " +delay+ "ms", model);
 
         var retMessage = "OK";
 
@@ -105,15 +106,28 @@ module.exports = function(model){
         var query = {"_id": documentToSave._id};
 
         setTimeout(function () {
+            if(model === 'patient'){
+                //Handle related Contact(s) before updating Patient:
+                for(var i = 0, len = documentToSave.relatedContacts.length; i < len; i++){
+                    //NOTE: update is async so the Contact-documents will get updated after Patient gets updated
+                    //If this becomes a problem see: http://metaduck.com/01-asynchronous-iteration-patterns.html
+                    var relatedContactId = documentToSave.relatedContacts[i].contact._id;
+                    ContactModel.update({"_id": relatedContactId}, documentToSave.relatedContacts[i].contact, function(err, numberAffected){
+                        (err || numberAffected === 0) && console.debug('Failed to update related contact');
+                    });
+                    documentToSave.relatedContacts[i].contact = relatedContactId;
+                }
+            }
+
             Model.update(query, documentToSave, function (err, numberAffected) {
                 if(err !== null){
-                    console.log("Failed to update one document ", err);
+                    console.debug("Failed to update one document ", err);
                     retMessage = "Error, updating document:" + err.message;
                 }
                 console.log('Affected documents in Update: ' + numberAffected);
-
-                res.send({"status":retMessage});
             });
+
+            res.send({"status":retMessage});
         }, delay);
     };
 
