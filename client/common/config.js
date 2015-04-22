@@ -18,7 +18,7 @@
         ////////////////
         function setOfflineMode(isOffline){
             offlineMode = isOffline;
-            window.localStorage['offlineMode'] = JSON.stringify(isOffline);
+            window.localStorage['offlineMode'] = angular.toJson(isOffline);
         }
         function getOfflineMode(){
             offlineMode = window.localStorage['offlineMode'] ?

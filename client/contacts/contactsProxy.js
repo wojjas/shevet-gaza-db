@@ -68,7 +68,7 @@
             }else{
                 console.log('client requests all contacts from Server');
                 return Contact.query(function (response) {
-                    window.localStorage['contacts'] = JSON.stringify(response.data);
+                    window.localStorage['contacts'] = angular.toJson(response.data);
                 }, function (error) {
                     console.debug("Error getting contacts: ", error);
                 });
@@ -91,7 +91,7 @@
                 console.log("client requests one contact from Server, with parameter: " + searchParameter);
 
                 return Contact.get({"_id":searchParameter}, function (response) {
-                    window.localStorage['contact'] = JSON.stringify(response);
+                    window.localStorage['contact'] = angular.toJson(response);
                 }, function (error) {
                     console.debug("Error getting contact: ", error);
                 });
@@ -106,7 +106,7 @@
                 for(var i = 0, len = contacts.length; i<len; i++){
                     if(contacts[i]._id === searchParameter){
                         contacts.splice(i, 1);
-                        window.localStorage['contacts'] = JSON.stringify(contacts);
+                        window.localStorage['contacts'] = angular.toJson(contacts);
 
                         return {};
                     }
@@ -126,7 +126,7 @@
                 var contacts = JSON.parse(window.localStorage['contacts']);
                 contact._id = createTmpLocalId();
                 contacts.push(contact);
-                window.localStorage['contacts'] = JSON.stringify(contacts);
+                window.localStorage['contacts'] = angular.toJson(contacts);
 
                 return {};
             }else{
@@ -154,7 +154,7 @@
                 for(var i = 0, len = contacts.length; i<len; i++){
                     if(contacts[i]._id === contact._id){
                         contacts[i] = contact;
-                        window.localStorage['contacts'] = JSON.stringify(contacts);
+                        window.localStorage['contacts'] = angular.toJson(contacts);
 
                         return {};
                     }

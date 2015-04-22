@@ -48,7 +48,7 @@
                 console.log('client requests all ' + view + ' from Server');
                 var ServerResource = init(view);
                 return ServerResource.query(function (response) {
-                    window.localStorage[view] = JSON.stringify(response.data);
+                    window.localStorage[view] = angular.toJson(response.data);
                 }, function (error) {
                     console.debug("Error getting " + view + ": ", error);
                 });
@@ -63,7 +63,7 @@
                 for(var i = 0, len = documents.length; i<len; i++){
                     if(documents[i]._id === searchParameter){
                         documents.splice(i, 1);
-                        window.localStorage[view] = JSON.stringify(documents);
+                        window.localStorage[view] = angular.toJson(documents);
 
                         return {};
                     }
