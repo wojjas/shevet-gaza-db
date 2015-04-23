@@ -165,7 +165,6 @@
                         vm.saveAndOpenInTab({data: vm.patient});
                         setPatient({}); //Clear this object for AddNew tab's form
                     }else{
-                        vm.patientTab.heading = vm.patient.firstName;
                         setPatient(vm.patient);
                     }
                     if(callback){
