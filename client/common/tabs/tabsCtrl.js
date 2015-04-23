@@ -3,9 +3,9 @@
 
     angular
         .module('gdCommon')
-        .controller('TabsController', ['$scope', '$routeParams', 'tabset', 'openedTabs', '$modal', Tabs]);
+        .controller('TabsController', ['$scope', 'tabset', 'openedTabs', '$modal', Tabs]);
 
-    function Tabs($scope, $routeParams, tabset, openedTabs, $modal) {
+    function Tabs($scope, tabset, openedTabs, $modal) {
         var vm = this;
 
         var tabset;
@@ -65,14 +65,15 @@
                 $scope.$broadcast('reloadTableEvent');
             }
         }
-        function handleTabCloseClicked(currentTab, doNotConfirm){
-            //Check for unsaved changes and demand confirmation.
-            if(!doNotConfirm && (currentTab && !currentTab.isFirstTab && currentTab.isDirty())){
+        function handleTabCloseClicked(currentTab, doNotConfirm) {
+            //Check for unsaved changes and demand confirmation. RelatedContacts excluded since inside Patient.
+            var isNotRelatedContactTabs = vm.currentView.indexOf('relatedContacts') === -1;
+            if (isNotRelatedContactTabs && !doNotConfirm && (currentTab && !currentTab.isFirstTab && currentTab.isDirty())) {
                 showConfirmClose(currentTab);
-            }else{
-                if(currentTab.isAddTab){
+            } else {
+                if (currentTab.isAddTab) {
                     tabset.openTab(vm.currentView, 0);
-                }else{
+                } else {
                     tabset.closeSpecifiedTab(vm.currentView, currentTab.id);
                 }
             }

@@ -290,7 +290,8 @@
         })
         onRouteChangeOff = $scope.$on('$locationChangeStart', function($event, newUrl){
             //TODO: maybe better to use tabsCtrl's  $scope.$on('$destroy' for this?
-            if(!currentTab.isFirstTab && currentTab.isDirty()){
+            var isNotRelatedContactTabs = !vm.relatedContacts;
+            if(isNotRelatedContactTabs && !currentTab.isFirstTab && currentTab.isDirty()){
                 showConfirmLeave($event, newUrl);
             }
         })
