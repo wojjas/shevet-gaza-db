@@ -5,10 +5,10 @@
         .module('gdCommon')
         .controller('TabsController', ['$scope', 'tabset', 'openedTabs', '$modal', Tabs]);
 
-    function Tabs($scope, tabset, openedTabs, $modal) {
+    function Tabs($scope, tabsetService, openedTabs, $modal) {
         var vm = this;
 
-        var tabset;
+        var tabset;                     //Instance of tabsetService
 
         vm.title = 'Tabs Ctrl';
         vm.currentView = '';
@@ -30,7 +30,7 @@
         function activate() {
             console.log('tabsCtrl.view: ' + vm.view);
             vm.currentView = vm.view;
-            tabset = new tabset.tabset();
+            tabset = new tabsetService.tabset();
         }
         function showConfirmClose(currentTab){
             var modalInstance = $modal.open({
@@ -74,6 +74,13 @@
                 if (currentTab.isAddTab) {
                     tabset.openTab(vm.currentView, 0);
                 } else {
+                    //If closing Patient, remove related contact's tabset as well
+                    if(vm.currentView === 'patients'){
+                        var tabsetId = 'relatedContacts_' + currentTab.id;
+                        openedTabs.removeTabset(tabsetId);
+                        //Set to null so it doesn't get updated:
+                        tabset = null;
+                    }
                     tabset.closeSpecifiedTab(vm.currentView, currentTab.id);
                 }
             }
@@ -83,10 +90,7 @@
         }
 
         $scope.$on('$destroy', function () {
-            //console.log('Destroying tabsCtrl, save tabs ' + vm.tabs);
-            //tabset.setTabset(vm.currentView, vm.tabs);
-            //tabset.unInitTabset(vm.currentView);
-            openedTabs.setTabset(vm.currentView, vm.tabs);
+            tabset && tabset.updateTabset();
         })
 
         //The tabset, instantiated in activate(), is initiated here, after the view is set

@@ -8,7 +8,7 @@
     function tabset(openedTabs) {
         var Tabsets = function(){
             var tabset = [];
-            //var currentView = '';     //TODO: rename currentView to view.
+            var currentView = '';     //TODO: rename currentView to view.
             var that = this;
 
             //Private functions:
@@ -81,7 +81,7 @@
                 var tableTabTemplateURL = '';
                 var detailTabTemplateURL = '';
 
-                //currentView = view;
+                currentView = view;
                 tabset = openedTabs.getTabset(view);
 
                 //If there's nothing for specified view, init one:
@@ -139,7 +139,11 @@
                     }];
 
                     tabset = tabs;
+                    openedTabs.setTabset(view, tabset);
                 }
+            }
+            this.updateTabset = function updateTabset(){
+                openedTabs.setTabset(currentView, tabset);
             }
             this.getTabset = function getTabset(view) {
                 return tabset;
@@ -174,6 +178,10 @@
                 if(index !== -1) {
                     closeTab(view, index);
                 }
+            }
+            this.removeTabset = function removeTabset(){
+                openedTabs.removeTabset(currentView);
+                //tabset = null;
             }
         }
 

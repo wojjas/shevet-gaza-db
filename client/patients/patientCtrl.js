@@ -298,9 +298,6 @@
             vm.patient = {};
         }
 
-        $scope.$on('$destroy', function (event) {
-            console.log('Patient Ctrl is being destroyed for Patient: ', vm.patient.firstName + ", id: " +vm.patient._id);
-        })
         onRouteChangeOff = $scope.$on('$locationChangeStart', function($event, newUrl){
             //TODO: maybe better to use tabsCtrl's  $scope.$on('$destroy' for this?
             if(!currentTab.isFirstTab && currentTab.isDirty()){
@@ -310,7 +307,6 @@
         $scope.$on('saveAndCloseEvent', function (event, concernedTabId) {
             if(currentTab && currentTab.id === concernedTabId){
                 handleSaveAndCloseClick();
-                //event.stopPropagation();
             }
         })
     }

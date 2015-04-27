@@ -13,10 +13,11 @@
            },
            setTabset: function (view, tabset) {
                tabsets[view] = angular.copy(tabset);
+           },
+           removeTabset: function(view){
+               delete tabsets[view];
            }
         };
         return service;
-
-        /////////////////////////////
     }
 })();
