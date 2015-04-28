@@ -6,6 +6,14 @@
         .factory('tabset', ['openedTabs', tabset]);
 
     function tabset(openedTabs) {
+        //TODO: Nice tool put in some global string-tool-box
+        //Replaces every occurrence of "substring" in "string" with "newSubstring"
+        function removeSubstring(string, substring, newSubstring){
+            var substringWithEscapedSpecialChars = substring.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+
+            return string.replace(new RegExp(substringWithEscapedSpecialChars, 'g'), newSubstring);
+        }
+
         var Tabsets = function(){
             var tabset = [];
             var currentView = '';     //TODO: rename currentView to view.
@@ -196,8 +204,8 @@
                 //Ignore empty objects by removing them before comparison:
                 //This is a hack to handle Patient's related-contact's contact-number's dummy object
                 //This dummy is added when a related contact tab is opened (by then patien's dataBkp is already set)
-                dataBkpStr = dataBkpStr.replace(',{}', '');
-                dataStr = dataStr.replace(',{}', '');
+                dataStr = removeSubstring(dataStr, ',{}', '');
+                dataBkpStr = removeSubstring(dataBkpStr, ',{}', '');
 
                 return dataBkpStr !== "" && dataBkpStr !== dataStr;
             }else{
@@ -210,7 +218,8 @@
 
         /////////////////////////////
         return {
-            tabset : Tabsets
+            tabset : Tabsets,
+            updateTabset : true //Flag governs if tabset should be updated or not
         }
     }
 })();

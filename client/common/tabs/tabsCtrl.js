@@ -78,8 +78,7 @@
                     if(vm.currentView === 'patients'){
                         var tabsetId = 'relatedContacts_' + currentTab.id;
                         openedTabs.removeTabset(tabsetId);
-                        //Set to null so it doesn't get updated:
-                        tabset = null;
+                        tabsetService.updateTabset = false;
                     }
                     tabset.closeSpecifiedTab(vm.currentView, currentTab.id);
                 }
@@ -90,7 +89,11 @@
         }
 
         $scope.$on('$destroy', function () {
-            tabset && tabset.updateTabset();
+            if(tabsetService.updateTabset){
+                tabset.updateTabset();
+            }else{
+                tabsetService.updateTabset = true;
+            }
         })
 
         //The tabset, instantiated in activate(), is initiated here, after the view is set
