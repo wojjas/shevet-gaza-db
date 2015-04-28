@@ -38,6 +38,11 @@
             vm.table = tableObject.table;
         }
         function fillTable(){
+            //Don't request related contacts
+            if(vm.view.indexOf('relatedContacts') !== -1){
+                return;
+            }
+
             var documentsRead = rdProxy.readAll(vm.view);
 
             if(documentsRead.$promise){
