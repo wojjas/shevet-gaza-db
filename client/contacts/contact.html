@@ -20,6 +20,25 @@
         float: none;
         margin: 0 auto;
     }
+
+    .photo-container{
+        position: relative;
+    }
+    .photo{
+        width: 150px;
+        height: 150px;
+        overflow: auto;
+        margin: auto;
+        position: absolute;
+        top: 218px; left: 0; bottom: 0; right: 0;
+    }
+
+    /*.design-time-color1{*/
+        /*background-color:lightgray;*/
+    /*}*/
+    .design-time-color2{
+        background-color:gray;
+    }
 </style>
 
 <section class="container">
@@ -40,28 +59,32 @@
                     </div>
                 </div>
                 <div class="form-group">
-                        <label class="col-sm-3 col-xs-12 control-label">Notes</label>
+                    <label class=" col-sm-3 col-xs-12 control-label">Born</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" type="text-area" ng-model="contactCtrl.contact.notes" placeholder="contact related notes"  rows="{{ contactCtrl.showRelation ? 5 : 7 }}"></textarea>
+                        <date-picker context='birth' date="contactCtrl.contact.birthDate"></date-picker>
                     </div>
                 </div>
-                <!--
-                <div class="form-group col-xs-12">
-                    <label class="col-sm-3 col-xs-12"></label>
-                    <div class="col-sm-9">
-                        <button class="btn btn-primary" ng-click="contactCtrl.handleSave()">Save</button>
-                        <button class="btn btn-default" ng-click="contactCtrl.handleCancel()">Cancel</button>
+
+                <div class="col-xs-12 center-block design-time-color1">
+                    <div class="photo-container center-block design-time-color1">
+                        <div class="photo design-time-color2"></div>
                     </div>
                 </div>
-                -->
             </div>
 
             <div class="col-sm-8 ">
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-xs-12 control-label">Name</label>
-                    <div class=" col-sm-10">
+                    <label class="col-sm-1 control-label">Name</label>
+                    <div class="col-sm-11" >
                         <input class="form-control" type="text" ng-model="contactCtrl.contact.name" placeholder="contact's full name" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-1 control-label">Notes</label>
+                    <div class="col-sm-12">
+                        <textarea class="form-control" type="text-area" ng-model="contactCtrl.contact.notes" placeholder="contact related notes"  rows="{{ contactCtrl.showRelation ? 3 : 3 }}"></textarea>
                     </div>
                 </div>
 
