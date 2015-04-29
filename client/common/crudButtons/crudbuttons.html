@@ -8,7 +8,7 @@
             </div>
 
             <div class="text-center col-sm-6 col-xs-8">
-                <div class="btn-group">
+                <div class="btn-group" ng-hide="hideSaveButtons">
                     <button class="btn btn-default"
                             type="button"
                             ng-click="save()">Save</button>
@@ -23,7 +23,11 @@
                 <button class="btn btn-danger"
                         type="button"
                         ng-click="delete()"
-                        ng-hide="isAddNewTab">Delete</button>
+                        ng-hide="isAddNewTab || hideSaveButtons">Delete</button>
+                <button class="btn btn-danger"
+                        type="button"
+                        ng-click="removeRelation()"
+                        ng-hide="isAddNewTab || !hideSaveButtons">Remove Relation</button>
                 <button class="btn btn-default"
                         type="reset"
                         ng-click="clear()"

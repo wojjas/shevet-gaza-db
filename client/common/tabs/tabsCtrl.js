@@ -61,7 +61,6 @@
         function handleTabSelect(tab){
             if(tab.isFirstTab && vm.reloadTableNeeded){
                 vm.reloadTableNeeded = false;
-                //reloadTableEvent
                 $scope.$broadcast('reloadTableEvent');
             }
         }

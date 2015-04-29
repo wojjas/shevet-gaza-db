@@ -16,10 +16,12 @@
         vm.title = 'Contact Ctrl';
         vm.contact = {};
         vm.activate = activate;
+        vm.isRelatedContact = isRelatedContact;
         vm.handleCloseClick = handleCloseClick;
         vm.handleSaveClick = handleSaveClick;
         vm.handleSaveAndCloseClick = handleSaveAndCloseClick;
         vm.handleDeleteClick = handleDeleteClick;
+        vm.handleRemoveRelation = handleRemoveRelation;
         vm.handleClearClick = handleClearClick;
 
         activate();
@@ -245,6 +247,10 @@
             $event.preventDefault();
         }
 
+        function isRelatedContact(){
+            return vm.relatedContacts && vm.relatedContacts.length > 0;
+        }
+
         //Event Handlers:
         function handleCloseClick(){
             vm.handleTabCloseClicked();
@@ -279,6 +285,23 @@
                 });
             }else{
                 vm.handleTabCloseClicked();
+            }
+        }
+        function handleRemoveRelation(){
+            //alert('This contact is NOT being removed, only its relation to this patient');
+            for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
+                if(vm.relatedContacts[i].contact._id === vm.contact._id){
+                    //vm.relatedContacts.splice(i, 1);
+                    //TODO: update view somehow... Regenerate RC list
+                    //$scope.$broadcast('removeRelationEvent');
+                    //$scope.$emit('removeRelationEvent');
+                    vm.reloadTableNeeded = true;
+
+                    //vm.handleTabCloseClicked();
+                    handleCloseClick();
+
+                    return;
+                }
             }
         }
         function handleClearClick(){

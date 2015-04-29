@@ -100,7 +100,9 @@
                                             save-and-close="contactCtrl.handleSaveAndCloseClick()"
                                             is-add-new-tab="contactCtrl.isAddNewTab"
                                             delete="contactCtrl.handleDeleteClick()"
-                                            clear="contactCtrl.handleClearClick()"></crud-buttons-directive>
+                                            remove-relation="contactCtrl.handleRemoveRelation()"
+                                            clear="contactCtrl.handleClearClick()"
+                                            hide-save-buttons="contactCtrl.isRelatedContact()"></crud-buttons-directive>
                     <div class="col-md-3 col-xs-2"></div>
                 </div>
             </div>

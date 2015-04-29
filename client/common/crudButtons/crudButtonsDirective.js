@@ -17,7 +17,9 @@
                 saveAndClose: '&',
                 isAddNewTab: "=",
                 delete: '&',
-                clear: '&'
+                removeRelation: '&',
+                clear: '&',
+                hideSaveButtons: "="
             },
             restrict: 'E',
             templateUrl: '/common/crudButtons/crudbuttons.html'
