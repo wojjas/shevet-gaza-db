@@ -3,10 +3,10 @@
 
     angular.module('gdContacts').controller('ContactController', Contact);
 
-    Contact.$inject = ['$scope', '$location', 'contactsProxy', 'loadingCover', '$modal', '$log'];
+    Contact.$inject = ['$scope', '$location', 'contactsProxy', 'loadingCover', '$modal', '$log', '$timeout'];
 
     /* @ngInject */
-    function Contact($scope, $location, contactsProxy, loadingCover, $modal, $log) {
+    function Contact($scope, $location, contactsProxy, loadingCover, $modal, $log, $timeout) {
         /* jshint validthis: true */
         var vm = this;
         var currentTab = {};                //Reference to parent scope's tab for this controller
@@ -247,6 +247,7 @@
             $event.preventDefault();
         }
 
+        //Public functions:
         function isRelatedContact(){
             return vm.relatedContacts && vm.relatedContacts.length > 0;
         }
@@ -291,14 +292,14 @@
             //alert('This contact is NOT being removed, only its relation to this patient');
             for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
                 if(vm.relatedContacts[i].contact._id === vm.contact._id){
-                    //vm.relatedContacts.splice(i, 1);
-                    //TODO: update view somehow... Regenerate RC list
-                    //$scope.$broadcast('removeRelationEvent');
-                    //$scope.$emit('removeRelationEvent');
+                    vm.relatedContacts.splice(i, 1);
                     vm.reloadTableNeeded = true;
 
-                    //vm.handleTabCloseClicked();
-                    handleCloseClick();
+                    //Give angular time to update the reloadTableNeeded flag before calling handleTabCloseClicked,
+                    //yes, 0ms is enough... This flag is bound through directive, isolated scope using "=".
+                    $timeout(function(){
+                        vm.handleTabCloseClicked();
+                    }, 0);
 
                     return;
                 }

@@ -130,8 +130,12 @@
             }
         }
 
-        $scope.$on('reloadTableEvent', function () {
-            fillTable();
+        $scope.$on('reloadTableEvent', function (event, isRelatedContactsTable) {
+            if(isRelatedContactsTable){
+                fillTableFromPatient()
+            }else{
+                fillTable();
+            }
         })
 
         $scope.$watch(function(){

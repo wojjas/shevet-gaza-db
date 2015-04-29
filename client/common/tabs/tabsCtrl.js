@@ -61,7 +61,7 @@
         function handleTabSelect(tab){
             if(tab.isFirstTab && vm.reloadTableNeeded){
                 vm.reloadTableNeeded = false;
-                $scope.$broadcast('reloadTableEvent');
+                $scope.$broadcast('reloadTableEvent', vm.currentView.indexOf('relatedContacts') >= 0);
             }
         }
         function handleTabCloseClicked(currentTab, doNotConfirm) {
