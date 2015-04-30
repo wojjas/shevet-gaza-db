@@ -136,7 +136,8 @@
                         !contact.contactNumbers[contact.contactNumbers.length - 1].number)){
                         contact.contactNumbers.pop();
                     }
-                    //Remove "relation" added (by this ctrl) to the contact object
+                    //Handle "relation" added (by this ctrl) to the contact object to be worked with in the ContactController
+                    vm.patient.relatedContacts[i].relation = contact.relation;
                     contact.relation && delete contact.relation;
                 }
             }
