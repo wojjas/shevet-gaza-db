@@ -11,17 +11,35 @@
     /*.design-time-color{*/
         /*background-color:lightgray;*/
     /*}*/
-    .contacts {
+    .related-contacts {
         overflow-y: hidden;
         overflow-x: hidden;
-        height: 500px;
+        min-height: 500px;
+
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 5px solid rgba(213,190,96,0.5);
+    }
+    .visits{
+        overflow-y: hidden;
+        overflow-x: hidden;
+        min-height: 500px;
+
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 5px solid rgba(213,190,96,0.5);
+    }
+    .padding{
+        padding: 5px;
     }
 </style>
 
-<section class="container">
+<section class="container padding">
 
     <!-- form-horizontal makes form-groups behave like grid rows, so no need for .row -->
-    <form class="form-horizontal center-block margin-top-md">
+    <form class="form-horizontal center-block margin-top-sm">
         <fieldset class="container">
 
             <div class="container">
@@ -123,7 +141,7 @@
                         </div>
                     </div>
                     <div class="row treatment-data">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-sm-4 col-xs-12">
                             <div class="form-group">
                                 <label class=" col-sm-3 col-xs-12 control-label">Born</label>
                                 <div class="col-sm-9">
@@ -138,19 +156,19 @@
                             </div>
                         </div>
                         <div class="col-sm-8 col-xs-12" style="margin-top:5px;">
-                            <label class="col-sm-12 col-xs-12">Diagnosis</label>
+                            <label class="col-sm-1 col-xs-1">Diagnosis</label>
                             <div class="col-sm-12 col-xs-12">
                                 <textarea class="form-control" type="text-area" rows="3" ng-model="patientCtrl.patient.diagnosis"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row contacts margin-top-md">
+                    <div class="row related-contacts margin-top-md">
                         <related-contacts-tabs view={{patientCtrl.relatedContactsTabsId()}}
                                                related-contacts="patientCtrl.patient.relatedContacts"></related-contacts-tabs>
                     </div>
 
-                    <div class="row contacts margin-top">
+                    <div class="row visits margin-top-sm">
                         <tabset>
                             <tab heading="Visits">
                                 <visit-list></visit-list>
