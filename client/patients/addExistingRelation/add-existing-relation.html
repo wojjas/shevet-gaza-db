@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="../main.css" xmlns="http://www.w3.org/1999/html">
+<style>
+
+</style>
+
+<section class="container">
+
+    <form class="form-horizontal margin-top-sm" role="form">
+        <fieldset class="container">
+            <div class="row col-xs-12">
+                <label class="col-xs-1"></label>
+                <label class="col-xs-10"><h4>Choose one contact and specify its relation to this patient</h4></label>
+                <label class="col-xs-1"></label>
+            </div>
+
+            <!--<related-contacts-table-->
+                    <!--view="relatedContacts"-->
+                    <!--rows="{{4}}"-->
+                    <!--show-relation="true"-->
+                    <!--related-contacts="tabsCtrl.relatedContacts"-->
+                    <!--template-path="{{tab.template}}"-->
+                    <!--handle-table-row-clicked="tabsCtrl.handleTableRowClicked(data)"-->
+                    <!--close-tab-deleted-in-table="tabsCtrl.closeTabDeletedInTable(id)">-->
+            <!--</related-contacts-table>-->
+            <add-existing-relation-table
+                    view="contacts"
+                    rows="{{4}}"></add-existing-relation-table>
+
+            <div class="row col-xs-12">
+                <label class="col-xs-2"></label>
+                    <div class="col-xs-8 form-group">
+                        <label class="col-xs-3 control-label">Relation</label>
+                        <div class=" col-xs-9">
+                            <input class="form-control" type="text" ng-model="contactCtrl.contact.relation" placeholder="relation to patient" />
+                        </div>
+                    </div>
+                <label class="col-xs-2"></label>
+            </div>
+
+            <div class="col-sm-12 margin-top-sm">
+                <div class="form-group ">
+                    <div class="col-md-3 col-sm-2"></div>
+                    <crud-buttons-directive close="contactCtrl.handleCloseClick()"
+                                            save="contactCtrl.handleSaveClick()"
+                                            save-and-close="contactCtrl.handleSaveAndCloseClick()"
+                                            is-add-new-tab="contactCtrl.isAddNewTab"
+                                            delete="contactCtrl.handleDeleteClick()"
+                                            remove-relation="contactCtrl.handleRemoveRelation()"
+                                            clear="contactCtrl.handleClearClick()"
+                                            hide-save-buttons="contactCtrl.isRelatedContact()"></crud-buttons-directive>
+                    <div class="col-md-3 col-xs-2"></div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</section>

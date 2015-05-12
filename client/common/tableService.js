@@ -52,12 +52,12 @@
 
            return this.table;
        };
-        TableServiceInstance.prototype.init = function(docs, numberOfRows, showRelation){
+        TableServiceInstance.prototype.init = function(docs, numberOfRows, showPagination){
             this.data = docs;
             this.parameters.count = numberOfRows || 12;
 
-            this.showPagination = !showRelation;
-            if(showRelation) {
+            this.showPagination = showPagination;
+            if(!showPagination) {
                 this.settings.counts = [];
             }
 

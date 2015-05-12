@@ -102,24 +102,24 @@
                     switch(viewRelevantPart){
                         case 'doctors':
                             tableTabHeading = 'Doctors';
-                            tableTabTemplateURL = 'client/doctors/doctors.html';
-                            detailTabTemplateURL = 'client/doctors/doctor.html';
+                            tableTabTemplateURL = '';
+                            detailTabTemplateURL = '';
                             break;
                         case 'patients':
                             tableTabHeading = 'Patients';
-                            tableTabTemplateURL = 'client/patients/patients.html';
-                            detailTabTemplateURL = 'client/patients/patient.html';
+                            tableTabTemplateURL = '';
+                            detailTabTemplateURL = '';
                             break;
                         case 'contacts':
                             tableTabHeading = 'Contacts';
-                            tableTabTemplateURL = 'client/contacts/related-contacts-table.html';
-                            detailTabTemplateURL = 'client/contacts/contact.html';
+                            tableTabTemplateURL = '';
+                            detailTabTemplateURL = '';
                             break;
                         case 'relatedContacts':
                             tableTabHeading = 'Contacts Related to Patient';
                             //TODO: use the same as for contacts above?
-                            tableTabTemplateURL = 'client/relatedContactsTabs/related-contacts-table.html';
-                            detailTabTemplateURL = 'client/contacts/contact.html';
+                            tableTabTemplateURL = '';
+                            detailTabTemplateURL = '';
                             break;
                         default:
                             tableTabHeading = 'Undefined';
@@ -135,16 +135,27 @@
                         "heading": tableTabHeading,
                         "active": true,
                         "template" : tableTabTemplateURL
-                    },{
-                        //The tab used for adding a post
-                        "hideCloseIcon": true,
-                        "isAddTab": true,
-                        "heading": 'Add new',
-                        "active": false,
-                        "template" : detailTabTemplateURL,
-
-                        isDirty: isDirty
                     }];
+
+                    //Add New or Add Existing (for related contacts)
+                    if(view.indexOf('relatedContacts') >= 0){
+                        tabs.push({
+                            "isAddExistingTab": true,
+                            "heading": 'Add Existing',
+                            "active": false
+                        })
+                    }else{
+                        tabs.push({
+                            //The tab used for adding a post
+                            "hideCloseIcon": true,
+                            "isAddTab": true,
+                            "heading": 'Add new',
+                            "active": false,
+                            "template" : detailTabTemplateURL,
+
+                            isDirty: isDirty
+                        });
+                    }
 
                     tabset = tabs;
                     openedTabs.setTabset(view, tabset);

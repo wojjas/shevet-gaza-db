@@ -289,21 +289,30 @@
             }
         }
         function handleRemoveRelation(){
-            //alert('This contact is NOT being removed, only its relation to this patient');
-            for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
-                if(vm.relatedContacts[i].contact._id === vm.contact._id){
-                    vm.relatedContacts.splice(i, 1);
-                    vm.reloadTableNeeded = true;
+            vm.removeRelatedContact({id:vm.contact._id});
+            vm.reloadTableNeeded = true;
 
-                    //Give angular time to update the reloadTableNeeded flag before calling handleTabCloseClicked,
-                    //yes, 0ms is enough... This flag is bound through directive, isolated scope using "=".
-                    $timeout(function(){
-                        vm.handleTabCloseClicked();
-                    }, 0);
+            //Give angular time to update the reloadTableNeeded flag before calling handleTabCloseClicked,
+            //yes, 0ms is enough... This flag is bound through directive, isolated scope using "=".
+            $timeout(function(){
+                vm.handleTabCloseClicked();
+            }, 0);
 
-                    return;
-                }
-            }
+            //TODO: Move this up to the Patient to avoid duplication when removing relation from table.
+            //for(var i = 0, len = vm.relatedContacts.length; i < len; i++){
+            //    if(vm.relatedContacts[i].contact._id === vm.contact._id){
+            //        vm.relatedContacts.splice(i, 1);
+            //        vm.reloadTableNeeded = true;
+            //
+            //        //Give angular time to update the reloadTableNeeded flag before calling handleTabCloseClicked,
+            //        //yes, 0ms is enough... This flag is bound through directive, isolated scope using "=".
+            //        $timeout(function(){
+            //            vm.handleTabCloseClicked();
+            //        }, 0);
+            //
+            //        return;
+            //    }
+            //}
         }
         function handleClearClick(){
             vm.contact = {};

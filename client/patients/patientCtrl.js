@@ -17,6 +17,7 @@
         vm.patient = {};
         vm.activate = activate;
         vm.relatedContactsTabsId = relatedContactsTabsId;
+        vm.removeRelatedContact = removeRelatedContact;
         vm.handleGenderSelected = handleGenderSelected;
         vm.handleReligionSelected = handleReligionSelected;
         vm.handleCloseClick = handleCloseClick;
@@ -251,6 +252,16 @@
         }
         function relatedContactsTabsId(){
             return 'relatedContacts_' + vm.patient._id;
+        }
+        function removeRelatedContact(id){
+            //TODO: work on this ctrl's rc.
+            for(var i = 0, len = vm.patient.relatedContacts.length; i < len; i++){
+                if(vm.patient.relatedContacts[i].contact._id === id){
+                    vm.patient.relatedContacts.splice(i, 1);
+
+                    return;
+                }
+            }
         }
 
         //Event Handlers:

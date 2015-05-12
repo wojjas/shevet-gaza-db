@@ -165,7 +165,8 @@
 
                     <div class="row related-contacts margin-top-md">
                         <related-contacts-tabs view={{patientCtrl.relatedContactsTabsId()}}
-                                               related-contacts="patientCtrl.patient.relatedContacts"></related-contacts-tabs>
+                                               related-contacts="patientCtrl.patient.relatedContacts"
+                                               remove-related-contact="patientCtrl.removeRelatedContact(id)"></related-contacts-tabs>
                     </div>
 
                     <div class="row visits margin-top-sm">

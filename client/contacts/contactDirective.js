@@ -19,7 +19,8 @@
                 relatedContacts: "=",
 
                 handleTabCloseClicked: "&",
-                saveAndOpenInTab: "&"
+                saveAndOpenInTab: "&",
+                removeRelatedContact: '&'
             },
             templateUrl:'/client/contacts/contact.html',
             controller: 'ContactController',
