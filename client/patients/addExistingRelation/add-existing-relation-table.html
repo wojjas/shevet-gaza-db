@@ -10,7 +10,7 @@
 
     <table ng-table="addExistingRelationTableController.table"
            show-filter="true"
-           class="table table-bordered table-hover table-striped table-responsive">
+           class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
         <tr ng-repeat="contact in $data"
             ng-class="{danger: contact._id == addExistingRelationTableController.dangerMarkedDocumentId}"
             ng-click="addExistingRelationTableController.handleTableRowClicked({data: contact})">
