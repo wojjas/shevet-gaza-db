@@ -22,6 +22,7 @@
 
         vm.saveAndOpenInTab = saveAndOpenInTab;
         vm.closeTabDeletedInTable = closeTabDeletedInTable;
+        vm.selectFirstTab = selectFirstTab;
 
         activate();
 
@@ -55,6 +56,9 @@
         }
         function closeTabDeletedInTable(id){
             tabset.closeSpecifiedTab(vm.currentView, id);
+        }
+        function selectFirstTab(){
+            tabset.openTab(vm.currentView, 0);
         }
 
         //Event Handlers:

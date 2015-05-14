@@ -16,13 +16,12 @@
             scope: {
                 view: '@',      //TODO: Needed?
                 rows: '@',
-                //handleTableRowClicked: "&",
-                removeRelation: "&"
-                //closeTabDeletedInTable: "&"
+                selectedContact: '=',
+                specifiedRelation: '='
             },
             templateUrl:'/client/patients/addExistingRelation/add-existing-relation-table.html',
             controller: 'AddExistingRelationTableController',
-            controllerAs: 'addExistingRelationTableController',
+            controllerAs: 'addExistingRelationTableCtrl',
             bindToController: true
         };
         return directive;

@@ -10,8 +10,9 @@
 
     <table ng-table="tableCtrl.table"
            show-filter="true"
-           class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
+           class="table table-bordered table-hover table-striped table-responsive">
         <tr ng-repeat="doctor in $data"
+            class="hand-on-hover"
             ng-class="{danger: doctor._id == tableCtrl.dangerMarkedDocumentId}"
                 ng-click="tableCtrl.handleTableRowClicked({data: doctor})">
                 <td data-title="'Name'"

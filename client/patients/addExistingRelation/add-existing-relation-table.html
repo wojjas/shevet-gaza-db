@@ -4,16 +4,32 @@
     /*.body {*/
     /*background: rgba(213,190,96,0.2);*/
     /*}*/
+    .border-on-hover:hover{
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 5px solid rgba(213,190,96,0.5);
+
+    }
+    .selected-row-border{
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 5px solid rgba(213,190,96,0.5);
+    }
 </style>
 
 <section class="body">
 
-    <table ng-table="addExistingRelationTableController.table"
+     <table ng-table="addExistingRelationTableCtrl.table"
            show-filter="true"
-           class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
+           class="table table-bordered table-hover table-striped table-responsive"
+           ng-disabled="addExistingRelationTableCtrl.selectedContact"> <!-- TODO: this simply doesn't work, make it work or remove -->
         <tr ng-repeat="contact in $data"
-            ng-class="{danger: contact._id == addExistingRelationTableController.dangerMarkedDocumentId}"
-            ng-click="addExistingRelationTableController.handleTableRowClicked({data: contact})">
+            ng-click="addExistingRelationTableCtrl.handleRowSelected(contact._id)"
+            class="border-on-hover hand-on-hover"
+            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact,
+                       'border-on-hover': !addExistingRelationTableCtrl.selectedContact}">
             <td data-title="'Id'"
                 sortable="'id'"
                 filter="{ 'id': 'text' }"
@@ -29,15 +45,6 @@
                 filter="{ 'birthDate': 'text' }"
                 class="col-sm-2">
                 {{contact.birthDate}}</td>
-            <td class="btn-column">
-                <button class="btn btn-default"
-                        ng-class="{'btn-danger': contact._id === addExistingRelationTableController.dangerMarkedDocumentId}"
-                        ng-mouseenter="addExistingRelationTableController.handleHoverOverDeleteBtn(contact._id)"
-                        ng-mouseleave="addExistingRelationTableController.handleHoverOverDeleteBtn(-1)"
-                        ng-click="addExistingRelationTableController.handleDeleteClick(contact._id)">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </td>
         </tr>
     </table>
 </section>

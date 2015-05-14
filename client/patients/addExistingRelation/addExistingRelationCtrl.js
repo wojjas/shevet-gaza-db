@@ -10,23 +10,32 @@
     function addExistingRelation() {
         var vm = this;
 
-        vm.title = 'addExistingRelation Ctrl';
+        vm.specifiedRelation = '';
+        vm.selectedContact = null;
+        vm.handleRelatedContactSelected = handleRelatedContactSelected;
+        vm.handleAddRelation = handleAddRelation;
+        vm.handleCancel = handleCancel;
+
         vm.activate = activate;
-        vm.handleTableRowButtonClicked = handleTableRowButtonClicked;
 
         activate();
 
         ////////////////
 
         function activate() {
-            //alert('AddExistingRelationController');
         }
 
-        function handleTableRowButtonClicked(contactId){
-            //TODO: depending on what button was clicked perform whole CRUD:
-
-            vm.removeRelatedContact(contactId);
-            //TODO: re-load table or remove mark in some other way
+        function handleRelatedContactSelected(id){
+            vm.selectedContact = id;
+        }
+        function handleAddRelation(){
+            //7 Add Relation button clicked, add this relation to Patient's related contacts by adding Patien's method for doing this.
+            //7 specifing vm.selectedContact & vm.specifiedRelation.
+        }
+        function handleCancel(){
+            vm.selectedContact = null;
+            vm.specifiedRelation = '';
+            vm.selectFirstTab();
         }
     }
 })();

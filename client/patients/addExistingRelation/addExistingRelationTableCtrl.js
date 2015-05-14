@@ -12,8 +12,8 @@
         var tableObject = {};
 
         vm.table;
+        vm.handleRowSelected = handleRowSelected;
         vm.activate = activate;
-        vm.handleDeleteClick = handleDeleteClick;
 
         activate();
 
@@ -58,14 +58,8 @@
             }
         }
 
-        function handleDeleteClick(id){
-            //console.log('*** add this (%s) contact as relation!', id);
-            //TODO: depending on what button was clicked perform whole CRUD:
-
-            vm.removeRelatedContact({id:id});
-            //TODO:
-            // close related tab if opened.
-            // re-load table or remove mark in some other way
+        function handleRowSelected(id){
+            vm.selectedContact = id;
         }
     }
 })();
