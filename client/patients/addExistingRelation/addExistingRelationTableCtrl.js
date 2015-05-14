@@ -58,8 +58,8 @@
             }
         }
 
-        function handleRowSelected(id){
-            vm.selectedContact = id;
+        function handleRowSelected(contact){
+            vm.selectedContact = contact;
         }
     }
 })();

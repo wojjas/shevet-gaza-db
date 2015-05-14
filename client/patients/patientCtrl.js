@@ -17,6 +17,7 @@
         vm.patient = {};
         vm.activate = activate;
         vm.relatedContactsTabsId = relatedContactsTabsId;
+        vm.addRelatedContact = addRelatedContact;
         vm.removeRelatedContact = removeRelatedContact;
         vm.handleGenderSelected = handleGenderSelected;
         vm.handleReligionSelected = handleReligionSelected;
@@ -262,6 +263,9 @@
                     return;
                 }
             }
+        }
+        function addRelatedContact(contact){
+            contact && vm.patient.relatedContacts.push(contact);
         }
 
         //Event Handlers:

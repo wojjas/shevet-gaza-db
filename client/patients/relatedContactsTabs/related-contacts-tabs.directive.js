@@ -20,8 +20,9 @@
             bindToController: true,
             scope: {
                 view: '@',
-                relatedContacts: '=',       //for Patient-details-tab
-                removeRelatedContact: '&'   //for Patient-details-tab
+                relatedContacts: '=',
+                removeRelatedContact: '&',
+                addRelatedContact: '&'
             }
         };
 

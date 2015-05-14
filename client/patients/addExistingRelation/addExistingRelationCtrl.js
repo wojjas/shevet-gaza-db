@@ -5,13 +5,13 @@
         .module('gdPatients')
         .controller('AddExistingRelationController', addExistingRelation);
 
-    //addExistingRelation.$inject = ['DEP'];
+    addExistingRelation.$inject = ['$timeout'];
 
-    function addExistingRelation() {
+    function addExistingRelation($timeout) {
         var vm = this;
 
-        vm.specifiedRelation = '';
         vm.selectedContact = null;
+        vm.specifiedRelation = '';
         vm.handleRelatedContactSelected = handleRelatedContactSelected;
         vm.isAddRelationDisabled = isAddRelationDisabled;
         vm.handleAddRelation = handleAddRelation;
@@ -33,13 +33,29 @@
             return !vm.selectedContact || vm.specifiedRelation === '';
         }
         function handleAddRelation(){
-            //7 Add Relation button clicked, add this relation to Patient's related contacts by adding Patien's method for doing this.
-            //7 specifing vm.selectedContact & vm.specifiedRelation.
+            var innerContact = vm.selectedContact;
+            innerContact.relation = vm.specifiedRelation;
+            var contact = {};
+            contact.contact = innerContact;
+            contact.relation = vm.specifiedRelation;
+            vm.addRelatedContact({contact: contact});
+
+            resetFormValues();
+            vm.reloadTableNeeded = true;
+            //Give angular time to update the reloadTableNeeded flag before calling selectFirstTab,
+            //yes, 0ms is enough... This flag is bound through directive, isolated scope using "=".
+            $timeout(function(){
+                vm.selectFirstTab();
+            }, 0);
         }
         function handleCancel(){
+            resetFormValues();
+            vm.selectFirstTab();
+        }
+
+        function resetFormValues(){
             vm.selectedContact = null;
             vm.specifiedRelation = '';
-            vm.selectFirstTab();
         }
     }
 })();

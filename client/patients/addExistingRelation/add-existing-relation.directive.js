@@ -15,7 +15,9 @@
         var directive = {
             restrict: 'E',
             scope: {
-                selectFirstTab: '&'
+                reloadTableNeeded: '=',
+                selectFirstTab: '&',
+                addRelatedContact: '&'
             },
             templateUrl:'/patients/addExistingRelation/add-existing-relation.html',
             controller: 'AddExistingRelationController',

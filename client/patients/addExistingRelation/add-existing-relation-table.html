@@ -26,9 +26,9 @@
            class="table table-bordered table-hover table-striped table-responsive"
            ng-disabled="addExistingRelationTableCtrl.selectedContact"> <!-- TODO: this simply doesn't work, make it work or remove -->
         <tr ng-repeat="contact in $data"
-            ng-click="addExistingRelationTableCtrl.handleRowSelected(contact._id)"
+            ng-click="addExistingRelationTableCtrl.handleRowSelected(contact)"
             class="border-on-hover hand-on-hover"
-            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact,
+            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact._id,
                        'border-on-hover': !addExistingRelationTableCtrl.selectedContact}">
             <td data-title="'Id'"
                 sortable="'id'"
