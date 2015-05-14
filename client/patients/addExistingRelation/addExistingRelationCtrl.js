@@ -13,6 +13,7 @@
         vm.specifiedRelation = '';
         vm.selectedContact = null;
         vm.handleRelatedContactSelected = handleRelatedContactSelected;
+        vm.isAddRelationDisabled = isAddRelationDisabled;
         vm.handleAddRelation = handleAddRelation;
         vm.handleCancel = handleCancel;
 
@@ -27,6 +28,9 @@
 
         function handleRelatedContactSelected(id){
             vm.selectedContact = id;
+        }
+        function isAddRelationDisabled(){
+            return !vm.selectedContact || vm.specifiedRelation === '';
         }
         function handleAddRelation(){
             //7 Add Relation button clicked, add this relation to Patient's related contacts by adding Patien's method for doing this.
