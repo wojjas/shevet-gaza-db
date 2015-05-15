@@ -17,7 +17,8 @@
                 view: '@',      //TODO: Needed?
                 rows: '@',
                 selectedContact: '=',
-                specifiedRelation: '='
+                specifiedRelation: '=',
+                alreadyRelated: '='
             },
             templateUrl:'/client/patients/addExistingRelation/add-existing-relation-table.html',
             controller: 'AddExistingRelationTableController',

@@ -57,6 +57,7 @@
                     <add-existing-relation
                             ng-if="tab.isAddExistingTab"
                             reload-table-needed="tabsCtrl.reloadTableNeeded"
+                            already-related="tabsCtrl.relatedContacts"
                             select-first-tab="tabsCtrl.selectFirstTab()"
                             add-related-contact="tabsCtrl.addRelatedContact({contact:contact})">
                     </add-existing-relation>

@@ -17,33 +17,38 @@
         -webkit-border-radius: 10px 10px 10px 10px;
         border: 5px solid rgba(213,190,96,0.5);
     }
+    .already-related{
+        background-color: rgb(235, 235, 228);
+        color: rgb(163, 153, 153);
+    }
 </style>
 
 <section class="body">
 
      <table ng-table="addExistingRelationTableCtrl.table"
            show-filter="true"
-           class="table table-bordered table-hover table-striped table-responsive"
-           ng-disabled="addExistingRelationTableCtrl.selectedContact"> <!-- TODO: this simply doesn't work, make it work or remove -->
+           class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
         <tr ng-repeat="contact in $data"
             ng-click="addExistingRelationTableCtrl.handleRowSelected(contact)"
-            class="border-on-hover hand-on-hover"
-            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact._id,
+            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact._id && (!addExistingRelationTableCtrl.isAlreadyRelated(contact)),
                        'border-on-hover': !addExistingRelationTableCtrl.selectedContact}">
             <td data-title="'Id'"
                 sortable="'id'"
                 filter="{ 'id': 'text' }"
-                class="col-sm-2">
+                class="col-sm-2"
+                ng-class="{'already-related': addExistingRelationTableCtrl.isAlreadyRelated(contact)}">
                 {{contact.id}}</td>
             <td data-title="'Name'"
                 sortable="'name'"
                 filter="{ 'name': 'text' }"
-                class="col-sm-8">
+                class="col-sm-8"
+                ng-class="{'already-related': addExistingRelationTableCtrl.isAlreadyRelated(contact)}">
                 {{contact.name}}</td>
             <td data-title="'Born'"
                 sortable="'birthDate'"
                 filter="{ 'birthDate': 'text' }"
-                class="col-sm-2">
+                class="col-sm-2"
+                ng-class="{'already-related': addExistingRelationTableCtrl.isAlreadyRelated(contact)}">
                 {{contact.birthDate}}</td>
         </tr>
     </table>

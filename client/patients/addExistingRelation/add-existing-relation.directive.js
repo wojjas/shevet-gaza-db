@@ -16,6 +16,7 @@
             restrict: 'E',
             scope: {
                 reloadTableNeeded: '=',
+                alreadyRelated: '=',
                 selectFirstTab: '&',
                 addRelatedContact: '&'
             },

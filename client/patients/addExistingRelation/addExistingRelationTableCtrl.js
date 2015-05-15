@@ -13,6 +13,7 @@
 
         vm.table;
         vm.handleRowSelected = handleRowSelected;
+        vm.isAlreadyRelated = isAlreadyRelated;
         vm.activate = activate;
 
         activate();
@@ -59,7 +60,24 @@
         }
 
         function handleRowSelected(contact){
-            vm.selectedContact = contact;
+            if(!isAlreadyRelated(contact)){
+                vm.selectedContact = contact;
+            }else{
+                alert('This contact is already related to this patient. (Remove or update relation using its detail page)');
+            }
+        }
+
+        function isAlreadyRelated(contact){
+            if(vm.alreadyRelated){
+                for(var i = 0, len = vm.alreadyRelated.length; i<len; i++){
+                    if(contact._id === vm.alreadyRelated[i].contact._id){
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 })();
