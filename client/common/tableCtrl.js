@@ -28,7 +28,7 @@
 
         function activate() {
             tableObject = new tableService.tableObject();
-            tableObject.init([], vm.rows, !vm.showRelation);
+            tableObject.init([], vm.rows, !vm.showRelation, !vm.showRelation);
 
             vm.showRelation || fillTable();
         }

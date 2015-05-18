@@ -22,7 +22,7 @@
 
         function activate() {
             tableObject = new tableService.tableObject();
-            tableObject.init([], vm.rows, false);
+            tableObject.init([], vm.rows, true, false);
 
             fillTable();
         }
