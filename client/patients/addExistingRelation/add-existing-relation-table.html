@@ -8,14 +8,14 @@
         border-radius: 10px 10px 10px 10px;
         -moz-border-radius: 10px 10px 10px 10px;
         -webkit-border-radius: 10px 10px 10px 10px;
-        border: 5px solid rgba(213,190,96,0.5);
+        border: 3px solid rgba(213,190,96,0.5);
 
     }
     .selected-row-border{
         border-radius: 10px 10px 10px 10px;
         -moz-border-radius: 10px 10px 10px 10px;
         -webkit-border-radius: 10px 10px 10px 10px;
-        border: 5px solid rgba(213,190,96,0.5);
+        border: 6px solid rgba(213,190,96,0.5);
     }
     .already-related{
         background-color: rgb(235, 235, 228);
@@ -30,8 +30,8 @@
            class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
         <tr ng-repeat="contact in $data"
             ng-click="addExistingRelationTableCtrl.handleRowSelected(contact)"
-            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact._id && (!addExistingRelationTableCtrl.isAlreadyRelated(contact)),
-                       'border-on-hover': !addExistingRelationTableCtrl.selectedContact}">
+            ng-class="{'selected-row-border': contact._id === addExistingRelationTableCtrl.selectedContact._id,
+                       'border-on-hover': !(contact._id === addExistingRelationTableCtrl.selectedContact._id) && !addExistingRelationTableCtrl.isAlreadyRelated(contact)}">
             <td data-title="'Id'"
                 sortable="'id'"
                 filter="{ 'id': 'text' }"
