@@ -12,7 +12,7 @@
            show-filter="true"
            class="table table-bordered table-hover table-striped table-responsive hand-on-hover">
         <tr ng-repeat="contact in $data"
-            class="hand-on-hover"
+            class="hand-on-hover border-on-hover"
             ng-class="{danger: contact._id == tableCtrl.dangerMarkedDocumentId}"
             ng-click="tableCtrl.handleTableRowClicked({data: contact.contact})">
             <td data-title="'Id'"
