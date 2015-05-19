@@ -7,30 +7,28 @@
 
     <form class="form-horizontal margin-top-sm" role="form">
         <fieldset class="container">
-            <div class="row col-xs-12">
+            <div class="row col-xs-12 centered">
                 <label class="col-xs-1"></label>
                 <label class="col-xs-10"><h4>Choose one contact from table and specify its relation to this patient</h4></label>
                 <label class="col-xs-1"></label>
             </div>
 
-            <add-existing-relation-table
-                    view="contacts"
-                    rows="{{4}}"
-                    selected-contact="addExistingRelationCtrl.selectedContact"
-                    specified-relation="addExistingRelationCtrl.specifiedRelation"
-                    already-related="addExistingRelationCtrl.alreadyRelated">
-            </add-existing-relation-table>
+            <div class="row col-xs-12 centered">
+                <add-existing-relation-table
+                        view="contacts"
+                        rows="{{4}}"
+                        selected-contact="addExistingRelationCtrl.selectedContact"
+                        specified-relation="addExistingRelationCtrl.specifiedRelation"
+                        already-related="addExistingRelationCtrl.alreadyRelated">
+                </add-existing-relation-table>
+            </div>
 
-            <div class="row col-xs-12">
-                <label class="col-xs-2"></label>
-                    <div class="col-xs-8 form-group">
-                        <label class="col-xs-3 control-label">Relation</label>
-                        <div class=" col-xs-9">
-                            <input class="form-control" type="text" ng-model="addExistingRelationCtrl.specifiedRelation" placeholder="relation to patient"
-                                   ng-disabled="!addExistingRelationCtrl.selectedContact" />
-                        </div>
-                    </div>
-                <label class="col-xs-2"></label>
+            <div class="row col-xs-12 form-group centered">
+                <label class="col-sm-2 col-xs-12 control-label text-left">Relation</label>
+                <div class=" col-sm-5 col-offset-5">
+                    <input class="form-control" type="text" ng-model="addExistingRelationCtrl.specifiedRelation" placeholder="relation to patient"
+                           ng-disabled="!addExistingRelationCtrl.selectedContact" />
+                </div>
             </div>
 
             <div class="col-sm-12 margin-top-sm">
@@ -39,21 +37,23 @@
                     <div class=" col-md-6 col-sm-8 buttons">
                         <div class="content">
                             <div class="row">
-                                <div class="col-sm-3 col-xs-2 text-left">
+
+                                <div class="col-sm-3 col-xs-2 text-right">
                                     <button class="btn btn-primary"
                                             type="button"
-                                            ng-click="addExistingRelationCtrl.handleCancel()">Cancel</button>
+                                            ng-disabled="addExistingRelationCtrl.isAddRelationDisabled()"
+                                            ng-click="addExistingRelationCtrl.handleAddRelation()">Add Relation</button>
                                 </div>
 
                                 <div class="text-center col-sm-6 col-xs-8">
                                 </div>
 
-                                <div class="col-sm-3 col-xs-2 text-right">
+                                <div class="col-sm-3 col-xs-2 text-left">
                                     <button class="btn btn-default"
                                             type="button"
-                                            ng-disabled="addExistingRelationCtrl.isAddRelationDisabled()"
-                                            ng-click="addExistingRelationCtrl.handleAddRelation()">Add Relation</button>
+                                            ng-click="addExistingRelationCtrl.handleCancel()">Cancel</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
