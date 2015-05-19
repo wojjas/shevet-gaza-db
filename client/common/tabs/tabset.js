@@ -20,7 +20,7 @@
             var that = this;
 
             //Private functions:
-            function indexOfTab(view, id){
+            function indexOfTab(id){
                 for(var i = 1, len = tabset.length; i < len; i++){
                     if(id && tabset[i].id === id){
                         return i;
@@ -58,7 +58,7 @@
 
                 return retVal;
             }
-            function addTabToTabsetAndOpen(view, data){
+            function addTabToTabsetAndOpen(data){
                 var newTab = {
                     active: true,           //Open this tab
                     heading: getObjectsName(data),
@@ -69,7 +69,7 @@
 
                 tabset.splice(tabset.length - 1, 0, newTab);
             }
-            function closeTab(view, index){
+            function closeTab(index){
                 var tabToClose = tabset[index];
 
                 if(tabToClose.isAddTab || tabToClose.isFirstTab){
@@ -80,14 +80,12 @@
                 tabset.splice(index, 1);
 
                 //Always select tab with table, do we really want that!?
-                that.openTab(view, 0);
+                that.openTab(0);
             }
 
             //Privileged functions:
             this.initTabset = function initTabset(view) {
                 var tableTabHeading = '';
-                var tableTabTemplateURL = '';
-                var detailTabTemplateURL = '';
 
                 currentView = view;
                 tabset = openedTabs.getTabset(view);
@@ -102,29 +100,19 @@
                     switch(viewRelevantPart){
                         case 'doctors':
                             tableTabHeading = 'Doctors';
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
                             break;
                         case 'patients':
                             tableTabHeading = 'Patients';
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
                             break;
                         case 'contacts':
                             tableTabHeading = 'Contacts';
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
                             break;
                         case 'relatedContacts':
                             tableTabHeading = 'Contacts Related to Patient';
                             //TODO: use the same as for contacts above?
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
                             break;
                         default:
                             tableTabHeading = 'Undefined';
-                            tableTabTemplateURL = '';
-                            detailTabTemplateURL = '';
                             console.debug('ERROR: Tabset controller called with unhandled view parameter.');
                     }
 
@@ -133,8 +121,7 @@
                         "isFirstTab": true,
                         "hideCloseIcon": true,
                         "heading": tableTabHeading,
-                        "active": true,
-                        "template" : tableTabTemplateURL
+                        "active": true
                     }];
 
                     //Add New or Add Existing (for related contacts)
@@ -151,7 +138,6 @@
                             "isAddTab": true,
                             "heading": 'Add new',
                             "active": false,
-                            "template" : detailTabTemplateURL,
 
                             isDirty: isDirty
                         });
@@ -164,43 +150,28 @@
             this.updateTabset = function updateTabset(){
                 openedTabs.setTabset(currentView, tabset);
             }
-            this.getTabset = function getTabset(view) {
+            this.getTabset = function getTabset() {
                 return tabset;
             }
-            this.openInTabCreateIfNeeded = function openInTabCreateIfNeeded(view, data){
-                    var tabOfRequested = indexOfTab(view, data._id);
+            this.openInTabCreateIfNeeded = function openInTabCreateIfNeeded(data){
+                    var tabOfRequested = indexOfTab(data._id);
                     if(tabOfRequested === -1){
-                        addTabToTabsetAndOpen(view, data);
+                        addTabToTabsetAndOpen(data);
                     }else{
-                        that.openTab(view, tabOfRequested);
+                        that.openTab(tabOfRequested);
                     }
             }
-            this.openTab = function openTab(view, index){
+            this.openTab = function openTab(index){
                 tabset[index].active = true;
             }
-            this.closeActiveTab = function closeActiveTab(view){
-                //Start at i=1 as we never want to close the FirstTab
-                for(var i=1, len=tabset.length; i < len; i++){
-                    if(tabset[i].active &&
-                        !tabset[i].isAddTab &&
-                        !tabset[i].isFirstTab){
-                        tabset.splice(i, 1);
-                        break;
-                    }
-                }
-
-                //Always select tab with table after closing a tab.
-                that.openTab(view, 0);
-            }
-            this.closeSpecifiedTab = function closeSpecifiedTab(view, id){
-                var index = indexOfTab(view, id);
+            this.closeSpecifiedTab = function closeSpecifiedTab(id){
+                var index = indexOfTab(id);
                 if(index !== -1) {
-                    closeTab(view, index);
+                    closeTab(index);
                 }
             }
             this.removeTabset = function removeTabset(){
                 openedTabs.removeTabset(currentView);
-                //tabset = null;
             }
         }
 

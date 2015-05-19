@@ -52,13 +52,13 @@
         }
 
         function saveAndOpenInTab(data){
-            tabset.openInTabCreateIfNeeded(vm.currentView, data);
+            tabset.openInTabCreateIfNeeded(data);
         }
         function closeTabDeletedInTable(id){
-            tabset.closeSpecifiedTab(vm.currentView, id);
+            tabset.closeSpecifiedTab(id);
         }
         function selectFirstTab(){
-            tabset.openTab(vm.currentView, 0);
+            tabset.openTab(0);
         }
 
         //Event Handlers:
@@ -75,7 +75,7 @@
                 showConfirmClose(currentTab);
             } else {
                 if (currentTab.isAddTab) {
-                    tabset.openTab(vm.currentView, 0);
+                    tabset.openTab(0);
                 } else {
                     //If closing Patient, remove related contact's tabset as well
                     if(vm.currentView === 'patients'){
@@ -83,12 +83,12 @@
                         openedTabs.removeTabset(tabsetId);
                         tabsetService.updateTabset = false;
                     }
-                    tabset.closeSpecifiedTab(vm.currentView, currentTab.id);
+                    tabset.closeSpecifiedTab(currentTab.id);
                 }
             }
         }
         function handleTableRowClicked(data){
-            tabset.openInTabCreateIfNeeded(vm.currentView, data);
+            tabset.openInTabCreateIfNeeded(data);
         }
 
         $scope.$on('$destroy', function () {
