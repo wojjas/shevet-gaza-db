@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var http = require('http');
 
 var contactsCtrl = require('./server/controllers/crudCtrl')('contact');
 var doctorsCtrl = require('./server/controllers/crudCtrl')('doctor');
@@ -10,6 +11,8 @@ var app = express();
 
 //Config:
 require('./server/configuration/express')(app);
+require('./server/configuration/body-parser')(app);
+var ssl = require('./server/configuration/ssl')(app);
 
 //Database:
 var dbConnectionString = 'mongodb://localhost:27037/gaza'
@@ -44,7 +47,9 @@ app.post('/api/patients/', patientsCtrl.createOne);
 app.put('/api/patients/', patientsCtrl.updateOne);
 app.get('/api/relatedContacts/:id', relatedContactsCtrl.getAll);
 
-//Server:
-app.listen(3000, function () {
+http.createServer(app).listen(3000, function () {
     console.log("Server listening on port: 3000");
-})
+});
+ssl.https.createServer(ssl.options, app).listen(3001, function () {
+    console.log("Server listening on port: 3001");
+});
