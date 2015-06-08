@@ -5,6 +5,7 @@ var http = require('http');
 var contactsCtrl = require('./server/controllers/crudCtrl')('contact');
 var doctorsCtrl = require('./server/controllers/crudCtrl')('doctor');
 var patientsCtrl = require('./server/controllers/crudCtrl')('patient');
+var usersCtrl = require('./server/controllers/crudCtrl')('user');
 var relatedContactsCtrl = require('./server/controllers/relatedContactsCtrl')();
 
 var app = express();
@@ -47,9 +48,15 @@ app.post('/api/patients/', patientsCtrl.createOne);
 app.put('/api/patients/', patientsCtrl.updateOne);
 app.get('/api/relatedContacts/:id', relatedContactsCtrl.getAll);
 
+app.get('/api/users', usersCtrl.getAll);
+app.get('/api/users/:id', usersCtrl.getOne);
+app.delete('/api/users/:id', usersCtrl.deleteOne);
+app.post('/api/users/', usersCtrl.createOne);
+app.put('/api/users/', usersCtrl.updateOne);
+
 http.createServer(app).listen(3000, function () {
     console.log("Server listening on port: 3000");
 });
 ssl.https.createServer(ssl.options, app).listen(3001, function () {
-    console.log("Server listening on port: 3001");
+    console.log("Server listening on port: 3001 (for https requests)");
 });

@@ -53,11 +53,14 @@ module.exports = function(model){
                                              document._doc.relatedContacts[i].relation);
                             }
                         }
-                        res.send(document);
                     });
-                }else{
-                    res.send(document);
                 }
+                //Remove password, don't send it to client, if user
+                if(model === 'user') {
+                    delete document.password;
+                }
+
+                res.send(document);
             });
         }, delay);
     };
@@ -106,8 +109,8 @@ module.exports = function(model){
         var query = {"_id": documentToSave._id};
 
         setTimeout(function () {
+            //Handle related Contact(s) before updating Patient:
             if(model === 'patient'){
-                //Handle related Contact(s) before updating Patient:
                 for(var i = 0, len = documentToSave.relatedContacts.length; i < len; i++){
                     //NOTE: update is async so the Contact-documents will get updated after Patient gets updated
                     //If this becomes a problem see: http://metaduck.com/01-asynchronous-iteration-patterns.html
@@ -117,6 +120,13 @@ module.exports = function(model){
                     });
                     documentToSave.relatedContacts[i].contact = relatedContactId;
                 }
+            }
+            if(model === 'user'){
+                //TODO: fix this so that passwords get hashed upon update as well!
+                console.debug('Updating user will not hash its password, use save instead!');
+                res.send({"status":'Failed to update user. Use save, not update, when updating users'});
+
+                return;
             }
 
             Model.update(query, documentToSave, function (err, numberAffected) {
@@ -134,6 +144,7 @@ module.exports = function(model){
     module.createOne = function(req, res){
         var delay = generateRandomDelay();
         console.log("Creating one document in db. Delay: " +delay+ "ms");
+        console.log("Incomming req.body: ", req.body);
 
         var retMessage = "OK";
         var newDocument = new Model(req.body);
@@ -142,11 +153,11 @@ module.exports = function(model){
             newDocument.save(function (err, result) {
                 if(err !== null){
                     console.log("Failed to create one document ", err);
-                    retMessage = "Error, creating document:" + err.message;
+                    retMessage = err.code === 11000 ? "Error, user already exists" : ("Error, creating document: " + err.message);
                 }
                 console.log('Affected documents in Create: ' + result);
 
-                res.send({"status":retMessage, "_id":result._id});
+                res.send({"status":retMessage, "_id": (result ? result._id : '')});
             });
         }, delay);
     };
