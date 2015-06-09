@@ -13,6 +13,7 @@ var app = express();
 //Config:
 require('./server/configuration/express')(app);
 require('./server/configuration/body-parser')(app);
+var authCtrl = require('./server/controllers/authCtrl')();
 var ssl = require('./server/configuration/ssl')(app);
 
 //Database:
@@ -51,7 +52,7 @@ app.get('/api/relatedContacts/:id', relatedContactsCtrl.getAll);
 app.get('/api/users', usersCtrl.getAll);
 app.get('/api/users/:id', usersCtrl.getOne);
 app.delete('/api/users/:id', usersCtrl.deleteOne);
-app.post('/api/users/', usersCtrl.createOne);
+app.post('/api/users/', authCtrl.isAuthenticated, usersCtrl.createOne);
 app.put('/api/users/', usersCtrl.updateOne);
 
 http.createServer(app).listen(3000, function () {
