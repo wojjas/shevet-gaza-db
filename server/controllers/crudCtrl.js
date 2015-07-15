@@ -44,8 +44,8 @@ module.exports = function(model){
                 if(model === 'patient'){
                     Model.populate(document, {path:'relatedContacts.contact'}, function(err, document) {
                         err && console.log('Failed to populate Patient with related contacts: ' + err);
-                        //TODO: check if each relation has a contact-object that is not null,
-                        // (if it is it indicates failure of finding Contact)
+                        //Check if each relation has a contact-object that is not null,
+                        //(if it is it indicates failure of finding Contact)
                         var nofRelatedContacts = document._doc.relatedContacts.length;
                         for(var i = 0; i < nofRelatedContacts; i++){
                             if(!document._doc.relatedContacts[i].contact){
@@ -53,14 +53,17 @@ module.exports = function(model){
                                              document._doc.relatedContacts[i].relation);
                             }
                         }
+                        res.send(document);
                     });
                 }
                 //Remove password, don't send it to client, if user
-                if(model === 'user') {
+                else if(model === 'user') {
                     delete document.password;
+                    res.send(document);
                 }
-
-                res.send(document);
+                else{
+                    res.send(document);
+                }
             });
         }, delay);
     };
@@ -153,7 +156,7 @@ module.exports = function(model){
             newDocument.save(function (err, result) {
                 if(err !== null){
                     console.log("Failed to create one document ", err);
-                    retMessage = err.code === 11000 ? "Error, user already exists" : ("Error, creating document: " + err.message);
+                    retMessage = err.code === 11000 ? "Error, document already exists" : ("Error, creating document: " + err.message);
                 }
                 console.log('Affected documents in Create: ' + result);
 
