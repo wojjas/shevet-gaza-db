@@ -4,6 +4,7 @@ var contactsCtrl = require('../controllers/crudCtrl')('contact');
 var doctorsCtrl = require('../controllers/crudCtrl')('doctor');
 var patientsCtrl = require('../controllers/crudCtrl')('patient');
 var usersCtrl = require('../controllers/crudCtrl')('user');
+var loginCtrl = require('../controllers/loginCtrl')();
 
 (function () {
     'use strict';
@@ -11,13 +12,17 @@ var usersCtrl = require('../controllers/crudCtrl')('user');
     module.exports = function(app){
         var module = {};
 
+        app.get('/api/login', authCtrl.isAuthenticated, loginCtrl.getLogin);
+        app.post('/api/login', loginCtrl.postLogin);
+
         app.get('/api/contacts', contactsCtrl.getAll);
         app.get('/api/contacts/:id', contactsCtrl.getOne);
         app.delete('/api/contacts/:id', contactsCtrl.deleteOne);
         app.post('/api/contacts/', contactsCtrl.createOne);
         app.put('/api/contacts/', contactsCtrl.updateOne);
 
-        app.get('/api/doctors', doctorsCtrl.getAll);
+        //TODO: protect the other rotes as well with "authCtrl.isTokenValid"
+        app.get('/api/doctors', authCtrl.isTokenValid, doctorsCtrl.getAll);
         app.get('/api/doctors/:id', doctorsCtrl.getOne);
         app.delete('/api/doctors/:id', doctorsCtrl.deleteOne);
         app.post('/api/doctors/', doctorsCtrl.createOne);
