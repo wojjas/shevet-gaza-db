@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="../main.css">
+<style>
+    .background{
+        background-color:lavenderblush;
+    }
+</style>
+
+<div class="background">
+
+    <div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
+
+    <h3>Welcome Back</h3>
+
+    <input class="form-control email-title" placeholder="E-mail" name="email"
+           type="text" style="cursor: auto;"
+            ng-model="loginCtrl.email">
+    <input class="form-control margin-top-xs" placeholder="Password" name="password"
+           type="password" value="" style="cursor: auto;"
+           ng-model="loginCtrl.password">
+
+    <button class="btn btn-primary margin-top-sm"
+            type="submit"
+            id="sendButton"
+            ng-click="loginCtrl.handleLoginClick()">
+        Login
+    </button>
+
+    </div>
+</div>

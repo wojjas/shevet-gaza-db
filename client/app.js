@@ -9,6 +9,8 @@
 
         //gazaDB modules:
         'gdCommon',
+        'gdAuth',
+        'gdUser',
         'gdContacts',
         'gdDoctors',
         'gdPatients',
@@ -18,19 +20,30 @@
     ]);
 
     app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.
-            when('/home', {
+        $routeProvider
+            .when('/home', {
                 templateUrl: 'home/home.html'
-            }).
-            when('/views/:view', {
+            })
+            .when('/login', {
+                templateUrl: 'user/login.html',
+                controller: 'LoginController',
+                controllerAs: 'loginCtrl'
+            })
+            .when('/views/:view', {
                 templateUrl: 'common/view.html',
-                controller: 'ViewController as viewCtrl'
-            }).
-            when('/settings', {
+                controller: 'ViewController',
+                controllerAs: 'viewCtrl'
+            })
+            .when('/settings', {
                 templateUrl: 'settings/settings.html'
-            }).
-            otherwise({
+            })
+            .otherwise({
                 retirectTo: '/home'
             })
     }]);
+
+    app.constant('CONFIG', {
+        "apiUrl": "https://localhost:3001/api",
+        "maxNumberOfNotes": "8"
+    });
 })();

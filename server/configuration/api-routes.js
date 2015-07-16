@@ -22,11 +22,12 @@ var loginCtrl = require('../controllers/loginCtrl')();
         app.put('/api/contacts/', contactsCtrl.updateOne);
 
         //TODO: protect the other rotes as well with "authCtrl.isTokenValid"
+
         app.get('/api/doctors', authCtrl.isTokenValid, doctorsCtrl.getAll);
-        app.get('/api/doctors/:id', doctorsCtrl.getOne);
-        app.delete('/api/doctors/:id', doctorsCtrl.deleteOne);
-        app.post('/api/doctors/', doctorsCtrl.createOne);
-        app.put('/api/doctors/', doctorsCtrl.updateOne);
+        app.get('/api/doctors/:id', authCtrl.isTokenValid, doctorsCtrl.getOne);
+        app.delete('/api/doctors/:id', authCtrl.isTokenValid, doctorsCtrl.deleteOne);
+        app.post('/api/doctors/', authCtrl.isTokenValid, doctorsCtrl.createOne);
+        app.put('/api/doctors/', authCtrl.isTokenValid, doctorsCtrl.updateOne);
 
         app.get('/api/patients', patientsCtrl.getAll);
         app.get('/api/patients/:id', patientsCtrl.getOne);

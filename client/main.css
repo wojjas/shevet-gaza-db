@@ -26,10 +26,12 @@
 .margin-top-sm{
     margin-top: 20px;
 }
+.margin-top-xs{
+    margin-top: 5px;
+}
 /*On hover over element with this class, cursor changes
 to indicate that element is click-able*/
 .hand-on-hover:hover {
-    cursor: pointer;
     cursor: hand;
 }
 .border-on-hover:hover{
