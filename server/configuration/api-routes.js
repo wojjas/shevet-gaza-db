@@ -1,0 +1,37 @@
+
+var authCtrl = require('../controllers/authCtrl')();
+var contactsCtrl = require('../controllers/crudCtrl')('contact');
+var doctorsCtrl = require('../controllers/crudCtrl')('doctor');
+var patientsCtrl = require('../controllers/crudCtrl')('patient');
+var usersCtrl = require('../controllers/crudCtrl')('user');
+
+(function () {
+    'use strict';
+
+    module.exports = function(app){
+        var module = {};
+
+        app.get('/api/contacts', contactsCtrl.getAll);
+        app.get('/api/contacts/:id', contactsCtrl.getOne);
+        app.delete('/api/contacts/:id', contactsCtrl.deleteOne);
+        app.post('/api/contacts/', contactsCtrl.createOne);
+        app.put('/api/contacts/', contactsCtrl.updateOne);
+
+        app.get('/api/doctors', doctorsCtrl.getAll);
+        app.get('/api/doctors/:id', doctorsCtrl.getOne);
+        app.delete('/api/doctors/:id', doctorsCtrl.deleteOne);
+        app.post('/api/doctors/', doctorsCtrl.createOne);
+        app.put('/api/doctors/', doctorsCtrl.updateOne);
+
+        app.get('/api/patients', patientsCtrl.getAll);
+        app.get('/api/patients/:id', patientsCtrl.getOne);
+        app.delete('/api/patients/:id', patientsCtrl.deleteOne);
+        app.post('/api/patients/', patientsCtrl.createOne);
+        app.put('/api/patients/', patientsCtrl.updateOne);
+
+        app.post('/api/users/', authCtrl.isAuthenticated, usersCtrl.createOne);
+
+        return module;
+    };
+
+})();

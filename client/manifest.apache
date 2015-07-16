@@ -18,9 +18,6 @@ CACHE:
 
 /img/logo_with_text.gif
 
-/partials/doctor.html
-/partials/doctors.html
-
 #The "NETWORK" needs to be '*' for ajax-calls to work!
 NETWORK:
 *
