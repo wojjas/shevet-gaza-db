@@ -12,6 +12,11 @@
         height: 40px;
         width: auto;
     }
+    .user{
+        height:40px;
+        line-height:40px;
+        text-align:center;
+    }
     .nav-buttons{
         margin-top: 5px;
         text-align: center;
@@ -28,12 +33,19 @@
          ng-controller="HeaderController as headerCtrl">
 
         <div class="row">
-            <div class="col-xs-2">
-                <div>
-                    <a href="/#/home"><img class="logo-in-header" ng-src="/img/logo_with_text.gif"></a>
+
+            <div class="col-lg-4 col-sm-5">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <a href="/#/home"><img class="logo-in-header" ng-src="/img/logo_with_text.gif"></a>
+                    </div>
+                    <div class="col-xs-7">
+                        <gd-current-user class="user"></gd-current-user>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-8">
+
+            <div class="col-lg-4 col-sm-7">
                 <nav class="nav-buttons">
                     <a href="#/views/doctors" class="btn btn-large">Doctors</a>
                     <a href="#/views/patients" class="btn btn-large">Patients</a>
@@ -41,12 +53,12 @@
                     <a href="#/settings" class="btn btn-large">Settings</a>
                 </nav>
             </div>
-            <div class="col-xs-2 vertical-middle" ng-show="false">
-                <p ng-click="headerCtrl.handleOfflineModeChanged()">Offline Mode:
-                    <input type="checkbox"
-                           ng-model="headerCtrl.offline">
-                </p>
-            </div>
+            <!--<div class="col-lg-4 col-sm-3 vertical-middle" ng-show="false">-->
+                <!--<p ng-click="headerCtrl.handleOfflineModeChanged()">Offline Mode:-->
+                    <!--<input type="checkbox"-->
+                           <!--ng-model="headerCtrl.offline">-->
+                <!--</p>-->
+            <!--</div>-->
         </div>
     </div>
 

@@ -58,7 +58,7 @@
                         (response.statusText.length > 0 ?
                         "Server Response: " + response.statusText :
                             "");
-                    window.alert(errorMessage);
+                    console.debug(errorMessage);
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });

@@ -1,0 +1,13 @@
+<style>
+    /*.debug{*/
+        /*background-color: #419641;*/
+    /*}*/
+</style>
+
+<div ng-show="userCtrl.userProfile && userCtrl.userProfile.username">
+    <span>{{userCtrl.userProfile.username}}</span>
+    <button class="btn btn-default btn-xs"
+            ng-click="userCtrl.handleSignOut()">
+        <i class="fa fa-sign-out"></i>
+    </button>
+</div>

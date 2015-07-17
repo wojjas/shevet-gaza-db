@@ -15,13 +15,11 @@ var loginCtrl = require('../controllers/loginCtrl')();
         app.get('/api/login', authCtrl.isAuthenticated, loginCtrl.getLogin);
         app.post('/api/login', loginCtrl.postLogin);
 
-        app.get('/api/contacts', contactsCtrl.getAll);
-        app.get('/api/contacts/:id', contactsCtrl.getOne);
-        app.delete('/api/contacts/:id', contactsCtrl.deleteOne);
-        app.post('/api/contacts/', contactsCtrl.createOne);
-        app.put('/api/contacts/', contactsCtrl.updateOne);
-
-        //TODO: protect the other rotes as well with "authCtrl.isTokenValid"
+        app.get('/api/contacts', authCtrl.isTokenValid,contactsCtrl.getAll);
+        app.get('/api/contacts/:id', authCtrl.isTokenValid, contactsCtrl.getOne);
+        app.delete('/api/contacts/:id', authCtrl.isTokenValid, contactsCtrl.deleteOne);
+        app.post('/api/contacts/', authCtrl.isTokenValid, contactsCtrl.createOne);
+        app.put('/api/contacts/', authCtrl.isTokenValid, contactsCtrl.updateOne);
 
         app.get('/api/doctors', authCtrl.isTokenValid, doctorsCtrl.getAll);
         app.get('/api/doctors/:id', authCtrl.isTokenValid, doctorsCtrl.getOne);
@@ -29,11 +27,11 @@ var loginCtrl = require('../controllers/loginCtrl')();
         app.post('/api/doctors/', authCtrl.isTokenValid, doctorsCtrl.createOne);
         app.put('/api/doctors/', authCtrl.isTokenValid, doctorsCtrl.updateOne);
 
-        app.get('/api/patients', patientsCtrl.getAll);
-        app.get('/api/patients/:id', patientsCtrl.getOne);
-        app.delete('/api/patients/:id', patientsCtrl.deleteOne);
-        app.post('/api/patients/', patientsCtrl.createOne);
-        app.put('/api/patients/', patientsCtrl.updateOne);
+        app.get('/api/patients', authCtrl.isTokenValid, patientsCtrl.getAll);
+        app.get('/api/patients/:id', authCtrl.isTokenValid, patientsCtrl.getOne);
+        app.delete('/api/patients/:id', authCtrl.isTokenValid, patientsCtrl.deleteOne);
+        app.post('/api/patients/', authCtrl.isTokenValid, patientsCtrl.createOne);
+        app.put('/api/patients/', authCtrl.isTokenValid, patientsCtrl.updateOne);
 
         app.post('/api/users/', authCtrl.isAuthenticated, usersCtrl.createOne);
 
