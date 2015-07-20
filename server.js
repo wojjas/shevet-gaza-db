@@ -6,7 +6,11 @@ var app = express();
 //Config:
 require('./server/configuration/express')(app);
 require('./server/configuration/body-parser')(app);
-var ssl = require('./server/configuration/ssl')();
+
+if(process.env.NPM_CONFIG_PRODUCTION){
+    console.log("*** In production mode ***");
+    var ssl = require('./server/configuration/ssl')();
+}
 
 //Database:
 require('./server/controllers/databaseCtrl.js')().connect();
@@ -18,7 +22,7 @@ require('./server/configuration/api-routes.js')(app);
 http.createServer(app).listen(3000, function () {
     console.log("Server listening on port: 3000");
 });
-if(ssl.options.areCertFilesRead()){
+if(ssl && ssl.options.areCertFilesRead()){
     ssl.https.createServer(ssl.options, app).listen(3001, function () {
         console.log("Server listening on port: 3001 (for https requests)");
     });
