@@ -5,9 +5,9 @@
         .module('gdAuth')
         .factory('oauth', oauth);
 
-    oauth.$inject = ['$http', 'formEncoder', 'currentUser', 'CONFIG'];
+    oauth.$inject = ['$http', '$window', '$q', 'formEncoder', 'currentUser'];
 
-    function oauth($http, formEncoder, currentUser, CONFIG) {
+    function oauth($http, $window, $q, formEncoder, currentUser) {
         var service = {
             login: login
         };
@@ -17,6 +17,13 @@
         ////////////////
 
         function login(username, password) {
+            if($window.location.protocol !== 'https:'){
+                $window.alert('Attempted to send credentials not using https. \n' +
+                              'This is unsafe and not allowed.');
+
+                return $q.reject({statusText:'Login attempt canceled at client. Tried to use unsafe protocol for sending credentials.'});
+            }
+
             var config = {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -28,7 +35,7 @@
                 grant_type: "password"
             });
 
-            return $http.post(CONFIG.apiUrl + "/login", data, config)
+            return $http.post("/api/login", data, config)
                 .success(function (response) {
                     console.log('Server response: ', response);
                     currentUser.setProfile(username, response.token);})

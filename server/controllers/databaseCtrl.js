@@ -11,7 +11,9 @@ var mongoose = require('mongoose');
             mongoose.connect(dbConnectionString);
             var db = mongoose.connection;
 
-            db.on('error', console.error.bind(console, 'db connection error'));
+            db.on('error',function(err){
+                    console.log('Failed to connect to db: ' + err);
+            });
             db.once('open', function () {
                 console.log('Opened db connection to: ' + dbConnectionString);
             });

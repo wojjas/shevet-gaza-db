@@ -41,9 +41,4 @@
                 retirectTo: '/home'
             })
     }]);
-
-    app.constant('CONFIG', {
-        "apiUrl": "https://localhost:3001/api",
-        "maxNumberOfNotes": "8"
-    });
 })();

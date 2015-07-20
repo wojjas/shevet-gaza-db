@@ -35,6 +35,12 @@ var loginCtrl = require('../controllers/loginCtrl')();
 
         app.post('/api/users/', authCtrl.isAuthenticated, usersCtrl.createOne);
 
+        //For debugging:
+        app.get('/ping/', function(req, res){
+            var timeStamp = new Date().toISOString();
+            res.status(200).send('pong at: ' + timeStamp);
+        });
+
         return module;
     };
 

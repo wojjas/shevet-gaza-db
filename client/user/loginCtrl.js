@@ -27,9 +27,10 @@
                 .then(function () {
                     loginRedirect.redirectAfterLogin();
                 })
-                .catch(function () {
+                .catch(function (err) {
                     //TODO: do some nice visual feedback that login failed
-                    console.log('Server rejected login attempt')
+                    var message = 'Login failed' + (err ? ': ' + err.statusText : '');
+                    console.log(message);
                 })
                 .finally(vm.email = vm.password = '');
         }

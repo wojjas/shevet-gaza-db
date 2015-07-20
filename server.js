@@ -18,6 +18,11 @@ require('./server/configuration/api-routes.js')(app);
 http.createServer(app).listen(3000, function () {
     console.log("Server listening on port: 3000");
 });
-ssl.https.createServer(ssl.options, app).listen(3001, function () {
-    console.log("Server listening on port: 3001 (for https requests)");
-});
+if(ssl.options.areCertFilesRead()){
+    ssl.https.createServer(ssl.options, app).listen(3001, function () {
+        console.log("Server listening on port: 3001 (for https requests)");
+    });
+}else{
+    console.log("Failed to read certificate files, https is not available");
+}
+

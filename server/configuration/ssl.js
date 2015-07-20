@@ -9,8 +9,11 @@ module.exports = function(app){
     var sslOptions = {};
 
     var options = {
-        key: fs.readFileSync(key_file),
-        cert: fs.readFileSync(crt_file)
+        key: readFileSync(key_file),
+        cert: readFileSync(crt_file),
+        areCertFilesRead: function(){
+            return this.key && this.cert;
+        }
     };
     if(passPhrase){
         options.passphrase = passPhrase;
@@ -20,4 +23,16 @@ module.exports = function(app){
     sslOptions.https = https;
 
     return sslOptions;
+
+    function readFileSync(path){
+        var retVal = '';
+
+        try{
+            retVal = fs.readFileSync(path);
+        }catch(e){
+            console.log('Failed to read certificate-file: ' + e.message);
+        }
+
+        return retVal;
+    }
 }

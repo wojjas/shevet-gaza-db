@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var authCfg = require('../controllers/authCtrl.js')();
@@ -6,7 +7,7 @@ var User = require('../models/user.js');
 (function () {
     'use strict';
 
-    module.exports = function(){
+    module.exports = function(app){
         var module = {
             getLogin: getLogin,
             postLogin: postLogin
@@ -31,9 +32,12 @@ var User = require('../models/user.js');
         function postLogin(req, res){
             var retMessage = "OK";
 
-            if(!req.body || !req.body.username || !req.body.password){
+            if(!req.body || !req.body.username || !req.body.password) {
                 retMessage = "Failed to login, insufficient credentials provided."
-                res.status(401).send({"status":retMessage});
+                res.status(401).send({"status": retMessage});
+            }else if(!mongoose.connection.readyState){
+                retMessage = "Server error, no connection to db, can't verify user credentials.";
+                res.status(500).send({"status":retMessage});
             }else{
                 User.findOne({"username":req.body.username}, function (err, user) {
                     if(err){
