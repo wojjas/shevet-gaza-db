@@ -20,12 +20,14 @@ require('./server/controllers/databaseCtrl.js')().connect();
 require('./server/configuration/api-routes.js')(app);
 
 //Server:
-http.createServer(app).listen(3000, function () {
-    console.log("Server listening on port: 3000");
+var port = process.env.PORT || 3000;
+http.createServer(app).listen(port, function () {
+    console.log("Server listening on port: " + port);
 });
 if(ssl && ssl.options.areCertFilesRead()){
-    ssl.https.createServer(ssl.options, app).listen(3001, function () {
-        console.log("Server listening on port: 3001 (for https requests)");
+    port = process.env.PORT || 3001;
+    ssl.https.createServer(ssl.options, app).listen(port, function () {
+        console.log("Server listening on port: %s (for https requests)", port);
     });
 }else{
     console.log("https is not available");
