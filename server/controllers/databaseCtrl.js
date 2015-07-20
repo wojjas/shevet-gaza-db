@@ -7,14 +7,14 @@ var mongoose = require('mongoose');
         var module = {};
 
         module.connect = function(){
-            //if(process.env.NPM_CONFIG_PRODUCTION){
-            //    var dbConnectionString = 'mongodb://wojjas:test@ds053310.mongolab.com:53310/heroku_app32205191';
-            //    var dbConnectionString = 'mongodb://ds053858.mongolab.com:53858/heroku_4qkqf86k';
-            //}else{
-            //    var dbConnectionString = 'mongodb://localhost:27037/gaza';
-            //}
-            var dbConnectionString = process.env.MONGOLAB_URI || 'mongodb://localhost:27037/gaza';
-            
+            if(process.env.ENV_PRODUCTION){
+                //var dbConnectionString = 'mongodb://wojjas:test@ds053310.mongolab.com:53310/heroku_app32205191';
+                var dbConnectionString = process.env.MONGOLAB_URI;
+            }else{
+                var dbConnectionString = 'mongodb://localhost:27037/gaza';
+            }
+            //var dbConnectionString = process.env.MONGOLAB_URI || 'mongodb://localhost:27037/gaza';
+
             mongoose.connect(dbConnectionString);
             var db = mongoose.connection;
 
