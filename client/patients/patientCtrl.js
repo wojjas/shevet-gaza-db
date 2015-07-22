@@ -133,7 +133,7 @@
                 for(var i=0, len=vm.patient.relatedContacts.length; i < len; i++){
                     var contact = vm.patient.relatedContacts[i].contact;
                     //Remove last empty object from related-contacts contact-numbers! (added by controller for the View)
-                    if(contact && contact.contactNumbers &&
+                    if(contact && contact.contactNumbers && contact.contactNumbers.length > 0 &&
                         (!contact.contactNumbers[contact.contactNumbers.length - 1].description &&
                         !contact.contactNumbers[contact.contactNumbers.length - 1].number)){
                         contact.contactNumbers.pop();

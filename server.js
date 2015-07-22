@@ -1,7 +1,7 @@
 var express = require('express');
 var http = require('http');
 
-console.log("*** Starting server in " + (process.env.ENV_PRODUCTION ? 'PRODUCTION' : 'DEBUG') + ' mode');
+console.log("*** Starting server in " + (process.env.IN_PRODUCTION_MODE ? 'PRODUCTION' : 'DEBUG') + ' mode');
 
 var app = express();
 
@@ -9,8 +9,8 @@ var app = express();
 require('./server/configuration/express')(app);
 require('./server/configuration/body-parser')(app);
 
-//Currently deployed to cloud service using https, so no need for own ssl-solution.
-if(!process.env.ENV_PRODUCTION){
+//If flag undefined, use ssl, if defined use its value
+if(process.env.USE_SSL === undefined || process.env.USE_SSL){
     var ssl = require('./server/configuration/ssl')();
 }
 
