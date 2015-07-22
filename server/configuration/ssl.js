@@ -5,7 +5,7 @@ var key_file = 'C:/Users/Wojtek/Documents/Dev/SPA/Corazon/Dev/shevet-gaza/server
 var crt_file = 'C:/Users/Wojtek/Documents/Dev/SPA/Corazon/Dev/shevet-gaza/server/gdtest.crt';
 var passPhrase = "this is optional";
 
-module.exports = function(app){
+module.exports = function(){
     var sslOptions = {};
 
     var options = {
