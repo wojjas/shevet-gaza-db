@@ -43,7 +43,7 @@
                 filter="{ 'birthDate': 'text' }"
                 class="col-sm-2"
                 ng-class="{'already-related': addExistingRelationTableCtrl.isAlreadyRelated(contact)}">
-                {{contact.birthDate}}</td>
+                {{contact.birthDate | date : addExistingRelationTableCtrl.dateFormat}}</td>
         </tr>
     </table>
 </section>

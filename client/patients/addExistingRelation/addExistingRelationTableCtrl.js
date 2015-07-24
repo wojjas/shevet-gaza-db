@@ -5,15 +5,16 @@
         .module('gdPatients')
         .controller('AddExistingRelationTableController', addExistingRelationTableCtrl);
 
-    addExistingRelationTableCtrl.$inject = ['tableService', 'rdProxy', 'loadingCover'];
+    addExistingRelationTableCtrl.$inject = ['tableService', 'rdProxy', 'loadingCover', 'config'];
 
-    function addExistingRelationTableCtrl(tableService, rdProxy, loadingCover) {
+    function addExistingRelationTableCtrl(tableService, rdProxy, loadingCover, config) {
         var vm = this;
         var tableObject = {};
 
         vm.table;
         vm.handleRowSelected = handleRowSelected;
         vm.isAlreadyRelated = isAlreadyRelated;
+        vm.dateFormat = config.dateFormat;
         vm.activate = activate;
 
         activate();

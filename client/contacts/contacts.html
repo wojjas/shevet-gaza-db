@@ -29,7 +29,7 @@
                     sortable="'birthDate'"
                     filter="{ 'birthDate': 'text' }"
                     class="col-sm-2">
-                    {{contact.birthDate}}</td>
+                    {{contact.birthDate | date : tableCtrl.dateFormat}}</td>
                 <td class="btn-column">
                     <button class="btn btn-default"
                             ng-class="{'btn-danger': contact._id === tableCtrl.dangerMarkedDocumentId}"

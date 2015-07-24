@@ -23,7 +23,7 @@
 
                 return $q.reject({statusText:'Login attempt canceled at client. Tried to use unsafe protocol for sending credentials.'});
             }
-            
+
             var config = {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"

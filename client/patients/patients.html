@@ -44,7 +44,7 @@
                 sortable="'birthDate'"
                 filter="{ 'birthDate': 'text' }"
                 class="col-sm-2">
-                {{patient.birthDate}}</td>
+                {{patient.birthDate | date : tableCtrl.dateFormat}}</td>
             
             <td class="btn-column">
                 <button class="btn btn-default"

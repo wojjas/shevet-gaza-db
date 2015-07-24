@@ -11,6 +11,7 @@
         var tableObject = {};
 
         vm.table;
+        vm.dateFormat = config.dateFormat;
         vm.activate = activate;
         vm.dangerMarkedDocumentId = -1;
 

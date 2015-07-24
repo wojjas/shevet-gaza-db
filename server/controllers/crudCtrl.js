@@ -119,14 +119,14 @@ module.exports = function(model){
                     //If this becomes a problem see: http://metaduck.com/01-asynchronous-iteration-patterns.html
                     var relatedContactId = documentToSave.relatedContacts[i].contact._id;
                     ContactModel.update({"_id": relatedContactId}, documentToSave.relatedContacts[i].contact, function(err, numberAffected){
-                        (err || numberAffected === 0) && console.debug('Failed to update related contact');
+                        (err || numberAffected === 0) && console.log('Failed to update related contact');
                     });
                     documentToSave.relatedContacts[i].contact = relatedContactId;
                 }
             }
             if(model === 'user'){
                 //TODO: fix this so that passwords get hashed upon update as well!
-                console.debug('Updating user will not hash its password, use save instead!');
+                console.log('Updating user will not hash its password, use save instead!');
                 res.send({"status":'Failed to update user. Use save, not update, when updating users'});
 
                 return;
@@ -134,7 +134,7 @@ module.exports = function(model){
 
             Model.update(query, documentToSave, function (err, numberAffected) {
                 if(err !== null){
-                    console.debug("Failed to update one document ", err);
+                    console.log("Failed to update one document ", err);
                     retMessage = "Error, updating document:" + err.message;
                 }
                 console.log('Affected documents in Update: ' + numberAffected);

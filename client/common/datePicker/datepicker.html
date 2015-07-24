@@ -1,6 +1,7 @@
 <div class="input-group">
     <input type="text" class="form-control"
-           datepicker-popup="{{format}}"
+           ng-change="datePickerCtrl.handleChange()"
+           datepicker-popup="{{datePickerCtrl.format}}"
            ng-model="datePickerCtrl.date"
            is-open="datePickerCtrl.opened"
            min-date="datePickerCtrl.minDate"

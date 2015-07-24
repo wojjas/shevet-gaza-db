@@ -9,6 +9,7 @@
         var offlineMode = false;
 
         var service = {
+            dateFormat:  'dd/MM/yy',
             setOfflineMode: setOfflineMode,
             getOfflineMode: getOfflineMode
         };
