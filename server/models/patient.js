@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
             middleName: {type: String, trim: true},
             lastName: {type: String, trim: true},
             gender: "String",
-            birthDate: {type: String, trim: true},    /*TODO: Use Date*/
+            birthDate: {type: Date},
             address: {type: String, trim: true},
             countryRegion: {type: String, trim: true},
             homePhone: {type: String, trim: true},
@@ -26,12 +26,12 @@ var Schema = mongoose.Schema;
             parentsRelated: "Boolean",
             religion: {type: String, trim: true},
             diagnosis: {type: String, trim: true},
-            dateReferredToUs: "String",     //TODO: Use Date
-            dateFirstEval: "String",        //TODO: Use Date
+            dateReferredToUs: {type: Date},
+            dateFirstEval: {type: Date},
             currentlyInHospital: "Boolean",
-            dateDeceased: "String",        //TODO: Use Date
+            dateDeceased: {type: Date},
             parentsCalling: "Boolean",
-            doctor: {type: String, trim: true},               //TODO: Use id to doctor instead!?
+            doctor: {type: String, trim: true},      //TODO: Use id to doctor instead!?
             relatedContacts: [{
                 //Patient-Contact-relation, typically Mother, Father, Uncle:
                 relation: "String",
