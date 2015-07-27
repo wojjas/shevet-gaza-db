@@ -11,19 +11,22 @@
 
     <h3>Welcome Back</h3>
 
-    <input class="form-control email-title" placeholder="E-mail" name="email"
-           type="text" style="cursor: auto;"
-            ng-model="loginCtrl.email">
-    <input class="form-control margin-top-xs" placeholder="Password" name="password"
-           type="password" value="" style="cursor: auto;"
-           ng-model="loginCtrl.password">
+        <form ng-submit="loginCtrl.handleSubmit()">
+            <input class="form-control" placeholder="Username" name="username"
+                   type="text" style="cursor: auto;"
+                   ng-model="loginCtrl.username"
+                    ng-change="loginCtrl.handleUsernameChange()">
+            <input class="form-control margin-top-xs" placeholder="Password" name="password"
+                   type="password" value="" style="cursor: auto;"
+                   ng-model="loginCtrl.password">
 
-    <button class="btn btn-primary margin-top-sm"
-            type="submit"
-            id="sendButton"
-            ng-click="loginCtrl.handleLoginClick()">
-        Login
-    </button>
+            <button class="btn btn-primary margin-top-sm"
+                    type="submit"
+                    id="submitButton"
+                    ng-disabled="loginCtrl.disableSubmitBtn()">
+                Login
+            </button>
+        </form>
 
     </div>
 </div>
