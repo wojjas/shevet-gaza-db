@@ -28,7 +28,11 @@
         function request(config) {
             if(currentUser.profile.isLoggedIn){
                 config.headers.Authorization = "Bearer " + currentUser.profile.token;
+
+                //Check if token is still valid, even if client considers itself to be "loggedIn"
+                currentUser.signOutIfTokenExpired();
             }
+
             return $q.when(config);
         }
     }

@@ -11,9 +11,9 @@
             $httpProvider.interceptors.push('loginRedirect');
         });
 
-    loginRedirect.$inject = ['$q', '$location'];
+    loginRedirect.$inject = ['$q', '$location', 'currentUser'];
 
-    function loginRedirect($q, $location) {
+    function loginRedirect($q, $location, currentUser) {
         var previousPath = '/login';
         var service = {
             responseError: responseError,
@@ -30,6 +30,9 @@
                     previousPath = $location.path();
                 }
                 $location.path("/login");
+
+                //if current token has expired remove it from local storage:
+                currentUser.signOutIfTokenExpired();
             }
 
             return $q.reject(response);

@@ -14,7 +14,8 @@
         var service = {
             profile: profile,
             setProfile: setProfile,
-            signOut: signOut
+            signOut: signOut,
+            signOutIfTokenExpired: signOutIfTokenExpired
         };
 
         return service;
@@ -47,8 +48,37 @@
 
         function signOut(){
             localStorage.remove(USERKEY);
-            this.profile.username = '';
-            this.profile.token = '';
+
+            if(this.profile){
+                this.profile.username = '';
+                this.profile.token = '';
+            }
+        }
+
+        function signOutIfTokenExpired(){
+            if(!this.profile.isLoggedIn){
+                return;
+            }
+
+            var localUser = localStorage.get(USERKEY);
+
+            if(!localUser){
+                this.signOut();
+
+                return;
+            }
+
+            if(localUser && isTokenExpired(localUser.token)){
+                this.signOut();
+            }
+        }
+
+        function isTokenExpired(data){
+            var payload = data.split('.');
+            var tokenString = atob(payload[1]);
+
+            var token = JSON.parse(tokenString);
+            return token.exp < new Date().getTime();
         }
     }
 })();
