@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
         var module = {};
 
         module.connect = function(){
+            //var dbConnectionString = 'mongodb://heroku_4qkqf86k:86vnv908l5cs9hhdq3t90m7865@ds053858.mongolab.com:53858/heroku_4qkqf86k'; //To remote db for debug purposes
             var dbConnectionString = process.env.MONGOLAB_URI || 'mongodb://localhost:27037/gaza';
 
             mongoose.connect(dbConnectionString);
