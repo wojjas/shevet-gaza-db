@@ -9,3 +9,6 @@ Demo, first release. Deployed on heroku and mongolab.
 
 **0.1.1**
 Client logs out if locally stored token has expired.
+
+**0.1.2**
+Improved logging for login and authentication.

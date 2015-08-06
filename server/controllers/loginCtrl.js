@@ -32,21 +32,25 @@ var User = require('../models/user.js');
         function postLogin(req, res){
             var retMessage = "OK";
 
+            console.log('Login, attempt started.');
+
             if(!req.body || !req.body.username || !req.body.password) {
-                retMessage = "Failed to login, insufficient credentials provided."
+                retMessage = "Login failed, insufficient credentials provided."
+                console.log(retMessage);
                 res.status(401).send({"status": retMessage});
             }else if(!mongoose.connection.readyState){
-                retMessage = "Server error, no connection to db, can't verify user credentials.";
+                retMessage = "Login failed, server error, no connection to db, can't verify user credentials.";
+                console.log(retMessage);
                 res.status(500).send({"status":retMessage});
             }else{
                 User.findOne({"username":req.body.username}, function (err, user) {
                     if(err){
-                        retMessage = "Failed to find user.";
+                        retMessage = "Login failed, user not found.";
                         console.log(retMessage + ": " + err);
                         res.status(401).send({"status":retMessage});
                     }
                     else if(!user){
-                        retMessage = "Failed to find user.";
+                        retMessage = "Login failed, user not found.";
                         console.log(retMessage);
                         res.status(401).send({"status":retMessage});
                     }else {
@@ -55,9 +59,10 @@ var User = require('../models/user.js');
 
                             if(isMatch){
                                 user.token = createToken(user);
+                                console.log('Login succeeded, for user "%s"', req.body.username);
                                 res.send({"status":retMessage, "token":user.token});
                             }else{
-                                console.log('Login failed, user "%s" found in db but provided invalid password.', req.body.username);
+                                console.log('Login failed, user "%s" found in db but invalid password was provided.', req.body.username);
                                 res.status(401).send({"status":"Invalid password"});
                             }
                         })

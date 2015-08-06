@@ -15,6 +15,7 @@ module.exports = function(){
         function (username, password, callback) {
             User.findOne({username: username}, function(err, user){
                 if(err){
+                    console.log("User %s failed to login, %s.", username, err);
                     return callback(err);
                 }
 
@@ -27,6 +28,7 @@ module.exports = function(){
                 //Make sure the password is correct:
                 user.verifyPassword(password, function(err, isMatch){
                     if(err){
+                        console.log("User %s failed to login, %s.", username, err);
                         return callback(err);
                     }
 
@@ -56,6 +58,7 @@ module.exports = function(){
 
             User.findById(token.sub, function(err, user){
                 if(err){
+                    console.log("Authorization failed, " + err);
                     return callback(err);
                 }
 
