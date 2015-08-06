@@ -35,7 +35,9 @@
                 controllerAs: 'viewCtrl'
             })
             .when('/settings', {
-                templateUrl: 'settings/settings.html'
+                templateUrl: 'settings/settings.html',
+                controller: 'SettingsController',
+                controllerAs: 'settingsCtrl'
             })
             .otherwise({
                 retirectTo: '/home'

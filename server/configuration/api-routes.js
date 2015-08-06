@@ -5,6 +5,8 @@ var doctorsCtrl = require('../controllers/crudCtrl')('doctor');
 var patientsCtrl = require('../controllers/crudCtrl')('patient');
 var usersCtrl = require('../controllers/crudCtrl')('user');
 var loginCtrl = require('../controllers/loginCtrl')();
+var pjson = require('../../package.json');
+var db = require('../controllers/databaseCtrl.js')();
 
 (function () {
     'use strict';
@@ -39,6 +41,16 @@ var loginCtrl = require('../controllers/loginCtrl')();
         app.get('/ping/', function(req, res){
             var timeStamp = new Date().toISOString();
             res.status(200).send('pong at: ' + timeStamp);
+        });
+        app.get('/info/', function(req, res){
+
+            var resObj = {
+                version : pjson.version,
+                databaseIsConnected: db.isConnected(),
+                dbConnectionString: db.dbConnectionString
+            };
+
+            res.status(200).send(resObj);
         });
 
         return module;

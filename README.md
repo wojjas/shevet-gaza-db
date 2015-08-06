@@ -15,3 +15,6 @@ Improved logging for login and authentication.
 
 **0.2.0**
 Username and timestamp is saved on each document modification.
+
+**0.3.0**
+Setting-page shows info and status.
