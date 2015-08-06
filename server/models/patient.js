@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
             firstName: {type: String, trim: true},
             middleName: {type: String, trim: true},
             lastName: {type: String, trim: true},
-            gender: "String",
+            gender: {type: String, trim: true},
             birthDate: {type: Date},
             address: {type: String, trim: true},
             countryRegion: {type: String, trim: true},
@@ -34,13 +34,15 @@ var Schema = mongoose.Schema;
             doctor: {type: String, trim: true},      //TODO: Use id to doctor instead!?
             relatedContacts: [{
                 //Patient-Contact-relation, typically Mother, Father, Uncle:
-                relation: "String",
+                relation: {type: String, trim: true},
                 contact: {
                     type: Schema.ObjectId,
                     ref: 'Contact'
                 },
                 _id: false          //Prevents Mongoose from adding _id to each element, default is true
-            }]
+            }],
+            modifiedOn: {type : Date, default: Date.now },  //if unset at save (create), timeStamp will be set to current time.
+            modifiedBy: {type: String, trim: true}
         }, {
             collection:'patients' //Optional but helps to understand what's going on.
         }                         //If omitted mongoose will add an "s" to Patient below and

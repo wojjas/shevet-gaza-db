@@ -12,3 +12,6 @@ Client logs out if locally stored token has expired.
 
 **0.1.2**
 Improved logging for login and authentication.
+
+**0.2.0**
+Username and timestamp is saved on each document modification.

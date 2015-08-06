@@ -5,8 +5,8 @@ var bcrypt = require('bcrypt-nodejs');
     'use strict;'
 
     var UserSchema = mongoose.Schema({
-            username: {type: "String", unique: true, required: true},
-            password: {type: "String", required: true}
+            username: {type: String, trim: true, unique: true, required: true},
+            password: {type: String, trim: true, required: true}
        }, {
             collection:'users'} //Optional but helps to understand what's going on.
     );                          //If omitted mongoose will add an "s" to User below and

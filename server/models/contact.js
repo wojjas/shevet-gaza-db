@@ -13,7 +13,9 @@ var mongoose = require('mongoose');
                 description : {type: String, trim: true},
                 number : {type: String, trim: true},
                 _id : false
-            }]
+            }],
+            modifiedOn: { type : Date, default: Date.now },  //if unset at save (create), timeStamp will be set to current time.
+            modifiedBy: {type: String, trim: true}
         }, {
             collection:'contacts' //Optional but helps to understand what's going on.
         }                         //If omitted mongoose will add an "s" to Contact below and

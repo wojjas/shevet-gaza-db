@@ -110,6 +110,11 @@ module.exports = function(model){
 
         var documentToSave = req.body;
         var query = {"_id": documentToSave._id};
+        var modifiedOn = new Date();
+        var modifiedBy = req.user.username || '<unknown>';
+
+        documentToSave.modifiedOn = modifiedOn;
+        documentToSave.modifiedBy = modifiedBy;
 
         setTimeout(function () {
             //Handle related Contact(s) before updating Patient:
@@ -118,6 +123,9 @@ module.exports = function(model){
                     //NOTE: update is async so the Contact-documents will get updated after Patient gets updated
                     //If this becomes a problem see: http://metaduck.com/01-asynchronous-iteration-patterns.html
                     var relatedContactId = documentToSave.relatedContacts[i].contact._id;
+                    documentToSave.relatedContacts[i].contact.modifiedOn = modifiedOn;
+                    documentToSave.relatedContacts[i].contact.modifiedBy = modifiedBy;
+
                     ContactModel.update({"_id": relatedContactId}, documentToSave.relatedContacts[i].contact, function(err, numberAffected){
                         (err || numberAffected === 0) && console.log('Failed to update related contact');
                     });
@@ -125,7 +133,7 @@ module.exports = function(model){
                 }
             }
             if(model === 'user'){
-                //TODO: fix this so that passwords get hashed upon update as well!
+                //TODO: fix this so that passwords get hashed upon update as well! (in user.js call: userShema.pre('update', ...))
                 console.log('Updating user will not hash its password, use save instead!');
                 res.send({"status":'Failed to update user. Use save, not update, when updating users'});
 
@@ -151,6 +159,7 @@ module.exports = function(model){
 
         var retMessage = "OK";
         var newDocument = new Model(req.body);
+        newDocument.modifiedBy = req.user.username || '<unknown>';
 
         setTimeout(function () {
             newDocument.save(function (err, result) {
