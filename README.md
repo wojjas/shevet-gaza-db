@@ -18,3 +18,6 @@ Username and timestamp is saved on each document modification.
 
 **0.3.0**
 Setting-page shows info and status.
+
+**0.4.0**
+Toastr shows various notifications.

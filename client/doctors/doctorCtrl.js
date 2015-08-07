@@ -3,10 +3,10 @@
 
     angular.module('gdDoctors').controller('DoctorController', Doctor);
 
-    Doctor.$inject = ['$scope', '$location', 'doctorsProxy', 'loadingCover', '$modal', '$log'];
+    Doctor.$inject = ['$scope', '$location', 'doctorsProxy', 'loadingCover', '$modal', '$log', 'notifier'];
 
     /* @ngInject */
-    function Doctor($scope, $location, doctorsProxy, loadingCover, $modal, $log) {
+    function Doctor($scope, $location, doctorsProxy, loadingCover, $modal, $log, notifier) {
         /* jshint validthis: true */
         var vm = this;
         var currentTab = {};                //Reference to parent scope's tab for this controller
@@ -109,11 +109,14 @@
                     if(saveAndClose){
                         vm.doctor = {}; //Clear this object so a new one can be created next time.
                         vm.handleTabCloseClicked({doNotConfirm: true});
+                        notifier.info('', 'Doctor Saved');
                     }else if(currentTab.isAddTab){
                         vm.saveAndOpenInTab({data: vm.doctor});
                         vm.doctor = {};
+                        notifier.info('', 'Doctor Added');
                     }else{
                         vm.doctorTab.heading = vm.doctor.name;
+                        notifier.info('', 'Doctor Saved');
                     }
                     if(callback){
                         callback();
@@ -121,6 +124,7 @@
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
+                    notifier.error('errorMessage', 'Failed to Save Doctor');
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });

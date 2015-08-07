@@ -5,9 +5,9 @@
         .module('gdAuth')
         .factory('currentUser', currentUser);
 
-    currentUser.$inject = ['localStorage'];
+    currentUser.$inject = ['localStorage', 'notifier'];
 
-    function currentUser(localStorage) {
+    function currentUser(localStorage, notifier) {
         var USERKEY = 'utoken';
         var profile = init();
 
@@ -53,6 +53,7 @@
                 this.profile.username = '';
                 this.profile.token = '';
             }
+            notifier.info('', 'User Logged Out');
         }
 
         function signOutIfTokenExpired(){

@@ -3,10 +3,10 @@
 
     angular.module('gdContacts').controller('ContactController', Contact);
 
-    Contact.$inject = ['$scope', '$location', 'contactsProxy', 'loadingCover', '$modal', '$log', '$timeout'];
+    Contact.$inject = ['$scope', '$location', 'contactsProxy', 'loadingCover', '$modal', '$log', '$timeout', 'notifier'];
 
     /* @ngInject */
-    function Contact($scope, $location, contactsProxy, loadingCover, $modal, $log, $timeout) {
+    function Contact($scope, $location, contactsProxy, loadingCover, $modal, $log, $timeout, notifier) {
         /* jshint validthis: true */
         var vm = this;
         var currentTab = {};                //Reference to parent scope's tab for this controller
@@ -158,12 +158,15 @@
                     if(saveAndClose){
                         vm.handleTabCloseClicked({doNotConfirm: true});
                         setContact({}); //Clear this object for AddNew tab's form
+                        notifier.info('', 'Contact Saved');
                     }else if(currentTab.isAddTab){
                         vm.saveAndOpenInTab({data: vm.contact});
                         setContact({}); //Clear this object for AddNew tab's form
+                        notifier.info('', 'Contact Added');
                     }else{
                         vm.contactTab.heading = vm.contact.name;
                         setContact(vm.contact);
+                        notifier.info('', 'Contact Saved');
                     }
                     if(callback){
                         callback();
@@ -171,6 +174,7 @@
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving contact. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
+                    notifier.error('errorMessage', 'Failed to Save Contact');
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });
