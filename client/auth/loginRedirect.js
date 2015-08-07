@@ -17,7 +17,10 @@
         var previousPath = '/login';
         var service = {
             responseError: responseError,
-            redirectAfterLogin: redirectAfterLogin
+            redirectAfterLogin: redirectAfterLogin,
+            getRestrictedPath: function(){
+                return previousPath;
+            }
         };
 
         return service;
