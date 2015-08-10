@@ -100,12 +100,19 @@
                         <div class="col-md-4 col-sm-5 treatment-data">
                             <div class="form-group">
                                 <label class="col-sm-3 col-xs-12 control-label">Ref Dr</label>
+
                                 <div class="col-sm-9">
-                                <input class="form-control"
-                                       type="text"
-                                       ng-model="patientCtrl.patient.doctor"
-                                       placeholder="referring doctor"/>
+                                    <div class="input-group">
+                                        <input class="form-control"
+                                               type="text"
+                                               ng-model="patientCtrl.patient.doctor"
+                                               placeholder="referring doctor"/>
+                                        <a href="" class="input-group-addon" ng-click="patientCtrl.handlePickDoctor()">
+                                            <i class="glyphicon glyphicon-edit"></i>
+                                        </a>
                                     </div>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 col-xs-12 control-label">Referred</label>
@@ -168,15 +175,25 @@
                                                related-contacts="patientCtrl.patient.relatedContacts"
                                                remove-related-contact="patientCtrl.removeRelatedContact(id)"
                                                add-related-contact="patientCtrl.addRelatedContact(contact)"></related-contacts-tabs>
+
+                        <div class="text-center" ng-show="patientCtrl.patient.relatedContacts.length == 0" style="color:lightgray">
+                            <p style="font-size:2em" class="disabled">This patient has no related contacts (mother, father, grandfather, etc.)</p>
+                            <p>A relation can be added using the "Add Existing" tab</p>
+                        </div>
                     </div>
 
                     <div class="row visits margin-top-sm">
                         <tabset>
                             <tab heading="Visits">
                                 <visit-list></visit-list>
+                                <div>
+                                    <img class="margin-top-md center-block img-responsive" ng-src="/img/comingSoon.jpg">
+                                </div>
+
                             </tab>
                             <tab heading="Add New">
                                 <visit-details></visit-details>
+                                <img class="margin-top-md center-block img-responsive" ng-src="/img/comingSoon.jpg">
                             </tab>
                         </tabset>
                     </div>

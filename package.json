@@ -1,6 +1,6 @@
 {
   "name": "gaza",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Migration of the Gaza Database",
   "main": "server.js",
   "scripts": {

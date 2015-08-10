@@ -21,3 +21,6 @@ Setting-page shows info and status.
 
 **0.4.0**
 Toastr shows various notifications.
+
+**0.4.1**
+Coming Soon pics shown instead of Visits, text shown when no related contacts.
