@@ -34,8 +34,8 @@
                 }
                 $location.path("/login");
 
-                //if current token has expired remove it from local storage:
-                currentUser.signOutIfTokenExpired();
+                //server says 401, sign out if signed in, no matter reason.
+                currentUser.signOut();
             }
 
             return $q.reject(response);

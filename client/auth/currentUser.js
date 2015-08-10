@@ -47,13 +47,20 @@
         }
 
         function signOut(){
+            var notifyAboutLogout = false;
+            if(this.profile.isLoggedIn){
+                notifyAboutLogout = true;
+            }
+
+            //Always try to remove from local-storage and clear profile:
             localStorage.remove(USERKEY);
 
             if(this.profile){
                 this.profile.username = '';
                 this.profile.token = '';
             }
-            notifier.info('', 'User Logged Out');
+
+            notifyAboutLogout && notifier.info('', 'User Logged Out');
         }
 
         function signOutIfTokenExpired(){
