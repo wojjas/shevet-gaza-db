@@ -1,3 +1,4 @@
+//var DoctorSchema = require('./doctor');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -31,7 +32,9 @@ var Schema = mongoose.Schema;
             currentlyInHospital: "Boolean",
             dateDeceased: {type: Date},
             parentsCalling: "Boolean",
-            doctor: {type: String, trim: true},      //TODO: Use id to doctor instead!?
+            /*TODO: consider using id to doctor and populate*/
+            doctor: {type: String, trim: true}, //{type: Schema.Types.ObjectId, ref: 'Doctor'},
+            doctors: [{type: String, trim: true}], //[DoctorSchema]
             relatedContacts: [{
                 //Patient-Contact-relation, typically Mother, Father, Uncle:
                 relation: {type: String, trim: true},

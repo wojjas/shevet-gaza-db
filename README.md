@@ -24,3 +24,6 @@ Toastr shows various notifications.
 
 **0.4.1**
 Coming Soon pics shown instead of Visits, text shown when no related contacts.
+
+**0.5.0**
+Referring doctor can be chosen from drop-down-list.

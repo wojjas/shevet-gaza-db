@@ -4,6 +4,7 @@ module.exports = function(model){
     var modelDefinitionFile = '../models/' + model + '.js';
     var Model = require(modelDefinitionFile);
     var ContactModel = (model === 'patient') && require('../models/contact.js');
+    var DoctorModel = (model === 'patient') && require('../models/doctor.js');
 
 // There is a configurable delay in each server-response.
 // Use it for debug-purposes. Set min and max to 0 to disable it.
@@ -40,29 +41,38 @@ module.exports = function(model){
                 err && console.log("Failed to get one document ", err);
                 document == null &&  console.log("No document matched the search parameter");
 
-                //Populate with related-contacts if patient
+                //Get all doctors and populate with related-contacts if patient:
                 if(model === 'patient'){
-                    Model.populate(document, {path:'relatedContacts.contact'}, function(err, document) {
-                        err && console.log('Failed to populate Patient with related contacts: ' + err);
-                        //Check if each relation has a contact-object that is not null,
-                        //(if it is it indicates failure of finding Contact)
-                        var nofRelatedContacts = document._doc.relatedContacts.length;
-                        for(var i = 0; i < nofRelatedContacts; i++){
-                            if(!document._doc.relatedContacts[i].contact){
-                                console.log('Failed to populate Patient with related contact: %s.',
-                                             document._doc.relatedContacts[i].relation);
+                    DoctorModel.find({}, function(err, documents){
+                        err && console.log('Failed to get all doctors when getting Patient: ' + err);
+                        document._doc.doctors = documents;
+
+                        documents.forEach(function(element, index, array){
+                            document._doc.doctors[index] = element.name;
+                        });
+
+                        Model.populate(document, {path:'relatedContacts.contact'}, function(err, document) {
+                            err && console.log('Failed to populate Patient with related contacts: ' + err);
+                            //Check if each relation has a contact-object that is not null,
+                            //(if it is it indicates failure of finding Contact)
+                            var nofRelatedContacts = document._doc.relatedContacts.length;
+                            for(var i = 0; i < nofRelatedContacts; i++){
+                                if(!document._doc.relatedContacts[i].contact){
+                                    console.log('Failed to populate Patient with related contact: %s.',
+                                        document._doc.relatedContacts[i].relation);
+                                }
                             }
-                        }
-                        res.send(document);
+                            res.status(200).send(document);
+                        });
                     });
                 }
                 //Remove password, don't send it to client, if user
                 else if(model === 'user') {
                     delete document.password;
-                    res.send(document);
+                    res.status(200).send(document);
                 }
                 else{
-                    res.send(document);
+                    res.status(200).send(document);
                 }
             });
         }, delay);
@@ -131,24 +141,31 @@ module.exports = function(model){
                     });
                     documentToSave.relatedContacts[i].contact = relatedContactId;
                 }
+                //No need to save the list of doctor names (It's a HACK that it exists in the first place)
+                if(documentToSave.doctors && documentToSave.doctors.length > 0){
+                    delete documentToSave.doctors;
+                }
             }
             if(model === 'user'){
                 //TODO: fix this so that passwords get hashed upon update as well! (in user.js call: userShema.pre('update', ...))
                 console.log('Updating user will not hash its password, use save instead!');
-                res.send({"status":'Failed to update user. Use save, not update, when updating users'});
+                res.status(500).send({"status":'Failed to update user. Use save, not update, when updating users'});
 
                 return;
             }
 
             Model.update(query, documentToSave, function (err, numberAffected) {
-                if(err !== null){
+                console.log('Affected documents in Update: ' + numberAffected);
+
+                if(err){
                     console.log("Failed to update one document ", err);
                     retMessage = "Error, updating document:" + err.message;
-                }
-                console.log('Affected documents in Update: ' + numberAffected);
-            });
 
-            res.send({"status":retMessage});
+                    res.status(500).send({"status":retMessage});
+                }else{
+                    res.status(200).send({"status":retMessage});
+                }
+            });
         }, delay);
     };
 

@@ -21,6 +21,7 @@
         vm.removeRelatedContact = removeRelatedContact;
         vm.handleGenderSelected = handleGenderSelected;
         vm.handleReligionSelected = handleReligionSelected;
+        vm.handleDoctorSelected = handleDoctorSelected;
         vm.handleCloseClick = handleCloseClick;
         vm.handleSaveClick = handleSaveClick;
         vm.handleSaveAndCloseClick = handleSaveAndCloseClick;
@@ -114,7 +115,28 @@
                     label:'Christian', value:'Christian'
                 }];
                 vm.selectedReligion = vm.patient.religion || vm.religions[0].value;
+
+                vm.doctors = [{label:'', value:''}];
+                if(patient.doctors){
+                    for(var i=0, len=patient.doctors.length; i<len; i++){
+                        if(patient.doctors[i]){ //Doctors without a name will not get added to the select-drop-down
+                            var obj = {label:patient.doctors[i], value:patient.doctors[i]};
+                            vm.doctors.push(obj);
+                        }
+                    }
+                    vm.doctors.sort(function(a, b){
+                        if(a.value < b.value) return -1;
+                        if(a.value > b.value) return 1;
+                        return 0;
+                    });
+                }
+                vm.selectedDoctor = vm.patient.doctor || vm.doctors[0].value;
             }
+        }
+        //The list of doctors is created on server each time a patient is fetched.
+        //as there's no need to save it this func can remove it from the patient object.
+        function removeListOfAllDoctors(){
+            delete vm.patient.doctors;
         }
         //Set happens after new object has been fetched from persistent storage,
         // unset just before it's time to store it.
@@ -150,6 +172,7 @@
             vm.reloadTableNeeded = true; //Even if save will fail, it won't hurt with a reload
 
             setOrUnsetRelatedContacts(null);
+            removeListOfAllDoctors();
 
             if(currentTab.isAddTab){
                 actionResult = patientsProxy.createPatient(vm.patient);
@@ -278,6 +301,9 @@
         }
         function handleReligionSelected(){
             vm.patient.religion = vm.selectedReligion;
+        }
+        function handleDoctorSelected(){
+            vm.patient.doctor = vm.selectedDoctor;
         }
         function handleCloseClick(){
             vm.handleTabCloseClicked();

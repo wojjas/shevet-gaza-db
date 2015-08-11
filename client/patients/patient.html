@@ -102,15 +102,12 @@
                                 <label class="col-sm-3 col-xs-12 control-label">Ref Dr</label>
 
                                 <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input class="form-control"
-                                               type="text"
-                                               ng-model="patientCtrl.patient.doctor"
-                                               placeholder="referring doctor"/>
-                                        <a href="" class="input-group-addon" ng-click="patientCtrl.handlePickDoctor()">
-                                            <i class="glyphicon glyphicon-edit"></i>
-                                        </a>
-                                    </div>
+                                    <select class="form-control"
+                                            ng-options="doctor.value as doctor.label for doctor in patientCtrl.doctors"
+                                            ng-selected="patientCtrl.selectedDoctor"
+                                            ng-model="patientCtrl.selectedDoctor"
+                                            ng-change="patientCtrl.handleDoctorSelected()">
+                                    </select>
                                 </div>
 
                             </div>
