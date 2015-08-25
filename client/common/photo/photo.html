@@ -1,0 +1,67 @@
+<style>
+    .photo-area{
+        width: 185px;
+        height: 185px;
+    }
+    .photo-area-border{
+        border: 3px dotted darkgrey;
+    }
+
+    .parent{
+        position: relative;
+    }
+    .child{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+    }
+
+    .photo-text{
+        display: absolute;
+        color: darkGray;
+        font-size: 1.7em;
+        text-shadow: -1px 0 silver, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+
+    .photo-input{
+        opacity: 0;
+        cursor: pointer;
+        width: 175px;
+        height: 175px;
+        font-size: 0;
+        position: absolute;
+        z-index: 10;
+    }
+
+</style>
+
+<div>
+
+    <div class="photo-outher photo-area parent"
+         ng-class="{'photo-area-border' : photoCtrl.textOverPhoto}"
+         ng-mouseover="photoCtrl.showTextOverPhoto(true)"
+         ng-mouseleave="photoCtrl.showTextOverPhoto(false)">
+
+                <input type="file"
+                       class="photo-input"
+                       accept="image/*"
+                       ng-model="photoCtrl.photo"
+                       onchange="angular.element(this).scope().handleFileChosen(this)"/>
+
+                <canvas id="{{photoCtrl.canvasId}}" class="child">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+
+                <img ng-src="{{photoCtrl.defaultPhoto}}"
+                     style="width:150px; height:150px;"
+                     class="photo-area child"
+                     ng-show="!photoCtrl.photo">
+
+                <div class="photo-text child">
+                    {{photoCtrl.textOverPhoto}}
+                </div>
+
+    </div>
+</div>

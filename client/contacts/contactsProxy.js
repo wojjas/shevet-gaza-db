@@ -13,7 +13,7 @@
     //Performs CRUD against LocalStorage and, or remote db.
     //Every document stored in LocalStorage is assigned an unique string with known prefix as _id.
     //This is needed to be able to CRUD it against LocalStorage.
-    //Upon each save, if this tmp-id is exists it is removed so that the remote db
+    //Upon each save, if this tmp-id exists it is removed so that the remote db
     //can assign an _id to this document. Upon successful save this _id is assigned to the
     //document in LocalStorage so that remote and local data is in sync.
     function contacts($resource, config) {

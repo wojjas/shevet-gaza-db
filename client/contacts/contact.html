@@ -9,29 +9,6 @@
     table {
         table-layout: fixed;
     }
-    .div-table-content {
-        height: 90px;
-        overflow-y: auto;
-    }
-    .btn-column{
-        width: 65px;
-    }
-    .horizontal-center {
-        float: none;
-        margin: 0 auto;
-    }
-
-    .photo-container{
-        position: relative;
-    }
-    .photo{
-        width: 150px;
-        height: 150px;
-        overflow: auto;
-        margin: auto;
-        position: absolute;
-        top: 218px; left: 0; bottom: 0; right: 0;
-    }
 
     /*.design-time-color1{*/
         /*background-color:lightgray;*/
@@ -70,8 +47,8 @@
 
                 <div class="col-xs-12 center-block design-time-color1">
                     <div class="photo-container center-block design-time-color1">
-                        <div class="photo design-time-color2"></div>
-                    </div>
+                    <gd-photo canvas-id='{{"contact-photo-id-" + contactCtrl.contact._id}}' photo="contactCtrl.contact.photo"></gd-photo>
+                        </div>
                 </div>
             </div>
 

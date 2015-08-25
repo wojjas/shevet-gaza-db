@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
             name: {type: String, trim: true},
             birthDate: {type: Date},
             notes: {type: String, trim: true},
+            photo: {type: String, trim: true},
             contactNumbers : [{
                 description : {type: String, trim: true},
                 number : {type: String, trim: true},

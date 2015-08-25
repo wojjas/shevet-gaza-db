@@ -9,6 +9,7 @@
 
         //gazaDB modules:
         'gdCommon',
+        'gdPhoto',
         'gdAuth',
         'gdUser',
         'gdContacts',
