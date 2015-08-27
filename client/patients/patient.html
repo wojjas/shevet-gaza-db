@@ -34,6 +34,11 @@
     .padding{
         padding: 5px;
     }
+
+    .col-centered{
+        float: none;
+        margin: 0 auto;
+    }
 </style>
 
 <section class="container padding">
@@ -94,8 +99,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-3 center-block design-time-color">
-                            <div class="photo"></div>
+                        <div class="col-md-4 col-sm-3 design-time-color">
+                                <gd-photo canvas-id='{{"patient-photo-id-" + patientCtrl.patient._id}}' photo="patientCtrl.patient.photo"></gd-photo>
                         </div>
                         <div class="col-md-4 col-sm-5 treatment-data">
                             <div class="form-group">

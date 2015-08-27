@@ -19,7 +19,6 @@
     }
 
     .photo-text{
-        display: absolute;
         color: darkGray;
         font-size: 1.7em;
         text-shadow: -1px 0 silver, 0 1px black, 1px 0 black, 0 -1px black;
@@ -39,7 +38,7 @@
 
 <div>
 
-    <div class="photo-outher photo-area parent"
+    <div class="photo-area parent center-block"
          ng-class="{'photo-area-border' : photoCtrl.textOverPhoto}"
          ng-mouseover="photoCtrl.showTextOverPhoto(true)"
          ng-mouseleave="photoCtrl.showTextOverPhoto(false)">

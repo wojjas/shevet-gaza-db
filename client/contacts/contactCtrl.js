@@ -125,7 +125,10 @@
         function setContact(contact){
             if(currentTab){
                 //Init contact numbers table:
-                contact.contactNumbers = contact.contactNumbers || []; //in case of AddNew
+                //If properties that will be added by directives' scopes' don't exist, init/add them.
+                contact.contactNumbers = contact.contactNumbers || [];
+                contact.photo = contact.photo || "";
+
                 vm.contactNumbers = contact.contactNumbers;
                 addOrRemoveDummyContactNumber(contact, true);
 
@@ -213,7 +216,6 @@
         }
         function showConfirmLeave($event, newUrl){
             //Navigate to newUrl if the form isn't dirty
-            //if (!$scope.editForm.$dirty) return;
             if(!currentTab.isDirty()){
                 return;
             }

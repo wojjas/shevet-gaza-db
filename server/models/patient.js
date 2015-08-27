@@ -35,6 +35,7 @@ var Schema = mongoose.Schema;
             /*TODO: consider using id to doctor and populate*/
             doctor: {type: String, trim: true}, //{type: Schema.Types.ObjectId, ref: 'Doctor'},
             doctors: [{type: String, trim: true}], //[DoctorSchema]
+            photo: {type: String, trim: true},
             relatedContacts: [{
                 //Patient-Contact-relation, typically Mother, Father, Uncle:
                 relation: {type: String, trim: true},

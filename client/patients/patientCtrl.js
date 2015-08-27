@@ -93,9 +93,10 @@
         function setPatient(patient){
             if(currentTab){
                 setOrUnsetRelatedContacts(patient);
-
+                patient.photo = patient.photo || ""; //Because photo's directive's scope adds it on currentTab.data
+                                                     //(making it seem that changes have been made, adding it here makes data === dataBkp)
                 currentTab.data = patient;
-                currentTab.dataBkp = angular.copy(patient); //cloneObject(patient);
+                currentTab.dataBkp = angular.copy(patient);
                 vm.patient = currentTab.data;
 
                 //Handle drop-downs:
