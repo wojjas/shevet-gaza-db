@@ -30,3 +30,6 @@ Referring doctor can be chosen from drop-down-list.
 
 **0.6.0**
 Contact and Patient have photos.
+
+**0.6.1**
+Using img.onload before calculating canvas, ensuring img.src is set before calculation.

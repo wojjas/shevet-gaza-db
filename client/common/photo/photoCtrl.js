@@ -68,32 +68,37 @@
         function resizeAndDrawImage(dataUrl, canvas){
             //Use a canvas:
             var img = new Image();
+
+            //onload will ensure that the image is loaded, meaning that img.src = dataUrl completed.
+            //This is needed on some browsers. If we use img before img.src is loaded its width and height = 0.
+            //resulting in resizing our canvas to 0, 0.
+            img.onload = function(){
+                //Resize to fit canvas:
+                var MAX_WIDTH = 175;
+                var MAX_HEIGHT = 175;
+                var width = img.width;
+                var height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+
+                vm.canvas = document.getElementById(vm.canvasId);
+                vm.canvas.width = width;
+                vm.canvas.height = height;
+
+                var ctx = vm.canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+            };
             img.src = dataUrl;
-
-            //Resize to fit canvas:
-            var MAX_WIDTH = 175;
-            var MAX_HEIGHT = 175;
-            var width = img.width;
-            var height = img.height;
-
-            if (width > height) {
-                if (width > MAX_WIDTH) {
-                    height *= MAX_WIDTH / width;
-                    width = MAX_WIDTH;
-                }
-            } else {
-                if (height > MAX_HEIGHT) {
-                    width *= MAX_HEIGHT / height;
-                    height = MAX_HEIGHT;
-                }
-            }
-
-            vm.canvas = document.getElementById(vm.canvasId);
-            vm.canvas.width = width;
-            vm.canvas.height = height;
-
-            var ctx = vm.canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
         }
 
         //This is because we want to resize the photo to fit this directive's view's canvas
