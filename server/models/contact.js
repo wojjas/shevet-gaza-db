@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 (function () {
-    'use strict;'
+    'use strict';
 
     var ContactSchema = mongoose.Schema(
         {

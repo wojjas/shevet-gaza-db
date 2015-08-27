@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 (function () {
-    'use strict;'
+    'use strict';
 
     var PatientSchema = Schema(
         {
