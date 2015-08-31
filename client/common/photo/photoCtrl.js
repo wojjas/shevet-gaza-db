@@ -65,7 +65,7 @@
             });
         };
 
-        function resizeAndDrawImage(dataUrl, canvas){
+        function resizeAndDrawImage(dataUrl){
             //Use a canvas:
             var img = new Image();
 
@@ -91,12 +91,13 @@
                     }
                 }
 
-                vm.canvas = document.getElementById(vm.canvasId);
-                vm.canvas.width = width;
-                vm.canvas.height = height;
+                var canvas = document.getElementById(vm.canvasId);
+                canvas.width = width;
+                canvas.height = height;
 
-                var ctx = vm.canvas.getContext("2d");
+                var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, width, height);
+                vm.photo = canvas.toDataURL("image/jpeg");
             };
             img.src = dataUrl;
         }
