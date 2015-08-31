@@ -203,7 +203,7 @@
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving patient. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
-                    notifier.error('errorMessage', 'Failed to Save Patient');
+                    notifier.error(errorMessage, 'Failed to Save Patient');
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });

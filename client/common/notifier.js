@@ -35,7 +35,7 @@
         }
 
         function showToastr(type, message, title){
-            toastr.options.timeOut = 1400;
+            toastr.options.timeOut = (type === 'error' ? 5000 : 1400);
             //Show longer messages for a longer period of time:
             if(message.length > 0){
                 toastr.options.timeOut += 1000;

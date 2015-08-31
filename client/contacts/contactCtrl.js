@@ -177,7 +177,7 @@
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving contact. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
-                    notifier.error('errorMessage', 'Failed to Save Contact');
+                    notifier.error(errorMessage, 'Failed to Save Contact');
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });

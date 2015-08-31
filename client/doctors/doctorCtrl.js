@@ -124,7 +124,7 @@
                 }).catch(function (response) {
                     var errorMessage = "ERROR saving doctor. " + (response ? response.statusText : "");
                     window.alert(errorMessage);
-                    notifier.error('errorMessage', 'Failed to Save Doctor');
+                    notifier.error(errorMessage, 'Failed to Save Doctor');
                 }).finally(function () {
                     loadingCover.hideLoadingCover();
                 });
