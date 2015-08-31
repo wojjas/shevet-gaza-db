@@ -101,6 +101,7 @@
                 console.debug("Setting resized photo from: ", vm.photo.length);
                 vm.photo = canvas.toDataURL("image/jpeg");
                 console.debug("Setting resized photo to  : ", vm.photo.length);
+                $scope.$apply();
             };
             img.src = dataUrl;
         }
