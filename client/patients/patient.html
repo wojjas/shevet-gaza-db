@@ -177,11 +177,6 @@
                                                related-contacts="patientCtrl.patient.relatedContacts"
                                                remove-related-contact="patientCtrl.removeRelatedContact(id)"
                                                add-related-contact="patientCtrl.addRelatedContact(contact)"></related-contacts-tabs>
-
-                        <div class="text-center" ng-show="patientCtrl.patient.relatedContacts.length == 0" style="color:lightgray">
-                            <p style="font-size:2em" class="disabled">This patient has no related contacts (mother, father, grandfather, etc.)</p>
-                            <p>A relation can be added using the "Add Existing" tab</p>
-                        </div>
                     </div>
 
                     <div class="row visits margin-top-sm">

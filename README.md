@@ -36,3 +36,6 @@ Using img.onload before calculating canvas, ensuring img.src is set before calcu
 
 **0.6.2**
 Using normalize.css for better styling on iOS.
+
+**0.6.3**
+Vendor prefixes added to photo.css and text about no related contacts only shown when needed.

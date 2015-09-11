@@ -31,12 +31,15 @@
                 {{contact.contact.name}}
             </td>
         </tr>
-        </a>
 
         <!--<a href=""-->
         <!--ng-click="tabsCtrl.handleTabCloseClicked(tab)">-->
         <!--<i class="glyphicon glyphicon-remove-circle tab-icon"></i>-->
         <!--</a>-->
-
     </table>
+
+    <div class="text-center" ng-show="tableCtrl.relatedContacts.length == 0" style="color:lightgray">
+        <p style="font-size:2em" class="disabled">This patient has no related contacts (mother, father, grandfather, etc.)</p>
+        <p>A relation can be added using the "Add Existing" tab</p>
+    </div>
 </section>
