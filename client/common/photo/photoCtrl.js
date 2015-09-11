@@ -98,9 +98,7 @@
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, width, height);
 
-                console.debug("Setting resized photo from: ", vm.photo.length);
                 vm.photo = canvas.toDataURL("image/jpeg");
-                console.debug("Setting resized photo to  : ", vm.photo.length);
                 $scope.$apply();
             };
             img.src = dataUrl;

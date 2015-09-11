@@ -33,3 +33,6 @@ Contact and Patient have photos.
 
 **0.6.1**
 Using img.onload before calculating canvas, ensuring img.src is set before calculation.
+
+**0.6.2**
+Using normalize.css for better styling on iOS.
