@@ -39,3 +39,6 @@ Using normalize.css for better styling on iOS.
 
 **0.6.3**
 Vendor prefixes added to photo.css and text about no related contacts only shown when needed.
+
+**0.6.4**
+Ignoring change of photo in contact and patient objects. This is a hack to prevent false detection of change.
