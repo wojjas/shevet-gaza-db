@@ -28,7 +28,7 @@
                 //Wrapped in timeout for the canvas to be painted before redraw on it
                 $timeout(function(){
                     resizeAndDrawImage(vm.photo);
-                }, 0);
+                }, 100);
             }
         }
 
@@ -90,15 +90,24 @@
                         height = MAX_HEIGHT;
                     }
                 }
+                //ignore the decimal part as it will disappear anyway, when setting canvas?
+                width = Math.floor(width);
+                height = Math.floor(height);
 
                 var canvas = document.getElementById(vm.canvasId);
                 canvas.width = width;
                 canvas.height = height;
 
+                //TODO: Size and data, "before redraw" and "after redraw" differs! some times. This makes a "false" diff in common/tabsets.js
+                //console.log('0) Before redraw: ' + vm.photo.length);
+
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, width, height);
+                var imageDataURL = canvas.toDataURL("image/jpeg");
 
-                vm.photo = canvas.toDataURL("image/jpeg");
+                //console.log('1) After redraw: ' + imageDataURL.length + ' ' + canvas.toDataURL("image/jpeg"));
+
+                vm.photo = imageDataURL;
                 $scope.$apply();
             };
             img.src = dataUrl;
@@ -114,7 +123,7 @@
             }
             if(!photoInitiated && vm.photo){
                 $timeout(function(){
-                    resizeAndDrawImage(vm.photo);
+                  resizeAndDrawImage(vm.photo);
                 }, 0);
                 photoInitiated = true;
             }

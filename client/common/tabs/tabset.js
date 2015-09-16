@@ -180,8 +180,18 @@
         //This tab's data is considered dirty if its dataBkp differs from its data
         function isDirty(){
             if(this.dataBkp && this.data){
-                var dataBkpStr = angular.toJson(this.dataBkp);
-                var dataStr = angular.toJson(this.data);
+                //TODO:
+                //HACK:
+                //For now "photo" is ignored, as its dataURI changes when redrawing on canvas. I don't know why yet.
+                //Just opening a object with a photo and then leaving it results in "Leaving unsaved changes" which is wrong
+                //Removing "photo" before comparison won't detect changes in photo, but it gets rid of this error.
+                var dataBkp = angular.copy(this.dataBkp);
+                var data = angular.copy(this.data);
+                delete dataBkp.photo;
+                delete data.photo;
+
+                var dataBkpStr = angular.toJson(dataBkp);
+                var dataStr = angular.toJson(data);
 
                 //Ignore empty objects by removing them before comparison:
                 //This is a hack to handle Patient's related-contact's contact-number's dummy object
